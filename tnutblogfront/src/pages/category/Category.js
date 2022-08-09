@@ -11,7 +11,7 @@ const Category = () => {
   const [authority, setAuthority] = useState("");
 
   useEffect(() => {
-    setAuthority(localStorage.getItem("authority"));
+    setAuthority(JSON.parse(localStorage.getItem("authority")).role);
   }, []);
 
   useEffect(() => {
