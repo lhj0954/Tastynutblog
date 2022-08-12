@@ -11,8 +11,10 @@ const Category = () => {
   const [authority, setAuthority] = useState("");
 
   useEffect(() => {
-    setAuthority(JSON.parse(localStorage.getItem("authority")).role);
-  }, []);
+    if (JSON.parse(localStorage.getItem("authority"))) {
+      setAuthority(JSON.parse(localStorage.getItem("authority")).role);
+    }
+  }, [authority]);
 
   useEffect(() => {
     fetch("http://localhost:8080/category")

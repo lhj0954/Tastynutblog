@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
 
 const SubReplyItem = (props) => {
   const { content, id, user } = props.subreply;
+
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("authority"))) {
+      setUsername(JSON.parse(localStorage.getItem("authority")).username);
+    }
+  }, [username]);
 
   const [mode, setMode] = useState("read");
 
@@ -71,8 +79,7 @@ const SubReplyItem = (props) => {
               <Card.Body>
                 {content} 작성자: {user.username}
                 {"   "}
-                {user.username ===
-                JSON.parse(localStorage.getItem("authority")).username ? (
+                {user.username === username ? (
                   <>
                     <Button variant="outline-secondary" onClick={deleteReply}>
                       삭제

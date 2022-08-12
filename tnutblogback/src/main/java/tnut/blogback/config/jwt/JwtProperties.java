@@ -1,11 +1,11 @@
 package tnut.blogback.config.jwt;
 
 public interface JwtProperties {
-    String ACCESS_SECRET = [ACCESS_SECRET];
-    String REFRESH_SECRET = [REFRESH_SECRET];
+    String ACCESS_SECRET = "AcCeSsSeCrEt";
+    String REFRESH_SECRET = "ReFrEsHsEcReT";
     int ACCESS_EXPIRATION_TIME =  1000*60*30; //30분
     Long REFRESH_EXPIRATION_TIME = 1000L * 60 * 60 * 24 * 30; //30일
-    String HEADER_ACCESS = [HEADER];
-    String TOKEN_SUBJECT = [TOKEN_SUBJECT];
-    String REDIRECT_URL = redirect_Uri;
+    String HEADER_ACCESS = "AccessToken";
+    String TOKEN_SUBJECT = "Tnut's subject";
+    String REDIRECT_URL = "http://localhost:3000/oauth/redirect?";
 }

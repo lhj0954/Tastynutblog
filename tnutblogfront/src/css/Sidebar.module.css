@@ -1,0 +1,22 @@
+.sidebarGrid {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+}
+.header {
+  margin-top: 30px;
+  margin-bottom: 0;
+  border-bottom: 1px solid black;
+  padding-bottom: 10px;
+}
+ul {
+  border-right: 1px solid black;
+  padding-top: 50px;
+}
+.largeCategory {
+  padding-top: 50px;
+  border-right: 1px solid black;
+}
+.largeCategoryItem {
+  color: black;
+  text-align: center;
+}

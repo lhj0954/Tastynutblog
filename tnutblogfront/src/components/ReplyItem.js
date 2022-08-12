@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
 import SubReplyItem from "./SubReplyItem";
 
 const ReplyItem = (props) => {
   const { content, id, subReplies, user } = props.comment;
+
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("authority"))) {
+      setUsername(JSON.parse(localStorage.getItem("authority")).username);
+    }
+  }, [username]);
 
   const [subReply, setSubReply] = useState({
     parentReply_id: id,
@@ -105,8 +113,7 @@ const ReplyItem = (props) => {
       <Card>
         <Card.Header as="h5">
           작성자: {user.username}{" "}
-          {user.username ===
-          JSON.parse(localStorage.getItem("authority")).username ? (
+          {user.username === username ? (
             <>
               <Button variant="outline-secondary" onClick={() => deleteReply()}>
                 삭제

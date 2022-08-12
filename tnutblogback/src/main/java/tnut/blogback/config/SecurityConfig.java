@@ -46,8 +46,6 @@ public class SecurityConfig {
                         .access("hasRole('ROLE_TNUT')")
                         .antMatchers("/user/**")
                         .access("hasRole('ROLE_USER') or hasRole('ROLE_TNUT')")
-                        .antMatchers("/authority")
-                        .access("hasRole('ROLE_USER') or hasRole('ROLE_TNUT')")
                         .anyRequest().permitAll())
                 .apply(new MyCustomDsl())
                 .and()
