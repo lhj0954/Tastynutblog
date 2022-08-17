@@ -1,30 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tab, Tabs, Nav } from "react-bootstrap";
 import BoardItem from "./BoardItem";
 import styles from "../css/Sidebar.module.css";
 
 const UserSideBar = (props) => {
+  const defaultLargeCategory = props.data[0];
+
   const [result, setResult] = useState({
     id: "",
     largeCategoryName: "",
     subCategories: [],
   });
 
-  const [key, setKey] = useState("home");
+  useEffect(() => {
+    if (defaultLargeCategory) {
+      setResult(defaultLargeCategory);
+    }
+  }, [defaultLargeCategory]);
+
+  const [key, setKey] = useState();
 
   const setSubCategory = (e) => {
     setResult(e);
+    setKey(e.subCategories[0].subCategoryName);
   };
 
   return (
     <div>
       <h1 className={styles.header}>Tnut's Boards</h1>
       <div className={styles.sidebarGrid}>
-        <Nav defaultActiveKey="/home" className={styles.largeCategory}>
-          <Nav.Item>
+        <div className={styles.largeCategory}>
+          <ul className={styles.largeCategoryItems}>
             {props.data.map((largeCategory) => {
               return (
-                <Nav.Link
+                <li
                   key={largeCategory.id}
                   onClick={() => {
                     setSubCategory(largeCategory);
@@ -32,37 +41,33 @@ const UserSideBar = (props) => {
                   className={styles.largeCategoryItem}
                 >
                   {largeCategory.largeCategoryName}
-                </Nav.Link>
+                </li>
               );
             })}
-          </Nav.Item>
-        </Nav>
-        <Tabs
-          id="controlled-tab-example"
-          activeKey={key}
-          onSelect={(k) => setKey(k)}
-          className="mb-3"
-        >
-          {result.subCategories.map((subCategory) => {
-            //result={선택한 largeCategory의 id, largeCategoryName ,subCategories: id, subCategoryName, boards}
-            return (
-              <Tab
-                eventKey={subCategory.subCategoryName}
-                title={<span>{subCategory.subCategoryName}</span>}
-                key={subCategory.id}
-              >
-                {subCategory.boards.map((board) => {
-                  return (
-                    <>
-                      <></>
-                      <BoardItem key={board.id} board={board} />
-                    </>
-                  );
-                })}
-              </Tab>
-            );
-          })}
-        </Tabs>
+          </ul>
+        </div>
+        <div className={styles.tabs}>
+          <Tabs
+            id="controlled-tab-example"
+            activeKey={key}
+            onSelect={(k) => setKey(k)}
+            className="mb-3"
+          >
+            {result.subCategories.map((subCategory) => {
+              return (
+                <Tab
+                  key={subCategory.id}
+                  title={subCategory.subCategoryName}
+                  eventKey={subCategory.subCategoryName}
+                >
+                  {subCategory.boards.map((board) => {
+                    return <BoardItem key={board.id} board={board} />;
+                  })}
+                </Tab>
+              );
+            })}
+          </Tabs>
+        </div>
       </div>
     </div>
   );

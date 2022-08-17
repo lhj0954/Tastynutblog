@@ -28,7 +28,7 @@ const Header = () => {
         </Link>
         <Navbar.Collapse id="navbarScroll">
           <Nav
-            className="me-auto my-2 my-lg-0"
+            className="justify-content-center flex-grow-1 pe-3"
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
@@ -40,7 +40,7 @@ const Header = () => {
                       글쓰기
                     </Link>
                     <Link to="/categoryPage" className="nav-link">
-                      카테고리 별 게시글
+                      글 관리 페이지
                     </Link>
                     <Nav.Item onClick={handleLogout} className="nav-link">
                       Logout
