@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Button, Container, Modal, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../css/LoginModal.module.css";
+import google_login_img from "../img/btn_google_signin_light_normal_web.png";
+import naver_login_img from "../img/btnW_perfect.png";
+import kakao_login_img from "../img/kakao_login_medium_narrow.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -29,12 +32,12 @@ const Header = () => {
     setShow(true);
   };
 
-  const handleLogin = (e) => {
-    if (e.target.value === "google") {
+  const handleLogin = (loginType) => {
+    if (loginType === "google") {
       window.location.href = `http://localhost:8080/oauth2/authorization/google`;
-    } else if (e.target.value === "naver") {
+    } else if (loginType === "naver") {
       window.location.href = `http://localhost:8080/oauth2/authorization/naver`;
-    } else if (e.target.value === "kakao") {
+    } else if (loginType === "kakao") {
       window.location.href = `http://localhost:8080/oauth2/authorization/kakao`;
     }
   };
@@ -52,9 +55,8 @@ const Header = () => {
           </Link>
           <Navbar.Collapse id="navbarScroll">
             <Nav
-              className="justify-content-center flex-grow-1 pe-3"
+              className="flex-grow-1 pe-3"
               style={{ maxHeight: "100px", fontSize: "20px" }}
-              navbarScroll
             >
               {authority ? (
                 <>
@@ -118,19 +120,28 @@ const Header = () => {
         </Modal.Header>
         <Modal.Body>
           <p className={styles.loginButton}>
-            <Button bg="secondary" value={"google"} onClick={handleLogin}>
-              구글 로그인
-            </Button>
+            <img
+              className={styles.loginImg}
+              alt="goole-login-img"
+              src={google_login_img}
+              onClick={() => handleLogin("google")}
+            />
           </p>
           <p className={styles.loginButton}>
-            <Button bg="secondary" value={"naver"} onClick={handleLogin}>
-              네이버 로그인
-            </Button>
+            <img
+              className={styles.loginImg}
+              alt="kakao-login-img"
+              src={kakao_login_img}
+              onClick={() => handleLogin("kakao")}
+            />
           </p>
           <p className={styles.loginButton}>
-            <Button bg="secondary" value={"kakao"} onClick={handleLogin}>
-              카카오 로그인
-            </Button>
+            <img
+              className={styles.loginImg}
+              alt="naver-login-img"
+              src={naver_login_img}
+              onClick={() => handleLogin("naver")}
+            />
           </p>
         </Modal.Body>
         <Modal.Footer>

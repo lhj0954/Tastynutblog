@@ -9,6 +9,7 @@ import UpdateForm from "./pages/board/UpdateForm";
 import Category from "./pages/category/Category";
 import { Helmet } from "react-helmet";
 import Redirect from "./pages/Redirect";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/oauth/redirect" element={<Redirect />} />
         </Routes>
       </Container>
+      <Footer />
     </div>
   );
 }
