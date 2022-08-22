@@ -53,7 +53,7 @@ const Header = () => {
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="justify-content-center flex-grow-1 pe-3"
-              style={{ maxHeight: "100px" }}
+              style={{ maxHeight: "100px", fontSize: "20px" }}
               navbarScroll
             >
               {authority ? (
