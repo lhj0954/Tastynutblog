@@ -66,7 +66,7 @@ const Home = () => {
       </div>
       <div>
         <hr />
-        <h1>새 게시글</h1>
+        <h1>최신 게시글</h1>
         <br />
         <>
           {boards.content.map((board) => {

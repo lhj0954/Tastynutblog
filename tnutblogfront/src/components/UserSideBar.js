@@ -27,7 +27,7 @@ const UserSideBar = (props) => {
 
   return (
     <div>
-      <h1 className={styles.header}>Tnut's Boards</h1>
+      <h1 className={styles.header}>Boards</h1>
       <div className={styles.sidebarGrid}>
         <div className={styles.largeCategory}>
           <ul className={styles.largeCategoryItems}>

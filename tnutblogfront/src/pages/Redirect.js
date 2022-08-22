@@ -47,11 +47,11 @@ const Redirect = () => {
         window.location.reload();
       }, 500);
 
-      navigate("/login");
+      navigate(-1);
     } else {
-      navigate("/");
+      navigate(-1);
     }
-  });
+  }, []);
 
   return <div></div>;
 };
