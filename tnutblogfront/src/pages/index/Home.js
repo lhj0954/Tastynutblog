@@ -66,7 +66,7 @@ const Home = () => {
       </div>
       <div>
         <hr />
-        <h1>최신 게시글</h1>
+        <h1>최근 게시글</h1>
         <br />
         <>
           {boards.content.map((board) => {
@@ -80,7 +80,6 @@ const Home = () => {
           </Pagination.Item>
           <Pagination.Prev disabled={disable1} onClick={previousPage} />
           <Pagination.Item active>{page + 1}</Pagination.Item>
-
           <Pagination.Next disabled={disable2} onClick={nextPage} />
           <Pagination.Item disabled={disable2} onClick={lastPage}>
             마지막 페이지

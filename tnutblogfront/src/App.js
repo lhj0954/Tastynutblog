@@ -10,25 +10,28 @@ import Category from "./pages/category/Category";
 import { Helmet } from "react-helmet";
 import Redirect from "./pages/Redirect";
 import Footer from "./components/Footer";
+import styles from "./css/Display.module.css";
 
 function App() {
   return (
-    <div>
+    <div className={styles.body}>
       <Helmet>
         <title>Tnut's Blog</title>
       </Helmet>
-      <Header />
-      <Container>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/board/saveForm" element={<SaveForm />} />
-          <Route path="/board/content/:id" element={<Content />} />
-          <Route path="/board/updateForm/:id" element={<UpdateForm />} />
-          <Route path="/categoryPage" element={<Category />} />
-          <Route path="/oauth/redirect" element={<Redirect />} />
-        </Routes>
-      </Container>
-      <Footer />
+      <div className={styles.wrapper}>
+        <Header />
+        <Container className={styles.container}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/board/saveForm" element={<SaveForm />} />
+            <Route path="/board/content/:id" element={<Content />} />
+            <Route path="/board/updateForm/:id" element={<UpdateForm />} />
+            <Route path="/categoryPage" element={<Category />} />
+            <Route path="/oauth/redirect" element={<Redirect />} />
+          </Routes>
+        </Container>
+        <Footer />
+      </div>
     </div>
   );
 }

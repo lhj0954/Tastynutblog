@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
 import ReplyItem from "../../components/ReplyItem";
 import AdminReplyItem from "../../components/AdminReplyItem";
+import styles from "../../css/Content.module.css";
 
 const Content = () => {
   const propsParam = useParams();
@@ -102,30 +103,39 @@ const Content = () => {
 
   return (
     <div>
-      <h1>{board.data.title}</h1>
-      {authority === "ROLE_TNUT" ? (
-        <>
-          <Button variant="secondary" onClick={() => updateBoard()}>
-            수정
-          </Button>{" "}
-          <Button variant="secondary" onClick={() => deleteBoard()}>
-            삭제
-          </Button>{" "}
-          <Button variant="secondary" onClick={() => navigate(-1)}>
-            돌아가기
-          </Button>
-        </>
-      ) : (
-        <>
-          <Button variant="secondary" onClick={() => navigate(-1)}>
-            돌아가기
-          </Button>
-        </>
-      )}
+      <br />
+      <Link
+        to="/categoryPage"
+        style={{ textDecoration: "none", color: "black", fontWeight: "bold" }}
+        title="카테고리 별 게시글 페이지로 이동합니다."
+      >
+        Category: {subCategoryName.subCategoryName}
+      </Link>
+      <br />
+      <br />
+      <div className={styles.contentTop}>
+        <h1 style={{ margin: "0" }}>{board.data.title}</h1>
+        {authority === "ROLE_TNUT" ? (
+          <div className={styles.utilButton}>
+            <Button variant="secondary" onClick={() => updateBoard()}>
+              수정
+            </Button>{" "}
+            <Button variant="secondary" onClick={() => deleteBoard()}>
+              삭제
+            </Button>{" "}
+            <Button variant="secondary" onClick={() => navigate(-1)}>
+              돌아가기
+            </Button>
+          </div>
+        ) : (
+          <div className={styles.utilButton}>
+            <Button variant="secondary" onClick={() => navigate(-1)}>
+              돌아가기
+            </Button>
+          </div>
+        )}
+      </div>
       <hr />
-      <Card>
-        <Card.Body>Category: {subCategoryName.subCategoryName}</Card.Body>
-      </Card>
       <Card>
         <Card.Body>{board.data.content}</Card.Body>
       </Card>
@@ -137,13 +147,23 @@ const Content = () => {
           name="reply"
           placeholder="댓글을 입력하세요"
         />
-        <Button
-          variant="outline-secondary"
-          id="button-addon2"
-          onClick={submitReply}
-        >
-          댓글 등록
-        </Button>
+        {authority ? (
+          <>
+            <Button
+              variant="outline-secondary"
+              id="button-addon2"
+              onClick={submitReply}
+            >
+              댓글 등록
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button variant="outline-secondary" id="button-addon2" disabled>
+              로그인 해주세요
+            </Button>
+          </>
+        )}
       </InputGroup>
       <hr />
       <>

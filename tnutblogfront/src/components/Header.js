@@ -101,7 +101,7 @@ const Header = () => {
                     onClick={handleShow}
                     style={{ cursor: "pointer" }}
                   >
-                    LogIn
+                    Login
                   </Nav.Item>
                 </>
               )}
