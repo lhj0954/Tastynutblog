@@ -3,6 +3,7 @@ package tnut.blogback.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tnut.blogback.dto.BoardSaveDto;
@@ -10,6 +11,8 @@ import tnut.blogback.model.Board;
 import tnut.blogback.model.category.SubCategory;
 import tnut.blogback.repository.BoardRepository;
 import tnut.blogback.repository.categoryrepository.SubCategoryRepository;
+
+import java.util.List;
 
 @Service
 public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, 글 목록 불러오기         댓글 작성, 삭제, 수정
@@ -38,8 +41,8 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
     }
 
     @Transactional(readOnly = true) //글들을 리스트로 받아옴 -> 인덱스 페이지에 넣을 거임 GetMapping
-    public Page<Board> boardAllList(Pageable pageable) {
-        return boardRepository.findAll(pageable);
+    public List<Board> boardRecentList( ) {
+        return boardRepository.findTop15ByOrderByIdDesc();
     }
 
 

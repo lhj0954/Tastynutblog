@@ -1,0 +1,15 @@
+.cardBody {
+  margin: 0;
+  height: 100%;
+}
+.cardWrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.cardText {
+  flex: 1;
+}
+a {
+  width: unset;
+}

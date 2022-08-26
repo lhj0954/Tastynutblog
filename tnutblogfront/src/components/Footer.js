@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "../css/Footer.module.css";
-import github_img from "../img/free-icon-github-logo-25231.png";
+import github_img from "../img/github.png";
 import tstory_img from "../img/tstory-logo.png";
+import blogger_img from "../img/free-icon-symbols-49334.png";
 
 const Footer = () => {
   return (
@@ -29,10 +30,46 @@ const Footer = () => {
         title="move to Tnut's Tstory"
       >
         <img
-          alt="free-github-icon"
+          alt="free-tstory-icon"
           src={tstory_img}
           style={{ height: "50px" }}
         />
+      </a>
+      <a
+        className={styles.relativesite_img}
+        href="https://tastynut0954.blogspot.com/"
+        rel="noreferrer"
+        target="_blank"
+        title="move to Tnut's blogger"
+      >
+        <img
+          alt="free-blogger-icon"
+          src={blogger_img}
+          style={{ height: "50px" }}
+        />
+      </a>
+      <br />
+      <br />
+      <a
+        href="https://www.flaticon.com/free-icons/github"
+        title="github icons"
+        style={{ textDecoration: "none", color: "black" }}
+      >
+        Github icons created by Pixel perfect - Flaticon |
+      </a>{" "}
+      <a
+        href="https://marshall-ku.tistory.com/134"
+        title="티스토리 아이콘"
+        style={{ textDecoration: "none", color: "black" }}
+      >
+        티스토리 아이콘 다운 블로그 |
+      </a>{" "}
+      <a
+        href="https://www.flaticon.com/kr/free-icons/"
+        title="블로그 아이콘"
+        style={{ textDecoration: "none", color: "black" }}
+      >
+        블로그 아이콘 제작자: Freepik - Flaticon
       </a>
     </div>
   );
