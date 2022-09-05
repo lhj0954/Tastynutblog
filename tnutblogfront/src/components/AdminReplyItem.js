@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Form, InputGroup } from "react-bootstrap";
+import {
+  Accordion,
+  Button,
+  Card,
+  Form,
+  InputGroup,
+  useAccordionButton,
+} from "react-bootstrap";
 import AdminSubReplyItem from "./AdminSubReplyItem";
 
 const AdminReplyItem = (props) => {
-  const { content, id, subReplies, user } = props.comment;
+  const { content, id, subReplies, user, createDate } = props.comment;
 
   const [mode, setMode] = useState("read");
+
+  const commentDate = createDate.substr(0, 10);
 
   const [accessor, setAccessor] = useState("");
 
@@ -108,90 +117,125 @@ const AdminReplyItem = (props) => {
       });
   };
 
+  function CustomToggle({ children, eventKey }) {
+    const decoratedOnClick = useAccordionButton(eventKey);
+
+    return (
+      <>
+        <Button
+          type="button"
+          onClick={decoratedOnClick}
+          variant="outline-secondary"
+        >
+          {children}
+        </Button>
+      </>
+    );
+  }
+
   return (
     <div>
-      <Card>
-        <Card.Header as="h5">
-          작성자: {user.username}{" "}
-          {accessor === user.username ? (
-            <>
-              <Button variant="outline-secondary" onClick={() => deleteReply()}>
-                삭제
-              </Button>{" "}
-              <Button
-                variant="outline-secondary"
-                onClick={() => setMode("update")}
-              >
-                수정
-              </Button>
-            </>
-          ) : (
-            <Button variant="outline-secondary" onClick={() => deleteReply()}>
-              삭제
-            </Button>
-          )}
-          <InputGroup className="mb-3">
-            <Form.Control
-              type="subReply"
-              onChange={changeValue1}
-              name="subReply"
-              placeholder="글을 입력하세요"
-            />
-            <Button
-              variant="outline-secondary"
-              id="button-addon2"
-              onClick={submitRereply}
-            >
-              답변하기
-            </Button>
-          </InputGroup>
-        </Card.Header>
-        <Card.Body>
-          {mode === "read" ? (
-            <>
-              {content !== null ? (
-                <Card.Text>{content}</Card.Text>
+      <Accordion>
+        <Card>
+          <Card.Header as="h5">
+            <span>{user.username} </span>
+            <span style={{ float: "right" }}>
+              {commentDate}{" "}
+              {accessor === user.username ? (
+                <>
+                  <Button
+                    variant="outline-secondary"
+                    onClick={() => deleteReply()}
+                  >
+                    삭제
+                  </Button>{" "}
+                  <Button
+                    variant="outline-secondary"
+                    onClick={() => setMode("update")}
+                  >
+                    수정
+                  </Button>{" "}
+                  <CustomToggle eventKey="0">답변하기</CustomToggle>
+                </>
               ) : (
-                <Card.Text>"삭제된 댓글입니다."</Card.Text>
+                <>
+                  <Button
+                    variant="outline-secondary"
+                    onClick={() => deleteReply()}
+                  >
+                    삭제
+                  </Button>{" "}
+                  <CustomToggle eventKey="0">답변하기</CustomToggle>
+                </>
               )}
-            </>
-          ) : (
-            <InputGroup className="mb-3">
-              <Form.Control
-                type="replyUpdate"
-                onChange={changeValue2}
-                name="replyUpdates"
-                value={contentValue.content}
-              />
-              <Button
-                variant="outline-secondary"
-                id="button-addon2"
-                onClick={updateReply}
-              >
-                수정하기
-              </Button>
-              <Button
-                variant="outline-secondary"
-                id="button-addon2"
-                onClick={() => setMode("read")}
-              >
-                수정취소
-              </Button>
-            </InputGroup>
-          )}
-
-          <>
-            {subReplies.map((subreply) => {
-              return (
-                <AdminSubReplyItem
-                  key={subreply.id}
-                  subreply={[subreply, accessor]}
+            </span>
+          </Card.Header>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body>
+              <InputGroup className="mb-3">
+                <Form.Control
+                  type="subReply"
+                  onChange={changeValue1}
+                  name="subReply"
                 />
-              );
-            })}
-          </>
-        </Card.Body>
-      </Card>
+                <Button
+                  variant="outline-secondary"
+                  id="button-addon2"
+                  onClick={submitRereply}
+                >
+                  답변하기
+                </Button>
+              </InputGroup>
+            </Card.Body>
+          </Accordion.Collapse>
+          <hr style={{ margin: 0 }} />
+          <Card.Body>
+            {mode === "read" ? (
+              <>
+                {content !== null ? (
+                  <Card.Text>{content}</Card.Text>
+                ) : (
+                  <Card.Text>"삭제된 댓글입니다."</Card.Text>
+                )}
+              </>
+            ) : (
+              <InputGroup className="mb-3">
+                <Form.Control
+                  type="replyUpdate"
+                  onChange={changeValue2}
+                  name="replyUpdates"
+                  value={contentValue.content}
+                />
+                <Button
+                  variant="outline-secondary"
+                  id="button-addon2"
+                  onClick={updateReply}
+                >
+                  수정하기
+                </Button>
+                <Button
+                  variant="outline-secondary"
+                  id="button-addon2"
+                  onClick={() => setMode("read")}
+                >
+                  수정취소
+                </Button>
+              </InputGroup>
+            )}
+
+            <>
+              {subReplies.map((subreply) => {
+                return (
+                  <AdminSubReplyItem
+                    key={subreply.id}
+                    subreply={[subreply, accessor]}
+                  />
+                );
+              })}
+            </>
+          </Card.Body>
+        </Card>
+      </Accordion>
       <br />
     </div>
   );

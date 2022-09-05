@@ -139,7 +139,7 @@ const Content = () => {
           </div>
         )}
       </div>
-      <h6>{board.data.createDate.substr(0, 10)}</h6>
+      <h6>{board.data.createDate}</h6>
       <hr />
       <Card>
         <Card.Body>{board.data.content}</Card.Body>
