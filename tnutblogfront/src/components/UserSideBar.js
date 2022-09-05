@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Tab, Tabs, Nav } from "react-bootstrap";
+import { Tab, Tabs } from "react-bootstrap";
 import BoardItem from "./BoardItem";
-import styles from "../css/Sidebar.module.css";
+import styles from "../css/UserSidebar.module.css";
 
 const UserSideBar = (props) => {
   const defaultLargeCategory = props.data[0];
@@ -40,7 +40,7 @@ const UserSideBar = (props) => {
                   }}
                   className={styles.largeCategoryItem}
                 >
-                  {largeCategory.largeCategoryName}
+                  <h3>{largeCategory.largeCategoryName}</h3>
                 </li>
               );
             })}

@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Form, InputGroup } from "react-bootstrap";
+import {
+  Accordion,
+  Button,
+  Card,
+  Form,
+  InputGroup,
+  useAccordionButton,
+} from "react-bootstrap";
 import SubReplyItem from "./SubReplyItem";
 
 const ReplyItem = (props) => {
-  const { content, id, subReplies, user } = props.comment;
+  const { content, id, subReplies, user, createDate } = props.comment;
 
   const [username, setUsername] = useState("");
+  const commentDate = createDate.substr(0, 10);
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("authority"))) {
@@ -108,83 +116,116 @@ const ReplyItem = (props) => {
       });
   };
 
+  function CustomToggle({ children, eventKey }) {
+    const decoratedOnClick = useAccordionButton(eventKey);
+
+    return (
+      <>
+        <Button
+          type="button"
+          onClick={decoratedOnClick}
+          variant="outline-secondary"
+        >
+          {children}
+        </Button>
+      </>
+    );
+  }
+
   return (
     <div>
-      <Card>
-        <Card.Header as="h5">
-          작성자: {user.username}{" "}
-          {user.username === username ? (
+      <Accordion>
+        <Card>
+          <Card.Header as="h5">
+            <div>
+              <span> {user.username}</span>
+              <span style={{ float: "right" }}>
+                {commentDate}
+                {"  "}
+                {user.username === username ? (
+                  <>
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() => deleteReply()}
+                    >
+                      삭제
+                    </Button>{" "}
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() => setMode("update")}
+                    >
+                      수정
+                    </Button>{" "}
+                    <CustomToggle eventKey="0">답변하기</CustomToggle>
+                  </>
+                ) : (
+                  <span>
+                    <CustomToggle eventKey="0">답변하기</CustomToggle>
+                  </span>
+                )}
+              </span>
+            </div>
+          </Card.Header>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body>
+              <InputGroup className="mb-3">
+                <Form.Control
+                  type="subReply"
+                  onChange={changeValue1}
+                  name="subReply"
+                />
+                <Button
+                  variant="outline-secondary"
+                  id="button-addon2"
+                  onClick={submitRereply}
+                >
+                  답변하기
+                </Button>
+              </InputGroup>
+            </Card.Body>
+          </Accordion.Collapse>
+          <hr style={{ margin: 0 }} />
+          <Card.Body>
+            {mode === "read" ? (
+              <>
+                {content !== null ? (
+                  <Card.Text>{content}</Card.Text>
+                ) : (
+                  <Card.Text>"삭제된 댓글입니다."</Card.Text>
+                )}
+              </>
+            ) : (
+              <InputGroup className="mb-3">
+                <Form.Control
+                  type="replyUpdate"
+                  onChange={changeValue2}
+                  name="replyUpdates"
+                  value={contentValue.content}
+                />
+                <Button
+                  variant="outline-secondary"
+                  id="button-addon2"
+                  onClick={updateReply}
+                >
+                  수정하기
+                </Button>
+                <Button
+                  variant="outline-secondary"
+                  id="button-addon2"
+                  onClick={() => setMode("read")}
+                >
+                  수정취소
+                </Button>
+              </InputGroup>
+            )}
             <>
-              <Button variant="outline-secondary" onClick={() => deleteReply()}>
-                삭제
-              </Button>{" "}
-              <Button
-                variant="outline-secondary"
-                onClick={() => setMode("update")}
-              >
-                수정
-              </Button>
+              {subReplies.map((subreply) => {
+                return <SubReplyItem key={subreply.id} subreply={subreply} />;
+              })}
             </>
-          ) : (
-            <></>
-          )}
-        </Card.Header>
-        <Card.Body>
-          {mode === "read" ? (
-            <>
-              {content !== null ? (
-                <Card.Text>{content}</Card.Text>
-              ) : (
-                <Card.Text>"삭제된 댓글입니다."</Card.Text>
-              )}
-            </>
-          ) : (
-            <InputGroup className="mb-3">
-              <Form.Control
-                type="replyUpdate"
-                onChange={changeValue2}
-                name="replyUpdates"
-                placeholder="글을 입력하세요"
-                value={contentValue.content}
-              />
-              <Button
-                variant="outline-secondary"
-                id="button-addon2"
-                onClick={updateReply}
-              >
-                수정하기
-              </Button>
-              <Button
-                variant="outline-secondary"
-                id="button-addon2"
-                onClick={() => setMode("read")}
-              >
-                수정취소
-              </Button>
-            </InputGroup>
-          )}
-          <InputGroup className="mb-3">
-            <Form.Control
-              type="subReply"
-              onChange={changeValue1}
-              name="subReply"
-              placeholder="글을 입력하세요"
-            />
-            <Button
-              variant="outline-secondary"
-              id="button-addon2"
-              onClick={submitRereply}
-            >
-              답변하기
-            </Button>
-          </InputGroup>
-          <>
-            {subReplies.map((subreply) => {
-              return <SubReplyItem key={subreply.id} subreply={subreply} />;
-            })}
-          </>
-        </Card.Body>
-      </Card>
+          </Card.Body>
+        </Card>
+      </Accordion>
       <br />
     </div>
   );

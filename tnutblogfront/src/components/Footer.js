@@ -54,6 +54,8 @@ const Footer = () => {
         href="https://www.flaticon.com/free-icons/github"
         title="github icons"
         style={{ textDecoration: "none", color: "black" }}
+        target="_blank"
+        rel="noreferrer"
       >
         Github icons created by Pixel perfect - Flaticon |
       </a>{" "}
@@ -61,6 +63,8 @@ const Footer = () => {
         href="https://marshall-ku.tistory.com/134"
         title="티스토리 아이콘"
         style={{ textDecoration: "none", color: "black" }}
+        target="_blank"
+        rel="noreferrer"
       >
         티스토리 아이콘 다운 블로그 |
       </a>{" "}
@@ -68,6 +72,8 @@ const Footer = () => {
         href="https://www.flaticon.com/kr/free-icons/"
         title="블로그 아이콘"
         style={{ textDecoration: "none", color: "black" }}
+        target="_blank"
+        rel="noreferrer"
       >
         블로그 아이콘 제작자: Freepik - Flaticon
       </a>

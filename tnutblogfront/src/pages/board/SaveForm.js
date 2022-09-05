@@ -71,6 +71,9 @@ const SaveForm = () => {
           name="title"
         />
       </Form.Group>
+      <Button variant="outline-secondary" type="submit">
+        저장하기
+      </Button>
       <hr />
       <Form.Select size="sm" onChange={selectLC}>
         <option>Large Category</option>
@@ -110,11 +113,6 @@ const SaveForm = () => {
           name="content"
         />
       </Form.Group>
-      <hr />
-      <br />
-      <Button variant="outline-secondary" type="submit">
-        저장하기
-      </Button>
     </Form>
   );
 };

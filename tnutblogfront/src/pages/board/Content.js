@@ -75,30 +75,34 @@ const Content = () => {
   };
 
   const submitReply = (e) => {
-    e.preventDefault();
-    fetch("http://localhost:8080/user/api/reply/save", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        AccessToken: localStorage.getItem("Tnut's accessToken"),
-      },
-      body: JSON.stringify(reply),
-    })
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          return res.json();
-        } else {
-          return null;
-        }
+    if (reply.content.length === 0) {
+      alert("빈 댓글을 등록할 수 없습니다.");
+    } else {
+      console.log(reply);
+      e.preventDefault();
+      fetch("http://localhost:8080/user/api/reply/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          AccessToken: localStorage.getItem("Tnut's accessToken"),
+        },
+        body: JSON.stringify(reply),
       })
-      .then((res) => {
-        if (res !== null) {
-          window.location.reload();
-        } else {
-          alert("댓글 등록 실패!");
-        }
-      });
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json();
+          } else {
+            return null;
+          }
+        })
+        .then((res) => {
+          if (res !== null) {
+            window.location.reload();
+          } else {
+            alert("댓글 등록 실패!");
+          }
+        });
+    }
   };
 
   return (
@@ -135,11 +139,13 @@ const Content = () => {
           </div>
         )}
       </div>
+      <h6>{board.data.createDate.substr(0, 10)}</h6>
       <hr />
       <Card>
         <Card.Body>{board.data.content}</Card.Body>
       </Card>
       <hr />
+      <h2>댓글 달기</h2>
       <InputGroup className="mb-3">
         <Form.Control
           type="reply"

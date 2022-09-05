@@ -1,9 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
 import AdminSubReplyItem from "./AdminSubReplyItem";
 
 const AdminReplyItem = (props) => {
   const { content, id, subReplies, user } = props.comment;
+
+  const [mode, setMode] = useState("read");
+
+  const [accessor, setAccessor] = useState("");
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("authority"))) {
+      setAccessor(JSON.parse(localStorage.getItem("authority")).username);
+    }
+  }, [accessor]);
+
+  const [contentValue, setContentValue] = useState({
+    id: id,
+    content: content,
+  });
 
   const [subReply, setSubReply] = useState({
     parentReply_id: id,
@@ -13,6 +28,13 @@ const AdminReplyItem = (props) => {
   const changeValue1 = (e) => {
     setSubReply((subReply) => ({
       ...subReply,
+      content: e.target.value,
+    }));
+  };
+
+  const changeValue2 = (e) => {
+    setContentValue((contentValue) => ({
+      ...contentValue,
       content: e.target.value,
     }));
   };
@@ -60,17 +82,53 @@ const AdminReplyItem = (props) => {
       });
   };
 
+  const updateReply = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:8080/user/api/reply/" + id + "/update", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        AccessToken: localStorage.getItem("Tnut's accessToken"),
+      },
+      body: JSON.stringify(contentValue),
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json;
+        } else {
+          return null;
+        }
+      })
+      .then((res) => {
+        if (res !== null) {
+          window.location.reload();
+        } else {
+          alert("댓글 수정 실패!");
+        }
+      });
+  };
+
   return (
     <div>
       <Card>
         <Card.Header as="h5">
           작성자: {user.username}{" "}
-          {content !== null ? (
+          {accessor === user.username ? (
+            <>
+              <Button variant="outline-secondary" onClick={() => deleteReply()}>
+                삭제
+              </Button>{" "}
+              <Button
+                variant="outline-secondary"
+                onClick={() => setMode("update")}
+              >
+                수정
+              </Button>
+            </>
+          ) : (
             <Button variant="outline-secondary" onClick={() => deleteReply()}>
               삭제
             </Button>
-          ) : (
-            <></>
           )}
           <InputGroup className="mb-3">
             <Form.Control
@@ -89,15 +147,46 @@ const AdminReplyItem = (props) => {
           </InputGroup>
         </Card.Header>
         <Card.Body>
-          {content !== null ? (
-            <Card.Text>{content}</Card.Text>
+          {mode === "read" ? (
+            <>
+              {content !== null ? (
+                <Card.Text>{content}</Card.Text>
+              ) : (
+                <Card.Text>"삭제된 댓글입니다."</Card.Text>
+              )}
+            </>
           ) : (
-            <Card.Text>"삭제된 댓글입니다."</Card.Text>
+            <InputGroup className="mb-3">
+              <Form.Control
+                type="replyUpdate"
+                onChange={changeValue2}
+                name="replyUpdates"
+                value={contentValue.content}
+              />
+              <Button
+                variant="outline-secondary"
+                id="button-addon2"
+                onClick={updateReply}
+              >
+                수정하기
+              </Button>
+              <Button
+                variant="outline-secondary"
+                id="button-addon2"
+                onClick={() => setMode("read")}
+              >
+                수정취소
+              </Button>
+            </InputGroup>
           )}
+
           <>
             {subReplies.map((subreply) => {
               return (
-                <AdminSubReplyItem key={subreply.id} subreply={subreply} />
+                <AdminSubReplyItem
+                  key={subreply.id}
+                  subreply={[subreply, accessor]}
+                />
               );
             })}
           </>

@@ -44,7 +44,6 @@ const Redirect = () => {
       }, 1000 * 60 * 29);
 
       setTimeout(() => {
-        window.location.reload();
         navigate(-1);
       }, 500);
     } else {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
 import IndexBoardItem from "../../components/IndexBoardItem";
+import IndexBoardItemBlank from "../../components/IndexBoardItemBlank";
 import styles from "../../css/Home.module.css";
 import profile_img from "../../img/profile.jpg";
 
@@ -10,23 +11,7 @@ const Home = () => {
   // const [disableFirst, setDisableFirst] = useState(false);
   // const [disableLast, setDisableLast] = useState(false);
 
-  const [boards, setBoards] = useState([
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-    { id: "", title: "", content: "", subCategory: [] },
-  ]);
+  const [boards, setBoards] = useState([]);
 
   // const previousPage = () => {
   //   setPage(page - 1);
@@ -68,10 +53,23 @@ const Home = () => {
     fetch("http://localhost:8080")
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         setBoards(res);
       });
   }, []);
+
+  let boards_1 = [];
+  let boards_2 = [];
+  let boards_3 = [];
+
+  for (let index = 0; index < 5; index++) {
+    boards_1.push(boards[index]);
+  }
+  for (let index = 5; index < 10; index++) {
+    boards_2.push(boards[index]);
+  }
+  for (let index = 10; index < 15; index++) {
+    boards_3.push(boards[index]);
+  }
 
   return (
     <div>
@@ -106,29 +104,35 @@ const Home = () => {
         >
           <Carousel.Item interval={5000}>
             <div style={{ display: "flex", height: "400px" }}>
-              <IndexBoardItem board={boards[0]} />
-              <IndexBoardItem board={boards[1]} />
-              <IndexBoardItem board={boards[2]} />
-              <IndexBoardItem board={boards[3]} />
-              <IndexBoardItem board={boards[4]} />
+              {boards_1.map((board) => {
+                if (board) {
+                  return <IndexBoardItem board={board} />;
+                } else {
+                  return <IndexBoardItemBlank />;
+                }
+              })}
             </div>
           </Carousel.Item>
           <Carousel.Item interval={5000}>
             <div style={{ display: "flex", height: "400px" }}>
-              <IndexBoardItem board={boards[5]} />
-              <IndexBoardItem board={boards[6]} />
-              <IndexBoardItem board={boards[7]} />
-              <IndexBoardItem board={boards[8]} />
-              <IndexBoardItem board={boards[9]} />
+              {boards_2.map((board) => {
+                if (board) {
+                  return <IndexBoardItem board={board} />;
+                } else {
+                  return <IndexBoardItemBlank />;
+                }
+              })}
             </div>
           </Carousel.Item>
           <Carousel.Item interval={5000}>
             <div style={{ display: "flex", height: "400px" }}>
-              <IndexBoardItem board={boards[10]} />
-              <IndexBoardItem board={boards[11]} />
-              <IndexBoardItem board={boards[12]} />
-              <IndexBoardItem board={boards[13]} />
-              <IndexBoardItem board={boards[14]} />
+              {boards_3.map((board) => {
+                if (board) {
+                  return <IndexBoardItem board={board} />;
+                } else {
+                  return <IndexBoardItemBlank />;
+                }
+              })}
             </div>
           </Carousel.Item>
         </Carousel>
