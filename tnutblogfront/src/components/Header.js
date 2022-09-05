@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Modal, Nav, Navbar } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Modal,
+  Nav,
+  Navbar,
+  NavDropdown,
+} from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../css/LoginModal.module.css";
 import google_login_img from "../img/btn_google_signin_light_normal_web.png";
@@ -9,11 +16,13 @@ import kakao_login_img from "../img/kakao_login_medium_narrow.png";
 const Header = () => {
   const navigate = useNavigate();
   const [authority, setAuthority] = useState("");
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("authority")) {
       //authority라는 값이 있으면
       setAuthority(JSON.parse(localStorage.getItem("authority")).role);
+      setUsername(JSON.parse(localStorage.getItem("authority")).username);
     }
   }, [authority]);
 
@@ -88,6 +97,19 @@ const Header = () => {
                       >
                         Logout
                       </Nav.Item>
+                      <Navbar.Collapse className="justify-content-end">
+                        <NavDropdown
+                          title={username}
+                          id="collasible-nav-dropdown"
+                          style={{ marginRight: "125px" }}
+                        >
+                          <NavDropdown.Item>
+                            <Link to="/mypage" className="nav-link">
+                              My page
+                            </Link>
+                          </NavDropdown.Item>
+                        </NavDropdown>
+                      </Navbar.Collapse>
                     </>
                   )}
                 </>

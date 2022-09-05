@@ -53,6 +53,9 @@ const Home = () => {
     fetch("http://localhost:8080")
       .then((res) => res.json())
       .then((res) => {
+        res.map((board) => {
+          return delete board.replies;
+        });
         setBoards(res);
       });
   }, []);

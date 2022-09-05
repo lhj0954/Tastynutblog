@@ -23,7 +23,7 @@ public class User { //유저에 담길 내용: 유저네임, 비밀번호, 이�
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     private String username;
 
     private String password;

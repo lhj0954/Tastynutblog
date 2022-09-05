@@ -11,6 +11,7 @@ import { Helmet } from "react-helmet";
 import Redirect from "./pages/Redirect";
 import Footer from "./components/Footer";
 import styles from "./css/Display.module.css";
+import Mypage from "./pages/Mypage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/board/updateForm/:id" element={<UpdateForm />} />
             <Route path="/categoryPage" element={<Category />} />
             <Route path="/oauth/redirect" element={<Redirect />} />
+            <Route path="/mypage" element={<Mypage />} />
           </Routes>
         </Container>
         <Footer />
