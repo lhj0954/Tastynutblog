@@ -24,7 +24,7 @@ public class ReplyService {
     }
 
     @Transactional
-    public Reply replySave(ReplySaveRequestDto replySaveRequestDto, User user) { //postMapping
+    public Reply replySave(ReplySaveRequestDto replySaveRequestDto, User user) { //postMapping  User는 pincipalDatails에서 가져옴
 
         Board board = boardRepository.findById(replySaveRequestDto.getBoard_id()) //보드 있는지 확인
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 게시글 입니다."));
@@ -40,13 +40,17 @@ public class ReplyService {
     }
 
     @Transactional
-    public Reply reReplySave(RereplySaveRequestDto reReplySaveRequestDto, User user) { //대댓글
+    public Reply reReplySave(RereplySaveRequestDto reReplySaveRequestDto, User user) { //대댓글 User는 pincipalDatails에서 가져옴
 
         Reply parentReply = replyRepository.findById(reReplySaveRequestDto.getParentReply_id())
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 댓글입니다."));
 
+        Board board = boardRepository.findById(reReplySaveRequestDto.getBoard_id()) //보드 있는지 확인
+                .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 게시글 입니다."));
+
         Reply replyEntity = Reply.builder()
                 .parentReply(parentReply)
+                .board(board)
                 .user(user)
                 .content(reReplySaveRequestDto.getContent())
                 .username(reReplySaveRequestDto.getUsername())
@@ -56,7 +60,7 @@ public class ReplyService {
     }
 
     @Transactional
-    public String replyDelete(Long id, User user) { //유저 댓글 삭제 DeleteMapping
+    public String replyDelete(Long id, User user) { //유저 댓글 삭제 DeleteMapping User는 pincipalDatails에서 가져옴
         Reply replyEntity = replyRepository.findByIdAndUser(id, user)
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제되거나 권한이 없는 이용자 입니다."));
 
@@ -100,7 +104,7 @@ public class ReplyService {
     }
 
     @Transactional
-    public Reply replyUpdate(ReplyUpdateDto replyUpdateDto, User user) {
+    public Reply replyUpdate(ReplyUpdateDto replyUpdateDto, User user) {  //User는 pincipalDatails에서 가져옴
         Reply replyEntity = replyRepository.findByIdAndUser(replyUpdateDto.getId(), user)
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 댓글이거나 권한이 없습니다."));
 

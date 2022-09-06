@@ -37,11 +37,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         //header에 jwt토큰이 제대로 들어가 있는지 확인
         if (accessToken == null) {
-            System.out.println("jwt토큰이 없는 요청");
+            System.out.println("jwt토큰이 필요없는 요청");
 
             chain.doFilter(request, response); //jwt토큰이 없다면 그대로 filter 진행(authentication객체가 없으므로 후에 인가가 필요한 요청 x)
         } else {
-            System.out.println("jwt토큰이 있는 요청");
+            System.out.println("jwt토큰이 필요한 요청");
 
             //jwt토큰을 통해 비정상적인 사용자인지 확인 accessToken
             String username = JWT.require(Algorithm.HMAC512(ACCESS_SECRET)).build()

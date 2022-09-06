@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
 
 const SubReplyItem = (props) => {
+  //console.log(props);
   const { content, id, username, createDate } = props.subreply;
 
   const [accessor, setAccessor] = useState("");

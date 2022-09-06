@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RereplySaveRequestDto {
     private Long parentReply_id;
+    private Long board_id;
     private String content;
     private String username;
 }

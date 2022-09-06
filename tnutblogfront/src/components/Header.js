@@ -84,6 +84,19 @@ const Header = () => {
                       >
                         Logout
                       </Nav.Item>
+                      <Navbar.Collapse className="justify-content-end">
+                        <NavDropdown
+                          title={username}
+                          id="collasible-nav-dropdown"
+                          style={{ marginRight: "125px" }}
+                        >
+                          <NavDropdown.Item>
+                            <Link to="/mypage" className="nav-link">
+                              관리자 페이지
+                            </Link>
+                          </NavDropdown.Item>
+                        </NavDropdown>
+                      </Navbar.Collapse>
                     </>
                   ) : (
                     <>

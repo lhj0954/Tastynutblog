@@ -1,0 +1,16 @@
+.layout {
+  border-top: 1px solid gainsboro;
+  border-bottom: 1px solid gainsboro;
+  padding-bottom: 15px;
+}
+.comment {
+  border-bottom: 1px dashed gainsboro;
+  padding-bottom: 10px;
+}
+.commentHead {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+.commentBody {
+  width: 100%;
+}

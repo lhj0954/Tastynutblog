@@ -19,8 +19,8 @@ public class UserApiController {
         this.userService = userService;
     }
 
-    @GetMapping("/api/{id}/info")
-    public ResponseDto<?> userInfo (@PathVariable Long id) {
-        return new ResponseDto<>(HttpStatus.OK.value(), userService.userInfo(id));
+    @GetMapping("/user/api/{username}/info")
+    public ResponseDto<?> userInfo (@PathVariable String username) {
+        return new ResponseDto<>(HttpStatus.OK.value(), userService.userInfo(username));
     }
 }

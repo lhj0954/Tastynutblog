@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ChangeUsername from "../components/ChangeUsername";
 import Mycomments from "../components/Mycomments";
 import styles from "../css/Mypage.module.css";
@@ -6,6 +7,38 @@ import styles from "../css/Mypage.module.css";
 const Mypage = () => {
   //user정보 api로 부터 받아와서 props로 전달
   const [page, setPage] = useState("changeUsername");
+
+  const navigate = useNavigate();
+
+  const [me, setMe] = useState({
+    createDate: "",
+    replies: [],
+    roleType: "",
+    username: "",
+  });
+
+  useEffect(() => {
+    //username이 없는 회원이라면 어떻게 되는지 해보기 -> null이 응답됨
+    fetch(
+      "http://localhost:8080/user/api/" +
+        JSON.parse(localStorage.getItem("authority")).username +
+        "/info",
+      {
+        headers: {
+          AccessToken: localStorage.getItem("Tnut's accessToken"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 200) {
+          setMe(res.data);
+        } else {
+          alert("없는 회원입니다.");
+          navigate("/");
+        }
+      });
+  }, []);
 
   return (
     <div>
@@ -30,8 +63,8 @@ const Mypage = () => {
         <div className={styles.subpage}>
           {
             {
-              changeUsername: <ChangeUsername />,
-              myComments: <Mycomments />,
+              changeUsername: <ChangeUsername username={me.username} />,
+              myComments: <Mycomments comments={me.replies} />,
             }[page]
           }
         </div>

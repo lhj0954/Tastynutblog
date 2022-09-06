@@ -10,7 +10,8 @@ import {
 import SubReplyItem from "./SubReplyItem";
 
 const ReplyItem = (props) => {
-  const { content, id, subReplies, username, createDate } = props.comment;
+  const { content, id, subReplies, username, createDate, board } =
+    props.comment;
 
   const [accessor, setAccessor] = useState("");
   const commentDate = createDate.substr(0, 10);
@@ -23,6 +24,7 @@ const ReplyItem = (props) => {
 
   const [subReply, setSubReply] = useState({
     parentReply_id: id,
+    board_id: board.id,
     content: "",
     username: JSON.parse(localStorage.getItem("authority")).username,
   });

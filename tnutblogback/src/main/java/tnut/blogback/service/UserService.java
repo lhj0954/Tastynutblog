@@ -15,9 +15,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User userInfo(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디 입니다."));
+    public User userInfo(String username) {
+        return userRepository.findByUsername(username);
     }
 
 }

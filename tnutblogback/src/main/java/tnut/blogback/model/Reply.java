@@ -43,7 +43,7 @@ public class Reply { //댓글에 담길 내용: 닉네임(유저), 댓글 내용
     private List<Reply> subReplies = new ArrayList<>();
 
     @ManyToOne //하나의 보드에 여러 댓글
-    @JsonIgnore //댓글에선 보드의 정보가 필요 없음
+    @JsonIgnoreProperties({"content", "subCategory", "replies", "createDate"}) //무한 참조 방지
     @JoinColumn(name = "board_id")
     private Board board;
 

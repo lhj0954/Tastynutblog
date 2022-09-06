@@ -2,6 +2,7 @@
 package tnut.blogback.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,17 +27,21 @@ public class User { //유저에 담길 내용: 유저네임, 비밀번호, 이�
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private String email;
 
+    @JsonIgnore
     private String provider;
 
+    @JsonIgnore
     private String providerId;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @OrderBy("id desc") //최신 댓글 순으로 정렬
-    @JsonIgnore //무한참조 방지
+    @JsonIgnoreProperties({"subReplies"})
     private List<Reply> replies = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
