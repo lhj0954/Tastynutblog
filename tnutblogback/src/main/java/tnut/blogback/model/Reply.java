@@ -28,6 +28,8 @@ public class Reply { //댓글에 담길 내용: 닉네임(유저), 댓글 내용
     @Lob
     private String content;
 
+    private String username;
+
     @Column(columnDefinition = "boolean default false")
     private boolean isDeletable;
 
@@ -46,7 +48,7 @@ public class Reply { //댓글에 담길 내용: 닉네임(유저), 댓글 내용
     private Board board;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"password", "email", "provider", "providerId", "roleType", "createDate"})
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 

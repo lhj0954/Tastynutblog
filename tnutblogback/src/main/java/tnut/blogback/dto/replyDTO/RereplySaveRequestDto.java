@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class RereplySaveRequestDto {
     private Long parentReply_id;
     private String content;
+    private String username;
 }

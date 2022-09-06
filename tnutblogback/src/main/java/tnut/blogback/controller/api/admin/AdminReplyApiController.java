@@ -16,7 +16,7 @@ public class AdminReplyApiController {
         this.replyService = replyService;
     }
 
-    @DeleteMapping("/admin/api/reply/{id}/delete") // 관리자 댓글 삭제
+    @DeleteMapping("/admin/api/reply/{id}/delete") // 관리자가 댓글 삭제
     public String replyDelete (@PathVariable Long id) {
         return replyService.replyDelete(id);
     }

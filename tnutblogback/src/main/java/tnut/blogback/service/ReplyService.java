@@ -33,6 +33,7 @@ public class ReplyService {
                 .board(board)
                 .user(user)
                 .content(replySaveRequestDto.getContent())
+                .username(replySaveRequestDto.getUsername())
                 .build();
 
         return replyRepository.save(replyEntity);
@@ -48,6 +49,7 @@ public class ReplyService {
                 .parentReply(parentReply)
                 .user(user)
                 .content(reReplySaveRequestDto.getContent())
+                .username(reReplySaveRequestDto.getUsername())
                 .build();
 
         return replyRepository.save(replyEntity);

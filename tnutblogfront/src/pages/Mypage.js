@@ -4,6 +4,7 @@ import Mycomments from "../components/Mycomments";
 import styles from "../css/Mypage.module.css";
 
 const Mypage = () => {
+  //user정보 api로 부터 받아와서 props로 전달
   const [page, setPage] = useState("changeUsername");
 
   return (
@@ -26,7 +27,7 @@ const Mypage = () => {
             </li>
           </ul>
         </div>
-        <div>
+        <div className={styles.subpage}>
           {
             {
               changeUsername: <ChangeUsername />,

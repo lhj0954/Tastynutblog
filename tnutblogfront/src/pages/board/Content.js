@@ -30,6 +30,7 @@ const Content = () => {
   const [reply, setReply] = useState({
     board_id: id,
     content: "",
+    username: JSON.parse(localStorage.getItem("authority")).username,
   });
 
   const [subCategoryName, setSubCategoryName] = useState({});
@@ -78,7 +79,6 @@ const Content = () => {
     if (reply.content.length === 0) {
       alert("빈 댓글을 등록할 수 없습니다.");
     } else {
-      console.log(reply);
       e.preventDefault();
       fetch("http://localhost:8080/user/api/reply/save", {
         method: "POST",

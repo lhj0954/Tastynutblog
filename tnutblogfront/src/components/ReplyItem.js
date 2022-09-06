@@ -10,20 +10,21 @@ import {
 import SubReplyItem from "./SubReplyItem";
 
 const ReplyItem = (props) => {
-  const { content, id, subReplies, user, createDate } = props.comment;
+  const { content, id, subReplies, username, createDate } = props.comment;
 
-  const [username, setUsername] = useState("");
+  const [accessor, setAccessor] = useState("");
   const commentDate = createDate.substr(0, 10);
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("authority"))) {
-      setUsername(JSON.parse(localStorage.getItem("authority")).username);
+      setAccessor(JSON.parse(localStorage.getItem("authority")).username);
     }
-  }, [username]);
+  }, [accessor]);
 
   const [subReply, setSubReply] = useState({
     parentReply_id: id,
     content: "",
+    username: JSON.parse(localStorage.getItem("authority")).username,
   });
 
   const [mode, setMode] = useState("read");
@@ -138,11 +139,11 @@ const ReplyItem = (props) => {
         <Card>
           <Card.Header as="h5">
             <div>
-              <span> {user.username}</span>
+              <span> {username}</span>
               <span style={{ float: "right" }}>
                 {commentDate}
                 {"  "}
-                {user.username === username ? (
+                {username === accessor ? (
                   <>
                     <Button
                       variant="outline-secondary"

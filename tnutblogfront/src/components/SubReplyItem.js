@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
 
 const SubReplyItem = (props) => {
-  const { content, id, user, createDate } = props.subreply;
+  const { content, id, username, createDate } = props.subreply;
 
-  const [username, setUsername] = useState("");
+  const [accessor, setAccessor] = useState("");
   const recommentDate = createDate.substr(0, 10);
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("authority"))) {
-      setUsername(JSON.parse(localStorage.getItem("authority")).username);
+      setAccessor(JSON.parse(localStorage.getItem("authority")).username);
     }
-  }, [username]);
+  }, [accessor]);
 
   const [mode, setMode] = useState("read");
 
@@ -80,10 +80,10 @@ const SubReplyItem = (props) => {
               <Card.Body>
                 <span>↳ {content} </span>
                 <div style={{ float: "right" }}>
-                  {user.username}
+                  {username}
                   {" / "}
                   {recommentDate}{" "}
-                  {user.username === username ? (
+                  {username === accessor ? (
                     <>
                       <Button variant="outline-secondary" onClick={deleteReply}>
                         삭제

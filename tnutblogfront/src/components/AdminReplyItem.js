@@ -10,7 +10,7 @@ import {
 import AdminSubReplyItem from "./AdminSubReplyItem";
 
 const AdminReplyItem = (props) => {
-  const { content, id, subReplies, user, createDate } = props.comment;
+  const { content, id, subReplies, username, createDate } = props.comment;
 
   const [mode, setMode] = useState("read");
 
@@ -32,6 +32,7 @@ const AdminReplyItem = (props) => {
   const [subReply, setSubReply] = useState({
     parentReply_id: id,
     content: "",
+    username: JSON.parse(localStorage.getItem("authority")).username,
   });
 
   const changeValue1 = (e) => {
@@ -138,10 +139,10 @@ const AdminReplyItem = (props) => {
       <Accordion>
         <Card>
           <Card.Header as="h5">
-            <span>{user.username} </span>
+            <span>{username} </span>
             <span style={{ float: "right" }}>
               {commentDate}{" "}
-              {accessor === user.username ? (
+              {accessor === username ? (
                 <>
                   <Button
                     variant="outline-secondary"
