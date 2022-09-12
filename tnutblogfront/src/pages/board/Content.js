@@ -175,13 +175,15 @@ const Content = () => {
       </InputGroup>
       <hr />
       <>
-        {replyList.map((comment) => {
-          if (authority === "ROLE_TNUT") {
-            return <AdminReplyItem key={comment.id} comment={comment} />;
-          } else {
-            return <ReplyItem key={comment.id} comment={comment} />;
-          }
-        })}
+        {replyList
+          .filter((comment) => comment.parentReply === null) //대댓글 렌더링 방지
+          .map((comment) => {
+            if (authority === "ROLE_TNUT") {
+              return <AdminReplyItem key={comment.id} comment={comment} />;
+            } else {
+              return <ReplyItem key={comment.id} comment={comment} />;
+            }
+          })}
       </>
     </div>
   );

@@ -37,7 +37,7 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
     }
 
     @Transactional(readOnly = true) //글들을 리스트로 받아옴 -> 인덱스 페이지에 넣을 거임 GetMapping
-    public List<Board> boardRecentList( ) {
+    public List<Board> boardRecentList() {
         return boardRepository.findTop15ByOrderByIdDesc();
     }
 

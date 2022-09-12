@@ -34,7 +34,7 @@ public class Reply { //댓글에 담길 내용: 닉네임(유저), 댓글 내용
     private boolean isDeletable;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties(value = {"content", "username", "deletable", "parentReply", "subReplies", "board", "user", "createDate"})
     @JoinColumn(name = "parentReply_id")
     private Reply parentReply;
 
@@ -43,7 +43,7 @@ public class Reply { //댓글에 담길 내용: 닉네임(유저), 댓글 내용
     private List<Reply> subReplies = new ArrayList<>();
 
     @ManyToOne //하나의 보드에 여러 댓글
-    @JsonIgnoreProperties({"content", "subCategory", "replies", "createDate"}) //무한 참조 방지
+    @JsonIgnoreProperties(value = {"content", "subCategory", "replies", "createDate"}) //무한 참조 방지
     @JoinColumn(name = "board_id")
     private Board board;
 
