@@ -11,13 +11,15 @@ const Content = () => {
   const navigate = useNavigate();
 
   const [authority, setAuthority] = useState("");
+  const [accessor, setAccessor] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("authority")) {
       //authority라는 값이 있으면
       setAuthority(JSON.parse(localStorage.getItem("authority")).role);
+      setAccessor(JSON.parse(localStorage.getItem("authority")).accessor);
     }
-  }, [authority]);
+  }, []);
 
   const [board, setBoard] = useState({
     //처음에 공백
@@ -30,7 +32,7 @@ const Content = () => {
   const [reply, setReply] = useState({
     board_id: id,
     content: "",
-    username: JSON.parse(localStorage.getItem("authority")).username,
+    username: accessor,
   });
 
   const [subCategoryName, setSubCategoryName] = useState({});

@@ -26,7 +26,7 @@ const ReplyItem = (props) => {
     parentReply_id: id,
     board_id: board.id,
     content: "",
-    username: JSON.parse(localStorage.getItem("authority")).username,
+    username: accessor,
   });
 
   const [mode, setMode] = useState("read");

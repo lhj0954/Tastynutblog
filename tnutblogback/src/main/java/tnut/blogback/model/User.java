@@ -34,7 +34,7 @@ public class User { //유저에 담길 내용: 유저네임, 비밀번호, 이�
 
     @JsonIgnore
     private String email;
-    
+
     private String provider;
 
     @JsonIgnore

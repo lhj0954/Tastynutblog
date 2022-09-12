@@ -178,6 +178,13 @@ const Header = () => {
               onClick={() => handleLogin("naver")}
             />
           </p>
+          <div className={styles.info}>
+            첫 로그인 시 임의로 닉네임이 설정됩니다.
+          </div>
+          <div className={styles.info}>로그인 후</div>
+          <div className={styles.info}>
+            우상단 닉네임을 클릭하여 Mypage에서 닉네임을 바꿔주세요.
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

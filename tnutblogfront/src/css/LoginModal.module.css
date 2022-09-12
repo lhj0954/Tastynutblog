@@ -5,3 +5,10 @@
 .loginImg {
   width: 200px;
 }
+.info {
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: small;
+  text-align: center;
+  color: gray;
+}
