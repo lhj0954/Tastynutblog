@@ -3,10 +3,11 @@ package tnut.blogback.controller.api.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+import tnut.blogback.config.auth.PrincipalDetails;
 import tnut.blogback.dto.ResponseDto;
+import tnut.blogback.dto.UsernameDto;
 import tnut.blogback.service.UserService;
 
 @RequiredArgsConstructor
@@ -19,8 +20,18 @@ public class UserApiController {
         this.userService = userService;
     }
 
-    @GetMapping("/user/api/{username}/info")
-    public ResponseDto<?> userInfo (@PathVariable String username) {
-        return new ResponseDto<>(HttpStatus.OK.value(), userService.userInfo(username));
+    @GetMapping("/user/api/{nickname}/info")
+    public ResponseDto<?> userInfo (@PathVariable String nickname) {
+        return new ResponseDto<>(HttpStatus.OK.value(), userService.userInfo(nickname));
+    }
+
+    @GetMapping("/{nickname}/checkNickname")
+    public ResponseDto<Boolean> checkNickname(@PathVariable String nickname) {
+        return new ResponseDto<>(HttpStatus.OK.value(), userService.checkNickname(nickname));
+    }
+
+    @PutMapping("/user/api/changeNickname") // jwt의 username 이용
+    public ResponseDto<?> changeNickname (@RequestBody UsernameDto usernameDto, @AuthenticationPrincipal PrincipalDetails principal) {
+        return new ResponseDto<>(HttpStatus.OK.value(), userService.changeNickname(usernameDto, principal));
     }
 }

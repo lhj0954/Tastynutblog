@@ -5,4 +5,6 @@ import tnut.blogback.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
      User findByUsername(String username);
+     User findByNickname(String nickname);
+     boolean existsByNickname(String nickname);
 }

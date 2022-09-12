@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ChangeUsername from "../components/ChangeUsername";
+import ChangeNickname from "../components/ChangeUsername";
 import Mycomments from "../components/Mycomments";
 import styles from "../css/Mypage.module.css";
 
 const Mypage = () => {
   //user정보 api로 부터 받아와서 props로 전달
-  const [page, setPage] = useState("changeUsername");
+  const [page, setPage] = useState("changeNickname");
 
   const navigate = useNavigate();
 
@@ -18,7 +18,6 @@ const Mypage = () => {
   });
 
   useEffect(() => {
-    //username이 없는 회원이라면 어떻게 되는지 해보기 -> null이 응답됨
     fetch(
       "http://localhost:8080/user/api/" +
         JSON.parse(localStorage.getItem("authority")).username +
@@ -38,7 +37,7 @@ const Mypage = () => {
           navigate("/");
         }
       });
-  }, []);
+  }, [navigate]);
 
   return (
     <div>
@@ -63,7 +62,7 @@ const Mypage = () => {
         <div className={styles.subpage}>
           {
             {
-              changeUsername: <ChangeUsername username={me.username} />,
+              changeNickname: <ChangeNickname username={me.username} />,
               myComments: <Mycomments comments={me.replies} />,
             }[page]
           }

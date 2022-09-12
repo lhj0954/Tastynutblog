@@ -25,6 +25,8 @@ public class User { //유저에 담길 내용: 유저네임, 비밀번호, 이�
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String nickname;
+
     private String username;
 
     @JsonIgnore
@@ -32,8 +34,7 @@ public class User { //유저에 담길 내용: 유저네임, 비밀번호, 이�
 
     @JsonIgnore
     private String email;
-
-    @JsonIgnore
+    
     private String provider;
 
     @JsonIgnore

@@ -62,6 +62,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String provider = Objects.requireNonNull(oAuth2UserInfo).getProvider();
         String providerId = oAuth2UserInfo.getProviderID();
         String username = provider + "_" + providerId;
+        String nickname = provider + "_" + providerId;
         String password = bCryptPasswordEncoder.encode(UUID.randomUUID().toString());
         String email = oAuth2UserInfo.getEmail();
         RoleType roleType = RoleType.ROLE_USER;
@@ -74,6 +75,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             System.out.println("첫 oauth 로그인");
             userEntity = User.builder()
                     .username(username)
+                    .nickname(nickname)
                     .password(password)
                     .email(email)
                     .roleType(roleType)

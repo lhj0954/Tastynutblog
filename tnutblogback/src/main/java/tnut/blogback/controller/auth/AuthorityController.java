@@ -32,7 +32,7 @@ public class AuthorityController {
 
         Map<String, String> userAuthority = new HashMap<>();
         userAuthority.put("role", user.getRoleType().toString());
-        userAuthority.put("username", user.getUsername());
+        userAuthority.put("username", user.getNickname());
 
         return new ResponseDto<>(HttpStatus.OK.value(), userAuthority);
     }

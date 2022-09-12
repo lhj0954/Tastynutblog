@@ -38,7 +38,7 @@ public class UserReplyApiController {
         return replyService.replyDelete(id, principal.getUser());
     }
 
-    @PutMapping("/user/api/reply/{id}/update") // 댓글 수정
+    @PutMapping("/user/api/reply/{id}/update") // 댓글 수정 {id} 필요 없는 것 같아보임
     public ResponseDto<?> replyUpdate (@RequestBody ReplyUpdateDto replyUpdateDto, @AuthenticationPrincipal PrincipalDetails principal) {
         return new ResponseDto<>(HttpStatus.OK.value(), replyService.replyUpdate(replyUpdateDto, principal.getUser()));
     }
