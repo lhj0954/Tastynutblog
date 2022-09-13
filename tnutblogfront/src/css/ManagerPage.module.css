@@ -1,0 +1,20 @@
+.title {
+  padding-left: 20px;
+  padding-bottom: 10px;
+  margin-top: 30px;
+  margin-bottom: 0;
+  border-bottom: 1px solid gray;
+}
+.body {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+}
+.list {
+  padding-top: 50px;
+  padding-right: 30px;
+}
+.subpage {
+  border-left: 1px solid gray;
+  padding-left: 30px;
+  padding-top: 50px;
+}

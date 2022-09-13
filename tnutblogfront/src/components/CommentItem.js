@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import styles from "../css/Mycomments.module.css";
 
 const CommentItem = (props) => {
-  console.log(props);
   const [comment, setComment] = useState({
     board: { id: "", title: "" },
     content: "",

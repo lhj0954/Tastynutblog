@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests(authorize->authorize
-                        .antMatchers("/admin/**", "/admin/**", "/admin/**")
+                        .antMatchers("/admin/**")
                         .access("hasRole('ROLE_TNUT')")
                         .antMatchers("/user/**")
                         .access("hasRole('ROLE_USER') or hasRole('ROLE_TNUT')")

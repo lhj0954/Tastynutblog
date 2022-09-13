@@ -91,7 +91,7 @@ const Header = () => {
                           style={{ marginRight: "125px" }}
                         >
                           <NavDropdown.Item>
-                            <Link to="/mypage" className="nav-link">
+                            <Link to="/managerPage" className="nav-link">
                               관리자 페이지
                             </Link>
                           </NavDropdown.Item>

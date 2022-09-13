@@ -12,6 +12,8 @@ import Redirect from "./pages/Redirect";
 import Footer from "./components/Footer";
 import styles from "./css/Display.module.css";
 import Mypage from "./pages/Mypage";
+import ManagerPage from "./pages/management/ManagerPage";
+import UserReply from "./pages/management/UserReply";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
             <Route path="/categoryPage" element={<Category />} />
             <Route path="/oauth/redirect" element={<Redirect />} />
             <Route path="/mypage" element={<Mypage />} />
+            <Route path="/managerPage" element={<ManagerPage />} />
+            <Route path="/userReply" element={<UserReply />} />
           </Routes>
         </Container>
         <Footer />
