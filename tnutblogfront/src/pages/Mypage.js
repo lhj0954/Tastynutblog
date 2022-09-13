@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ChangeNickname from "../components/ChangeUsername";
+import ChangeNickname from "../components/ChangeNickname";
 import Mycomments from "../components/Mycomments";
 import styles from "../css/Mypage.module.css";
 
@@ -14,7 +14,7 @@ const Mypage = () => {
     createDate: "",
     replies: [],
     roleType: "",
-    username: "",
+    nickname: "",
   });
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const Mypage = () => {
           <ul className={styles.list}>
             <li
               style={{ cursor: "pointer" }}
-              onClick={() => setPage("changeUsername")}
+              onClick={() => setPage("changeNickname")}
             >
               닉네임 바꾸기
             </li>
@@ -62,7 +62,7 @@ const Mypage = () => {
         <div className={styles.subpage}>
           {
             {
-              changeNickname: <ChangeNickname username={me.username} />,
+              changeNickname: <ChangeNickname username={me.nickname} />,
               myComments: <Mycomments comments={me.replies} />,
             }[page]
           }

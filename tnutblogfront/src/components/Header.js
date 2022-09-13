@@ -90,7 +90,7 @@ const Header = () => {
                           id="collasible-nav-dropdown"
                           style={{ marginRight: "125px" }}
                         >
-                          <NavDropdown.Item>
+                          <NavDropdown.Item as="li">
                             <Link to="/managerPage" className="nav-link">
                               관리자 페이지
                             </Link>
@@ -110,19 +110,17 @@ const Header = () => {
                       >
                         Logout
                       </Nav.Item>
-                      <Navbar.Collapse className="justify-content-end">
-                        <NavDropdown
-                          title={username}
-                          id="collasible-nav-dropdown"
-                          style={{ marginRight: "125px" }}
-                        >
-                          <NavDropdown.Item>
-                            <Link to="/mypage" className="nav-link">
-                              My page
-                            </Link>
-                          </NavDropdown.Item>
-                        </NavDropdown>
-                      </Navbar.Collapse>
+                      <NavDropdown
+                        title={username}
+                        id="collasible-nav-dropdown"
+                        style={{ marginRight: "125px", marginLeft: "auto" }}
+                      >
+                        <NavDropdown.Item as="li">
+                          <Link to="/mypage" className="nav-link">
+                            My page
+                          </Link>
+                        </NavDropdown.Item>
+                      </NavDropdown>
                     </>
                   )}
                 </>
@@ -132,7 +130,7 @@ const Header = () => {
                     카테고리 별 게시글
                   </Link>
                   <Nav.Item
-                    class="nav-link"
+                    className="nav-link"
                     onClick={handleShow}
                     style={{ cursor: "pointer" }}
                   >

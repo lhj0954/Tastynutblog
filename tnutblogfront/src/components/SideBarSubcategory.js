@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { Badge, Button, Form, FormControl, InputGroup } from "react-bootstrap";
+import { Badge, Form, FormControl, InputGroup } from "react-bootstrap";
 
 const SideBarSubcategory = (props) => {
   const subCategory = props.subCategory;
+
   const [mode, setMode] = useState("read");
+
   const [updateSC, setUpdateSC] = useState({
-    subCategoryName: "",
+    subCategoryName: subCategory.subCategoryName,
     id: "",
   });
+
   const updateSubCategoryV = (e) => {
     setUpdateSC((updateSC) => ({
       ...updateSC,
@@ -28,7 +31,6 @@ const SideBarSubcategory = (props) => {
     )
       .then((res) => res.text())
       .then((res) => {
-        console.log(res);
         if (res === "success delete") {
           window.location.reload();
         } else {
@@ -81,7 +83,6 @@ const SideBarSubcategory = (props) => {
             }}
           >
             <Badge
-              pill
               bg="danger"
               style={{ cursor: "pointer", marginRight: "4px" }}
               onClick={deleteSubCategory}
@@ -90,7 +91,6 @@ const SideBarSubcategory = (props) => {
               삭제
             </Badge>
             <Badge
-              pill
               bg="warning"
               text="dark"
               onClick={() => {
@@ -107,27 +107,27 @@ const SideBarSubcategory = (props) => {
           <Form onSubmit={updateSubCategory}>
             <InputGroup className="mb-3">
               <FormControl
-                placeholder="Category Rename"
+                placeholder="소분류 입력"
                 aria-label="Fix subCategory"
                 aria-describedby="basic-addon2"
                 id={subCategory.id}
                 onChange={updateSubCategoryV}
+                value={updateSC.subCategoryName || ""}
               />
-              <Button
+              <Badge
+                bg="secondary"
                 variant="outline-secondary"
-                id="button-addon2"
-                type="submit"
+                onClick={() => {
+                  setMode("read");
+                  setUpdateSC((updateSC) => ({
+                    ...updateSC,
+                    subCategoryName: subCategory.subCategoryName,
+                  }));
+                }}
+                style={{ padding: "10px" }}
               >
-                수정
-              </Button>
-              <Button
-                variant="outline-secondary"
-                id="button-addon2"
-                type="submit"
-                onClick={() => setMode("read")}
-              >
-                수정취소
-              </Button>
+                x
+              </Badge>
             </InputGroup>
           </Form>
         </>

@@ -7,7 +7,7 @@ import SaveForm from "./pages/board/SaveForm";
 import Content from "./pages/board/Content";
 import UpdateForm from "./pages/board/UpdateForm";
 import Category from "./pages/category/Category";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import Redirect from "./pages/Redirect";
 import Footer from "./components/Footer";
 import styles from "./css/Display.module.css";
@@ -18,9 +18,11 @@ import UserReply from "./pages/management/UserReply";
 function App() {
   return (
     <div className={styles.body}>
-      <Helmet>
-        <title>Tnut's Blog</title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Tnut's Blog</title>
+        </Helmet>
+      </HelmetProvider>
       <div className={styles.wrapper}>
         <Header />
         <Container className={styles.container}>

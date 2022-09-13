@@ -49,7 +49,7 @@ const Redirect = () => {
     } else {
       navigate(-1);
     }
-  }, []);
+  });
 
   return <div></div>;
 };

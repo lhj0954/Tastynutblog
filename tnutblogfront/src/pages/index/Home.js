@@ -53,9 +53,6 @@ const Home = () => {
     fetch("http://localhost:8080")
       .then((res) => res.json())
       .then((res) => {
-        res.map((board) => {
-          return delete board.replies;
-        });
         setBoards(res);
       });
   }, []);
@@ -107,33 +104,36 @@ const Home = () => {
         >
           <Carousel.Item interval={5000}>
             <div style={{ display: "flex", height: "400px" }}>
-              {boards_1.map((board) => {
+              {boards_1.map((board, index = 0) => {
                 if (board) {
-                  return <IndexBoardItem board={board} />;
+                  return <IndexBoardItem key={board.id} board={board} />;
                 } else {
-                  return <IndexBoardItemBlank />;
+                  index++;
+                  return <IndexBoardItemBlank key={index} />;
                 }
               })}
             </div>
           </Carousel.Item>
           <Carousel.Item interval={5000}>
             <div style={{ display: "flex", height: "400px" }}>
-              {boards_2.map((board) => {
+              {boards_2.map((board, index = 5) => {
                 if (board) {
-                  return <IndexBoardItem board={board} />;
+                  return <IndexBoardItem key={board.id} board={board} />;
                 } else {
-                  return <IndexBoardItemBlank />;
+                  index++;
+                  return <IndexBoardItemBlank key={index} />;
                 }
               })}
             </div>
           </Carousel.Item>
           <Carousel.Item interval={5000}>
             <div style={{ display: "flex", height: "400px" }}>
-              {boards_3.map((board) => {
+              {boards_3.map((board, index = 10) => {
                 if (board) {
-                  return <IndexBoardItem board={board} />;
+                  return <IndexBoardItem key={board.id} board={board} />;
                 } else {
-                  return <IndexBoardItemBlank />;
+                  index++;
+                  return <IndexBoardItemBlank key={index} />;
                 }
               })}
             </div>

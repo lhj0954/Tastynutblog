@@ -1,20 +1,14 @@
 import React, { useState } from "react";
-import {
-  Badge,
-  Button,
-  Form,
-  FormControl,
-  InputGroup,
-  Nav,
-} from "react-bootstrap";
+import { Badge, Form, FormControl, InputGroup, Nav } from "react-bootstrap";
 import styles from "../css/SideBarLargeCategory.module.css";
 
 const SideBarLargecategory = (props) => {
   const largeCategory = props.largeCategory;
+
   const [mode, setMode] = useState("read");
 
   const [updateLC, setUpdateLC] = useState({
-    largeCategoryName: "",
+    largeCategoryName: largeCategory.largeCategoryName,
     id: "",
   });
 
@@ -50,35 +44,37 @@ const SideBarLargecategory = (props) => {
 
   const updateLargeCategory = (e) => {
     e.preventDefault();
-    console.log(updateLC);
-    fetch(
-      "http://localhost:8080/admin/api/largeCategory/" +
-        updateLC.id +
-        "/update",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          AccessToken: localStorage.getItem("Tnut's accessToken"),
-        },
-        body: JSON.stringify(updateLC),
-      }
-    )
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          return res.json;
-        } else {
-          return null;
+    if (updateLC.largeCategoryName.length === 0) {
+      alert("빈칸 입력 불가");
+    } else {
+      fetch(
+        "http://localhost:8080/admin/api/largeCategory/" +
+          updateLC.id +
+          "/update",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            AccessToken: localStorage.getItem("Tnut's accessToken"),
+          },
+          body: JSON.stringify(updateLC),
         }
-      })
-      .then((res) => {
-        if (res !== null) {
-          window.location.reload();
-        } else {
-          alert("글 수정 실패!");
-        }
-      });
+      )
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json;
+          } else {
+            return null;
+          }
+        })
+        .then((res) => {
+          if (res !== null) {
+            window.location.reload();
+          } else {
+            alert("글 수정 실패!");
+          }
+        });
+    }
   };
 
   return (
@@ -93,7 +89,6 @@ const SideBarLargecategory = (props) => {
               style={{ float: "right", paddingTop: "6px", paddingRight: "4px" }}
             >
               <Badge
-                pill
                 bg="danger"
                 style={{ cursor: "pointer", marginRight: "4px" }}
                 onClick={deleteLargeCategory}
@@ -102,7 +97,6 @@ const SideBarLargecategory = (props) => {
                 삭제
               </Badge>
               <Badge
-                pill
                 bg="warning"
                 text="dark"
                 onClick={() => {
@@ -119,26 +113,27 @@ const SideBarLargecategory = (props) => {
             <Form onSubmit={updateLargeCategory}>
               <InputGroup className="mb-3">
                 <FormControl
-                  placeholder="Category Rename"
+                  placeholder="대분류 입력"
                   aria-label="Fix largeCategory"
                   aria-describedby="basic-addon2"
                   id={largeCategory.id}
                   onChange={updateLargeCategoryV}
+                  value={updateLC.largeCategoryName || ""}
                 />
-                <Button
+                <Badge
+                  bg="secondary"
                   variant="outline-secondary"
-                  id="button-addon2"
-                  type="submit"
+                  onClick={() => {
+                    setMode("read");
+                    setUpdateLC((updateLC) => ({
+                      ...updateLC,
+                      largeCategoryName: largeCategory.largeCategoryName,
+                    }));
+                  }}
+                  style={{ padding: "10px" }}
                 >
-                  수정
-                </Button>
-                <Button
-                  variant="outline-secondary"
-                  id="button-addon2"
-                  onClick={() => setMode("read")}
-                >
-                  수정취소
-                </Button>
+                  x
+                </Badge>
               </InputGroup>
             </Form>
           </>
