@@ -22,7 +22,9 @@ const UserSideBar = (props) => {
 
   const setSubCategory = (e) => {
     setResult(e);
-    setKey(e.subCategories[0].subCategoryName);
+    if (e.subCategories[0]) {
+      setKey(e.subCategories[0].subCategoryName);
+    }
   };
 
   return (
