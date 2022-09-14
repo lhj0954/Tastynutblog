@@ -47,28 +47,32 @@ const ReReplyItem = (props) => {
 
   const updateReply = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/user/api/reply/" + id + "/update", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        AccessToken: localStorage.getItem("Tnut's accessToken"),
-      },
-      body: JSON.stringify(contentValue),
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json;
-        } else {
-          return null;
-        }
+    if (contentValue.content.length === 0) {
+      alert("빈 댓글을 작성하실 수 없습니다.");
+    } else {
+      fetch("http://localhost:8080/user/api/reply/" + id + "/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          AccessToken: localStorage.getItem("Tnut's accessToken"),
+        },
+        body: JSON.stringify(contentValue),
       })
-      .then((res) => {
-        if (res !== null) {
-          window.location.reload();
-        } else {
-          alert("댓글 수정 실패!");
-        }
-      });
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json;
+          } else {
+            return null;
+          }
+        })
+        .then((res) => {
+          if (res !== null) {
+            window.location.reload();
+          } else {
+            alert("댓글 수정 실패!");
+          }
+        });
+    }
   };
 
   return (

@@ -153,31 +153,33 @@ const Content = () => {
       </Card>
       <hr />
       <h2>댓글 달기</h2>
-      <InputGroup className="mb-3">
-        <Form.Control
-          type="reply"
-          onChange={changeValue}
-          name="reply"
-          placeholder="댓글을 입력하세요"
-        />
-        {authority ? (
-          <>
-            <Button
-              variant="outline-secondary"
-              id="button-addon2"
-              onClick={submitReply}
-            >
-              댓글 등록
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button variant="outline-secondary" id="button-addon2" disabled>
-              로그인 해주세요
-            </Button>
-          </>
-        )}
-      </InputGroup>
+      <Form onSubmit={submitReply}>
+        <InputGroup className="mb-3">
+          <Form.Control
+            type="reply"
+            onChange={changeValue}
+            name="reply"
+            placeholder="댓글을 입력하세요"
+          />
+          {authority ? (
+            <>
+              <Button
+                variant="outline-secondary"
+                id="button-addon2"
+                onClick={submitReply}
+              >
+                댓글 등록
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="outline-secondary" id="button-addon2" disabled>
+                로그인 해주세요
+              </Button>
+            </>
+          )}
+        </InputGroup>
+      </Form>
       <hr />
       <>
         {replyList

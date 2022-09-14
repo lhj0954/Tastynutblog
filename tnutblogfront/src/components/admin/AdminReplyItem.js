@@ -11,7 +11,8 @@ import {
 import AdminSubReplyItem from "./AdminSubReplyItem";
 
 const AdminReplyItem = (props) => {
-  const { content, id, reReplies, user, createDate, board } = props.reply;
+  const { content, id, reReplies, user, createDate, board, deletable } =
+    props.reply;
 
   const [mode, setMode] = useState("read");
 
@@ -30,16 +31,16 @@ const AdminReplyItem = (props) => {
     content: content,
   });
 
-  const [subReply, setSubReply] = useState({
+  const [reReply, setReReply] = useState({
     parentReply_id: id,
     board_id: board.id,
     content: "",
-    username: JSON.parse(localStorage.getItem("authority")).username, //관리자는 무조건 로그인 상태이므로 null고려 x
+    username: JSON.parse(localStorage.getItem("authority")).nickname, //관리자는 무조건 로그인 상태이므로 null고려 x
   });
 
   const changeValue1 = (e) => {
-    setSubReply((subReply) => ({
-      ...subReply,
+    setReReply((reReply) => ({
+      ...reReply,
       content: e.target.value,
     }));
   };
@@ -53,28 +54,32 @@ const AdminReplyItem = (props) => {
 
   const submitRereply = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/user/api/reReply/save", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        AccessToken: localStorage.getItem("Tnut's accessToken"),
-      },
-      body: JSON.stringify(subReply),
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        } else {
-          return null;
-        }
+    if (reReply.content.length === 0) {
+      alert("빈 댓글은 작성하실 수 없습니다.");
+    } else {
+      fetch("http://localhost:8080/user/api/reReply/save", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          AccessToken: localStorage.getItem("Tnut's accessToken"),
+        },
+        body: JSON.stringify(reReply),
       })
-      .then((res) => {
-        if (res === null) {
-          alert("댓글 등록 실패!");
-        } else {
-          window.location.reload();
-        }
-      });
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json();
+          } else {
+            return null;
+          }
+        })
+        .then((res) => {
+          if (res === null) {
+            alert("댓글 등록 실패!");
+          } else {
+            window.location.reload();
+          }
+        });
+    }
   };
 
   const deleteReply = () => {
@@ -96,28 +101,32 @@ const AdminReplyItem = (props) => {
 
   const updateReply = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/user/api/reply/" + id + "/update", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        AccessToken: localStorage.getItem("Tnut's accessToken"),
-      },
-      body: JSON.stringify(contentValue),
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json;
-        } else {
-          return null;
-        }
+    if (contentValue.content.length === 0) {
+      alert("빈 댓글은 작성하실 수 없습니다.");
+    } else {
+      fetch("http://localhost:8080/user/api/reply/" + id + "/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          AccessToken: localStorage.getItem("Tnut's accessToken"),
+        },
+        body: JSON.stringify(contentValue),
       })
-      .then((res) => {
-        if (res !== null) {
-          window.location.reload();
-        } else {
-          alert("댓글 수정 실패!");
-        }
-      });
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json;
+          } else {
+            return null;
+          }
+        })
+        .then((res) => {
+          if (res !== null) {
+            window.location.reload();
+          } else {
+            alert("댓글 수정 실패!");
+          }
+        });
+    }
   };
 
   function CustomToggle({ children, eventKey }) {
@@ -146,18 +155,25 @@ const AdminReplyItem = (props) => {
               {replyDate}{" "}
               {accessor === user.nickname ? (
                 <>
-                  <Button
-                    variant="outline-secondary"
-                    onClick={() => deleteReply()}
-                  >
-                    삭제
-                  </Button>{" "}
-                  <Button
-                    variant="outline-secondary"
-                    onClick={() => setMode("update")}
-                  >
-                    수정
-                  </Button>{" "}
+                  {deletable === true ? (
+                    <></>
+                  ) : (
+                    <>
+                      <Button
+                        variant="outline-secondary"
+                        onClick={() => deleteReply()}
+                      >
+                        삭제
+                      </Button>{" "}
+                      <Button
+                        variant="outline-secondary"
+                        onClick={() => setMode("update")}
+                      >
+                        수정
+                      </Button>{" "}
+                    </>
+                  )}
+
                   <CustomToggle eventKey="0">답변하기</CustomToggle>
                 </>
               ) : (
@@ -175,20 +191,22 @@ const AdminReplyItem = (props) => {
           </Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
-              <InputGroup className="mb-3">
-                <Form.Control
-                  type="subReply"
-                  onChange={changeValue1}
-                  name="subReply"
-                />
-                <Button
-                  variant="outline-secondary"
-                  id="button-addon2"
-                  onClick={submitRereply}
-                >
-                  답변하기
-                </Button>
-              </InputGroup>
+              <Form onSubmit={submitRereply}>
+                <InputGroup className="mb-3">
+                  <Form.Control
+                    type="subReply"
+                    onChange={changeValue1}
+                    name="subReply"
+                  />
+                  <Button
+                    variant="outline-secondary"
+                    id="button-addon2"
+                    onClick={submitRereply}
+                  >
+                    답변하기
+                  </Button>
+                </InputGroup>
+              </Form>
             </Card.Body>
           </Accordion.Collapse>
           <hr style={{ margin: 0 }} />
