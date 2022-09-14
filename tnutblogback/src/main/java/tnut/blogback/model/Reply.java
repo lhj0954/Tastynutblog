@@ -34,13 +34,13 @@ public class Reply { //댓글에 담길 내용: 닉네임(유저), 댓글 내용
     private boolean isDeletable;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"content", "username", "deletable", "parentReply", "subReplies", "board", "user", "createDate"})
+    @JsonIgnoreProperties(value = {"content", "username", "deletable", "parentReply", "reReplies", "board", "user", "createDate"})
     @JoinColumn(name = "parentReply_id")
     private Reply parentReply;
 
     @OneToMany(mappedBy = "parentReply", fetch = FetchType.LAZY)
     @OrderBy("id asc ")
-    private List<Reply> subReplies = new ArrayList<>();
+    private List<Reply> reReplies = new ArrayList<>();
 
     @ManyToOne //하나의 보드에 여러 댓글
     @JsonIgnoreProperties(value = {"content", "subCategory", "replies", "createDate"}) //무한 참조 방지

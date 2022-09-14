@@ -181,12 +181,12 @@ const Content = () => {
       <hr />
       <>
         {replyList
-          .filter((comment) => comment.parentReply === null) //대댓글 렌더링 방지
-          .map((comment) => {
+          .filter((reply) => reply.parentReply === null) //대댓글 렌더링 방지
+          .map((reply) => {
             if (authority === "ROLE_TNUT") {
-              return <AdminReplyItem key={comment.id} comment={comment} />;
+              return <AdminReplyItem key={reply.id} reply={reply} />;
             } else {
-              return <ReplyItem key={comment.id} comment={comment} />;
+              return <ReplyItem key={reply.id} reply={reply} />;
             }
           })}
       </>

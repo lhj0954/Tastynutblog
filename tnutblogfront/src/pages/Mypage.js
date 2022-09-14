@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ChangeNickname from "../components/user/ChangeNickname";
-import Mycomments from "../components/user/Mycomments";
+import Mycomments from "../components/user/MyReplies";
 import styles from "../css/Mypage.module.css";
 
 const Mypage = () => {
@@ -63,7 +63,7 @@ const Mypage = () => {
           {
             {
               changeNickname: <ChangeNickname username={me.nickname} />,
-              myComments: <Mycomments comments={me.replies} />,
+              myComments: <Mycomments replies={me.replies} />,
             }[page]
           }
         </div>

@@ -64,7 +64,7 @@ public class ReplyService {
         Reply replyEntity = replyRepository.findByIdAndUser(id, user)
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제되거나 권한이 없는 이용자 입니다."));
 
-        if (!replyEntity.getSubReplies().isEmpty()) { //자식이 있을경우
+        if (!replyEntity.getReReplies().isEmpty()) { //자식이 있을경우
             replyEntity.setContent(null); //내용을 비우고
             replyEntity.setDeletable(true); //삭제 가능상태로 업데이트
         } else { //자식이 없을 경우
@@ -86,7 +86,7 @@ public class ReplyService {
         Reply replyEntity = replyRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 댓글입니다."));
 
-        if (!replyEntity.getSubReplies().isEmpty()) {
+        if (!replyEntity.getReReplies().isEmpty()) {
             replyEntity.setContent(null);
             replyEntity.setDeletable(true);
         } else {

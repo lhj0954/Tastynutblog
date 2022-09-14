@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Badge, Button, Card, Form, InputGroup } from "react-bootstrap";
 
-const SubReplyItem = (props) => {
-  const { content, id, username, createDate } = props.subreply;
+const ReReplyItem = (props) => {
+  const { content, id, username, createDate } = props.reReply;
 
   const [accessor, setAccessor] = useState("");
-  const recommentDate = createDate.substr(0, 10);
+  const reReplyDate = createDate.substr(0, 10);
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("authority"))) {
@@ -82,7 +82,7 @@ const SubReplyItem = (props) => {
                 <div style={{ float: "right" }}>
                   {username}
                   {" / "}
-                  {recommentDate}{" "}
+                  {reReplyDate}{" "}
                   {username === accessor ? (
                     <>
                       <Button variant="outline-secondary" onClick={deleteReply}>
@@ -140,4 +140,4 @@ const SubReplyItem = (props) => {
   );
 };
 
-export default SubReplyItem;
+export default ReReplyItem;

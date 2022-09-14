@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import styles from "../../css/Mycomments.module.css";
+import styles from "../../css/MyReplies.module.css";
 
-const CommentItem = (props) => {
-  const [comment, setComment] = useState({
+const MyReplyItem = (props) => {
+  const [reply, setReply] = useState({
     board: { id: "", title: "" },
     content: "",
     createDate: "",
@@ -12,27 +12,27 @@ const CommentItem = (props) => {
   });
 
   useEffect(() => {
-    setComment(props.comment);
-  }, [props.comment]);
+    setReply(props.reply);
+  }, [props.reply]);
 
   return (
     <div>
-      <div className={styles.comment}>
-        <div className={styles.commentHead}>
-          작성일: {comment.createDate}{" "}
+      <div className={styles.reply}>
+        <div className={styles.replyHead}>
+          작성일: {reply.createDate}{" "}
           <span style={{ float: "right" }}>
             게시글 :{" "}
             <Link
-              to={"/board/content/" + comment.board.id}
+              to={"/board/content/" + reply.board.id}
               className="btn btn-secondary"
             >
-              {comment.board.title}
+              {reply.board.title}
             </Link>
           </span>
         </div>
-        <div className={styles.commentBody}>
+        <div className={styles.replyBody}>
           <Card>
-            <Card.Body>{comment.content}</Card.Body>
+            <Card.Body>{reply.content}</Card.Body>
           </Card>
         </div>
       </div>
@@ -40,4 +40,4 @@ const CommentItem = (props) => {
   );
 };
 
-export default CommentItem;
+export default MyReplyItem;

@@ -34,15 +34,7 @@ const IndexBoardItemBlank = () => {
                   </Link>
                 </>
               ) : (
-                <>
-                  {/* <Link
-                    to={"/board/saveForm/"}
-                    className="btn btn-secondary"
-                    style={{ float: "right", pointerEvents: "none" }}
-                  >
-                    글쓰러가기
-                  </Link> */}
-                </>
+                <></>
               )}
             </div>
           </div>

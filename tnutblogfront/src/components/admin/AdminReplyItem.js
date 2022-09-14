@@ -11,12 +11,11 @@ import {
 import AdminSubReplyItem from "./AdminSubReplyItem";
 
 const AdminReplyItem = (props) => {
-  const { content, id, subReplies, username, createDate, board } =
-    props.comment;
+  const { content, id, reReplies, username, createDate, board } = props.reply;
 
   const [mode, setMode] = useState("read");
 
-  const commentDate = createDate.substr(0, 10);
+  const replyDate = createDate.substr(0, 10);
 
   const [accessor, setAccessor] = useState("");
 
@@ -144,7 +143,7 @@ const AdminReplyItem = (props) => {
           <Card.Header as="h5">
             <span>{username} </span>
             <span style={{ float: "right" }}>
-              {commentDate}{" "}
+              {replyDate}{" "}
               {accessor === username ? (
                 <>
                   <Button
@@ -230,7 +229,7 @@ const AdminReplyItem = (props) => {
             )}
 
             <>
-              {subReplies.map((subreply) => {
+              {reReplies.map((subreply) => {
                 return (
                   <AdminSubReplyItem
                     key={subreply.id}

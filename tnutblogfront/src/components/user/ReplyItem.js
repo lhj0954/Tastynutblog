@@ -8,11 +8,10 @@ import {
   InputGroup,
   useAccordionButton,
 } from "react-bootstrap";
-import SubReplyItem from "./SubReplyItem";
+import ReReplyItem from "./ReReplyItem";
 
 const ReplyItem = (props) => {
-  const { content, id, subReplies, username, createDate, board } =
-    props.comment;
+  const { content, id, reReplies, username, createDate, board } = props.reply;
 
   let accessor;
   if (localStorage.getItem("authority")) {
@@ -21,9 +20,9 @@ const ReplyItem = (props) => {
     accessor = "";
   }
 
-  const commentDate = createDate.substr(0, 10);
+  const replyDate = createDate.substr(0, 10);
 
-  const [subReply, setSubReply] = useState({
+  const [reReply, setReReply] = useState({
     parentReply_id: id,
     board_id: board.id,
     content: "",
@@ -38,8 +37,8 @@ const ReplyItem = (props) => {
   });
 
   const changeValue1 = (e) => {
-    setSubReply((subReply) => ({
-      ...subReply,
+    setReReply((reReply) => ({
+      ...reReply,
       content: e.target.value,
     }));
   };
@@ -59,7 +58,7 @@ const ReplyItem = (props) => {
         "Content-Type": "application/json; charset=utf-8",
         AccessToken: localStorage.getItem("Tnut's accessToken"),
       },
-      body: JSON.stringify(subReply),
+      body: JSON.stringify(reReply),
     })
       .then((res) => {
         if (res.status === 200) {
@@ -144,7 +143,7 @@ const ReplyItem = (props) => {
             <div>
               <span> {username}</span>
               <span style={{ float: "right" }}>
-                {commentDate}
+                {replyDate}
                 {"  "}
                 {username === accessor ? (
                   <>
@@ -174,9 +173,9 @@ const ReplyItem = (props) => {
             <Card.Body>
               <InputGroup className="mb-3">
                 <Form.Control
-                  type="subReply"
+                  type="reReply"
                   onChange={changeValue1}
-                  name="subReply"
+                  name="reReply"
                 />
                 <Button
                   variant="outline-secondary"
@@ -225,8 +224,8 @@ const ReplyItem = (props) => {
               </Form>
             )}
             <>
-              {subReplies.map((subreply) => {
-                return <SubReplyItem key={subreply.id} subreply={subreply} />;
+              {reReplies.map((reReply) => {
+                return <ReReplyItem key={reReply.id} reReply={reReply} />;
               })}
             </>
           </Card.Body>

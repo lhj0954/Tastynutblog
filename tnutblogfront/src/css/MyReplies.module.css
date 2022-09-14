@@ -3,14 +3,14 @@
   border-bottom: 1px solid gainsboro;
   padding-bottom: 15px;
 }
-.comment {
+.reply {
   border-bottom: 1px dashed gainsboro;
   padding-bottom: 10px;
 }
-.commentHead {
+.replyHead {
   margin-top: 15px;
   margin-bottom: 20px;
 }
-.commentBody {
+.replyBody {
   width: 100%;
 }

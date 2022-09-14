@@ -7,7 +7,7 @@ const AdminSubReplyItem = (props) => {
 
   const [mode, setMode] = useState("read");
 
-  const recommentDate = createDate.substr(0, 10);
+  const reReplyDateDate = createDate.substr(0, 10);
 
   const [contentValue, setContentValue] = useState({
     id: id,
@@ -76,7 +76,7 @@ const AdminSubReplyItem = (props) => {
                 <span style={{ float: "right" }}>
                   {username}
                   {" / "}
-                  {recommentDate}{" "}
+                  {reReplyDateDate}{" "}
                   {accessor === username ? (
                     <>
                       {}
