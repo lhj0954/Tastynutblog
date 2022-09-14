@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import styles from "../css/Mycomments.module.css";
+import styles from "../../css/Mycomments.module.css";
 
 const CommentItem = (props) => {
   const [comment, setComment] = useState({

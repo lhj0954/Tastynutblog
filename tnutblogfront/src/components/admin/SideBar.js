@@ -9,8 +9,8 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import styles from "../css/Sidebar.module.css";
-import BoardItem from "./BoardItem";
+import styles from "../../css/Sidebar.module.css";
+import BoardItem from "../BoardItem";
 import SideBarLargecategory from "./SideBarLargecategory";
 import SideBarSubcategory from "./SideBarSubcategory";
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
-import IndexBoardItem from "../../components/IndexBoardItem";
-import IndexBoardItemBlank from "../../components/IndexBoardItemBlank";
+import IndexBoardItem from "../../components/index/IndexBoardItem";
+import IndexBoardItemBlank from "../../components/index/IndexBoardItemBlank";
 import styles from "../../css/Home.module.css";
 import profile_img from "../../img/profile.jpg";
 

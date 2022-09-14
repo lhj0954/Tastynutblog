@@ -1,7 +1,7 @@
 import { Container } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Header from "./components/Header";
+import Header from "./components/layout/Header";
 import Home from "./pages/index/Home";
 import SaveForm from "./pages/board/SaveForm";
 import Content from "./pages/board/Content";
@@ -9,7 +9,7 @@ import UpdateForm from "./pages/board/UpdateForm";
 import Category from "./pages/category/Category";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Redirect from "./pages/Redirect";
-import Footer from "./components/Footer";
+import Footer from "./components/layout/Footer";
 import styles from "./css/Display.module.css";
 import Mypage from "./pages/Mypage";
 import ManagerPage from "./pages/management/ManagerPage";

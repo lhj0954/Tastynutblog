@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "../css/Footer.module.css";
-import github_img from "../img/github.png";
-import tstory_img from "../img/tstory-logo.png";
-import blogger_img from "../img/free-icon-symbols-49334.png";
+import styles from "../../css/Footer.module.css";
+import github_img from "../../img/github.png";
+import tstory_img from "../../img/tstory-logo.png";
+import blogger_img from "../../img/free-icon-symbols-49334.png";
 
 const Footer = () => {
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import styles from "../css/IndexBoardItem.module.css";
+import styles from "../../css/IndexBoardItem.module.css";
 
 const IndexBoardItemBlank = () => {
   const [authority, setAuthority] = useState("");

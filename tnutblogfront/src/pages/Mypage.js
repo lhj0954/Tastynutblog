@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ChangeNickname from "../components/ChangeNickname";
-import Mycomments from "../components/Mycomments";
+import ChangeNickname from "../components/user/ChangeNickname";
+import Mycomments from "../components/user/Mycomments";
 import styles from "../css/Mypage.module.css";
 
 const Mypage = () => {

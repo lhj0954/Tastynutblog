@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
-import ReplyItem from "../../components/ReplyItem";
-import AdminReplyItem from "../../components/AdminReplyItem";
+import ReplyItem from "../../components/user/ReplyItem";
+import AdminReplyItem from "../../components/admin/AdminReplyItem";
 import styles from "../../css/Content.module.css";
 
 const Content = () => {

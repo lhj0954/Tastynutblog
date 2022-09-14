@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import styles from "../css/IndexBoardItem.module.css";
+import styles from "../../css/IndexBoardItem.module.css";
 
 const IndexBoardItem = (props) => {
   const { id, title, content, subCategory } = props.board;

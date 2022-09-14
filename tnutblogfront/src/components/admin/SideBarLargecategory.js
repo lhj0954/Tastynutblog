@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Badge, Form, FormControl, InputGroup, Nav } from "react-bootstrap";
-import styles from "../css/SideBarLargeCategory.module.css";
+import styles from "../../css/SideBarLargeCategory.module.css";
 
 const SideBarLargecategory = (props) => {
   const largeCategory = props.largeCategory;

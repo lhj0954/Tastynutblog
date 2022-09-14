@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Tab, Tabs } from "react-bootstrap";
-import BoardItem from "./BoardItem";
-import styles from "../css/UserSidebar.module.css";
+import BoardItem from "../BoardItem";
+import styles from "../../css/UserSidebar.module.css";
 
 const UserSideBar = (props) => {
   const defaultLargeCategory = props.data[0];

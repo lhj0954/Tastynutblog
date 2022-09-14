@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import SideBar from "../../components/SideBar";
-import UserSideBar from "../../components/UserSideBar";
+import SideBar from "../../components/admin/SideBar";
+import UserSideBar from "../../components/user/UserSideBar";
 
 const Category = () => {
   const [largeCategory, setLargeCategory] = useState({

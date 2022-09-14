@@ -8,10 +8,10 @@ import {
   NavDropdown,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "../css/LoginModal.module.css";
-import google_login_img from "../img/btn_google_signin_light_normal_web.png";
-import naver_login_img from "../img/btnW_perfect.png";
-import kakao_login_img from "../img/kakao_login_medium_narrow.png";
+import styles from "../../css/LoginModal.module.css";
+import google_login_img from "../../img/btn_google_signin_light_normal_web.png";
+import naver_login_img from "../../img/btnW_perfect.png";
+import kakao_login_img from "../../img/kakao_login_medium_narrow.png";
 
 const Header = () => {
   const navigate = useNavigate();

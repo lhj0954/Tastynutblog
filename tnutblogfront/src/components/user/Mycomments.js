@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../css/Mycomments.module.css";
+import styles from "../../css/Mycomments.module.css";
 import CommentItem from "./CommentItem";
 
 const Mycomments = (props) => {

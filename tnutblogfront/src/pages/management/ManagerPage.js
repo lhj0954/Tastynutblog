@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UserManagement from "../../components/UserManagement";
+import UserManagement from "../../components/admin/UserManagement";
 import styles from "../../css/ManagerPage.module.css";
 
 const ManagerPage = () => {
