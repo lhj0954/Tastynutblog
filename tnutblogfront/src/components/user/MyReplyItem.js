@@ -24,7 +24,7 @@ const MyReplyItem = (props) => {
             게시글 :{" "}
             <Link
               to={"/board/content/" + reply.board.id}
-              className="btn btn-secondary"
+              style={{ color: "black" }}
             >
               {reply.board.title}
             </Link>
