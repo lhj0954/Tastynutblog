@@ -19,21 +19,28 @@ const ChangeNickname = (props) => {
 
   const checkUsername = (e) => {
     e.preventDefault();
-    fetch(
-      "http://localhost:8080/" + nickname.changingNickname + "/checkNickname"
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        if (res.data === false) {
-          setIsDuplicated("n");
-          alert("사용가능한 username입니다.");
-        } else {
-          setIsDuplicated("y");
-          alert("중복된 username입니다.");
-        }
-      });
+    if (
+      nickname.changingNickname.length === 0 ||
+      nickname.changingNickname.length >= 10
+    ) {
+      alert("닉네임은 1~10글자 사이로 작성해 주세요");
+    } else {
+      fetch(
+        "http://localhost:8080/" + nickname.changingNickname + "/checkNickname"
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          if (res.data === false) {
+            setIsDuplicated("n");
+            alert("사용가능한 username입니다.");
+          } else {
+            setIsDuplicated("y");
+            alert("중복된 username입니다.");
+          }
+        });
+    }
   };
 
   const changeUsername = (e) => {

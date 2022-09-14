@@ -12,13 +12,6 @@ const Content = () => {
 
   const [authority, setAuthority] = useState("");
 
-  let accessor;
-  if (localStorage.getItem("authority")) {
-    accessor = JSON.parse(localStorage.getItem("authority")).nickname;
-  } else {
-    accessor = "";
-  }
-
   useEffect(() => {
     if (localStorage.getItem("authority")) {
       //authority라는 값이 있으면
@@ -37,7 +30,6 @@ const Content = () => {
   const [reply, setReply] = useState({
     board_id: id,
     content: "",
-    username: accessor,
   });
 
   const [subCategoryName, setSubCategoryName] = useState({});
