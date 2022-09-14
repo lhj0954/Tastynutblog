@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Accordion,
+  Badge,
   Button,
   Card,
   Form,
@@ -13,14 +14,14 @@ const ReplyItem = (props) => {
   const { content, id, subReplies, username, createDate, board } =
     props.comment;
 
-  const [accessor, setAccessor] = useState("");
-  const commentDate = createDate.substr(0, 10);
+  let accessor;
+  if (localStorage.getItem("authority")) {
+    accessor = JSON.parse(localStorage.getItem("authority")).username;
+  } else {
+    accessor = "";
+  }
 
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("authority"))) {
-      setAccessor(JSON.parse(localStorage.getItem("authority")).username);
-    }
-  }, [accessor]);
+  const commentDate = createDate.substr(0, 10);
 
   const [subReply, setSubReply] = useState({
     parentReply_id: id,
@@ -198,28 +199,30 @@ const ReplyItem = (props) => {
                 )}
               </>
             ) : (
-              <InputGroup className="mb-3">
-                <Form.Control
-                  type="replyUpdate"
-                  onChange={changeValue2}
-                  name="replyUpdates"
-                  value={contentValue.content}
-                />
-                <Button
-                  variant="outline-secondary"
-                  id="button-addon2"
-                  onClick={updateReply}
-                >
-                  수정하기
-                </Button>
-                <Button
-                  variant="outline-secondary"
-                  id="button-addon2"
-                  onClick={() => setMode("read")}
-                >
-                  수정취소
-                </Button>
-              </InputGroup>
+              <Form onSubmit={updateReply}>
+                <InputGroup className="mb-3">
+                  <Form.Control
+                    type="replyUpdate"
+                    onChange={changeValue2}
+                    name="replyUpdates"
+                    value={contentValue.content || ""}
+                  />
+                  <Badge
+                    bg="secondary"
+                    variant="outline-secondary"
+                    onClick={() => {
+                      setMode("read");
+                      setContentValue((contentValue) => ({
+                        ...contentValue,
+                        content: content,
+                      }));
+                    }}
+                    style={{ padding: "10px", cursor: "pointer" }}
+                  >
+                    x
+                  </Badge>
+                </InputGroup>
+              </Form>
             )}
             <>
               {subReplies.map((subreply) => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Accordion,
+  Badge,
   Button,
   Card,
   Form,
@@ -10,7 +11,8 @@ import {
 import AdminSubReplyItem from "./AdminSubReplyItem";
 
 const AdminReplyItem = (props) => {
-  const { content, id, subReplies, username, createDate } = props.comment;
+  const { content, id, subReplies, username, createDate, board } =
+    props.comment;
 
   const [mode, setMode] = useState("read");
 
@@ -31,8 +33,9 @@ const AdminReplyItem = (props) => {
 
   const [subReply, setSubReply] = useState({
     parentReply_id: id,
+    board_id: board.id,
     content: "",
-    username: JSON.parse(localStorage.getItem("authority")).username,
+    username: JSON.parse(localStorage.getItem("authority")).username, //관리자는 무조건 로그인 상태이므로 null고려 x
   });
 
   const changeValue1 = (e) => {
@@ -200,28 +203,30 @@ const AdminReplyItem = (props) => {
                 )}
               </>
             ) : (
-              <InputGroup className="mb-3">
-                <Form.Control
-                  type="replyUpdate"
-                  onChange={changeValue2}
-                  name="replyUpdates"
-                  value={contentValue.content}
-                />
-                <Button
-                  variant="outline-secondary"
-                  id="button-addon2"
-                  onClick={updateReply}
-                >
-                  수정하기
-                </Button>
-                <Button
-                  variant="outline-secondary"
-                  id="button-addon2"
-                  onClick={() => setMode("read")}
-                >
-                  수정취소
-                </Button>
-              </InputGroup>
+              <Form onSubmit={updateReply}>
+                <InputGroup className="mb-3">
+                  <Form.Control
+                    type="replyUpdate"
+                    onChange={changeValue2}
+                    name="replyUpdates"
+                    value={contentValue.content || ""}
+                  />
+                  <Badge
+                    bg="secondary"
+                    variant="outline-secondary"
+                    onClick={() => {
+                      setMode("read");
+                      setContentValue((contentValue) => ({
+                        ...contentValue,
+                        content: content,
+                      }));
+                    }}
+                    style={{ padding: "10px", cursor: "pointer" }}
+                  >
+                    x
+                  </Badge>
+                </InputGroup>
+              </Form>
             )}
 
             <>

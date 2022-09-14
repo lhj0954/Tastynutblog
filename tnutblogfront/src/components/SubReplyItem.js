@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Form, InputGroup } from "react-bootstrap";
+import { Badge, Button, Card, Form, InputGroup } from "react-bootstrap";
 
 const SubReplyItem = (props) => {
-  //console.log(props);
   const { content, id, username, createDate } = props.subreply;
 
   const [accessor, setAccessor] = useState("");
@@ -109,29 +108,31 @@ const SubReplyItem = (props) => {
             )}
           </>
         ) : (
-          <InputGroup className="mb-3">
-            <Form.Control
-              type="replyUpdate"
-              onChange={changeValue}
-              name="replyUpdates"
-              placeholder="글을 입력하세요"
-              value={contentValue.content}
-            />
-            <Button
-              variant="outline-secondary"
-              id="button-addon2"
-              onClick={updateReply}
-            >
-              수정하기
-            </Button>
-            <Button
-              variant="outline-secondary"
-              id="button-addon2"
-              onClick={() => setMode("read")}
-            >
-              수정취소
-            </Button>
-          </InputGroup>
+          <Form onSubmit={updateReply}>
+            <InputGroup className="mb-3">
+              <Form.Control
+                type="replyUpdate"
+                onChange={changeValue}
+                name="replyUpdates"
+                placeholder="글을 입력하세요"
+                value={contentValue.content || ""}
+              />
+              <Badge
+                bg="secondary"
+                variant="outline-secondary"
+                onClick={() => {
+                  setMode("read");
+                  setContentValue((contentValue) => ({
+                    ...contentValue,
+                    content: content,
+                  }));
+                }}
+                style={{ padding: "10px", cursor: "pointer" }}
+              >
+                x
+              </Badge>
+            </InputGroup>
+          </Form>
         )}
       </Card>
       <div style={{ height: "10px" }}></div>

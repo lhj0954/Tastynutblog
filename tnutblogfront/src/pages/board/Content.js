@@ -11,13 +11,18 @@ const Content = () => {
   const navigate = useNavigate();
 
   const [authority, setAuthority] = useState("");
-  const [accessor, setAccessor] = useState("");
+
+  let accessor;
+  if (localStorage.getItem("authority")) {
+    accessor = JSON.parse(localStorage.getItem("authority")).username;
+  } else {
+    accessor = "";
+  }
 
   useEffect(() => {
     if (localStorage.getItem("authority")) {
       //authority라는 값이 있으면
       setAuthority(JSON.parse(localStorage.getItem("authority")).role);
-      setAccessor(JSON.parse(localStorage.getItem("authority")).accessor);
     }
   }, []);
 
