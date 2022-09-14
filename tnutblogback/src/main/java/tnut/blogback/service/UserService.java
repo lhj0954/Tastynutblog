@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tnut.blogback.config.auth.PrincipalDetails;
 import tnut.blogback.dto.UsernameDto;
-import tnut.blogback.model.Reply;
 import tnut.blogback.model.User;
 import tnut.blogback.repository.UserRepository;
 
@@ -20,8 +19,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User userInfo(String nickname) {
-        return userRepository.findByNickname(nickname);
+    public User userInfo(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Transactional
@@ -33,12 +32,7 @@ public class UserService {
     public User changeNickname(UsernameDto usernameDto, PrincipalDetails principalDetails) {
         User userEntity = userRepository.findByUsername(principalDetails.getUser().getUsername());
 
-        String nickName = usernameDto.getChangingNickname();
-
-        userEntity.setNickname(nickName);
-
-        List<Reply> replies = userEntity.getReplies();
-        replies.forEach(reply -> reply.setUsername(nickName)); //댓글에 저장된 username도 바꿔주기
+        userEntity.setNickname(usernameDto.getChangingNickname());
 
         return userEntity;
     }

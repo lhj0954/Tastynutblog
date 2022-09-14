@@ -18,16 +18,11 @@ const Mypage = () => {
   });
 
   useEffect(() => {
-    fetch(
-      "http://localhost:8080/user/api/" +
-        JSON.parse(localStorage.getItem("authority")).username +
-        "/info",
-      {
-        headers: {
-          AccessToken: localStorage.getItem("Tnut's accessToken"),
-        },
-      }
-    )
+    fetch("http://localhost:8080/user/api/info", {
+      headers: {
+        AccessToken: localStorage.getItem("Tnut's accessToken"),
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
         if (res.status === 200) {

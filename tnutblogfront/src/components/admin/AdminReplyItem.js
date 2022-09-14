@@ -11,7 +11,7 @@ import {
 import AdminSubReplyItem from "./AdminSubReplyItem";
 
 const AdminReplyItem = (props) => {
-  const { content, id, reReplies, username, createDate, board } = props.reply;
+  const { content, id, reReplies, user, createDate, board } = props.reply;
 
   const [mode, setMode] = useState("read");
 
@@ -21,7 +21,7 @@ const AdminReplyItem = (props) => {
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("authority"))) {
-      setAccessor(JSON.parse(localStorage.getItem("authority")).username);
+      setAccessor(JSON.parse(localStorage.getItem("authority")).nickname);
     }
   }, [accessor]);
 
@@ -141,10 +141,10 @@ const AdminReplyItem = (props) => {
       <Accordion>
         <Card>
           <Card.Header as="h5">
-            <span>{username} </span>
+            <span>{user.nickname} </span>
             <span style={{ float: "right" }}>
               {replyDate}{" "}
-              {accessor === username ? (
+              {accessor === user.nickname ? (
                 <>
                   <Button
                     variant="outline-secondary"

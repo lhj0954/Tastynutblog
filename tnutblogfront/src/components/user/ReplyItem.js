@@ -11,11 +11,11 @@ import {
 import ReReplyItem from "./ReReplyItem";
 
 const ReplyItem = (props) => {
-  const { content, id, reReplies, username, createDate, board } = props.reply;
+  const { content, id, reReplies, createDate, board, user } = props.reply;
 
   let accessor;
   if (localStorage.getItem("authority")) {
-    accessor = JSON.parse(localStorage.getItem("authority")).username;
+    accessor = JSON.parse(localStorage.getItem("authority")).nickname;
   } else {
     accessor = "";
   }
@@ -141,11 +141,11 @@ const ReplyItem = (props) => {
         <Card>
           <Card.Header as="h5">
             <div>
-              <span> {username}</span>
+              <span> {user.nickname}</span>
               <span style={{ float: "right" }}>
                 {replyDate}
                 {"  "}
-                {username === accessor ? (
+                {user.nickname === accessor ? (
                   <>
                     <Button
                       variant="outline-secondary"

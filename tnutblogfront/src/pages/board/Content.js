@@ -14,7 +14,7 @@ const Content = () => {
 
   let accessor;
   if (localStorage.getItem("authority")) {
-    accessor = JSON.parse(localStorage.getItem("authority")).username;
+    accessor = JSON.parse(localStorage.getItem("authority")).nickname;
   } else {
     accessor = "";
   }

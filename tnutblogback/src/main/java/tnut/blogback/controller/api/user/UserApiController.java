@@ -20,9 +20,9 @@ public class UserApiController {
         this.userService = userService;
     }
 
-    @GetMapping("/user/api/{nickname}/info")
-    public ResponseDto<?> userInfo (@PathVariable String nickname) {
-        return new ResponseDto<>(HttpStatus.OK.value(), userService.userInfo(nickname));
+    @GetMapping("/user/api/info")
+    public ResponseDto<?> userInfo (@AuthenticationPrincipal PrincipalDetails principal) {
+        return new ResponseDto<>(HttpStatus.OK.value(), userService.userInfo(principal.getUser().getUsername()));
     }
 
     @GetMapping("/{nickname}/checkNickname")

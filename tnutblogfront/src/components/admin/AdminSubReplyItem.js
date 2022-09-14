@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Badge, Button, Card, Form, InputGroup } from "react-bootstrap";
 
 const AdminSubReplyItem = (props) => {
-  const { content, id, username, createDate } = props.subreply[0];
+  const { content, id, user, createDate } = props.subreply[0];
   const accessor = props.subreply[1];
 
   const [mode, setMode] = useState("read");
@@ -74,10 +74,10 @@ const AdminSubReplyItem = (props) => {
               <Card.Body>
                 <span>↳ {content}</span>
                 <span style={{ float: "right" }}>
-                  {username}
+                  {user.nickname}
                   {" / "}
                   {reReplyDateDate}{" "}
-                  {accessor === username ? (
+                  {accessor === user.nickname ? (
                     <>
                       {}
                       <Button

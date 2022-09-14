@@ -16,13 +16,13 @@ import kakao_login_img from "../../img/kakao_login_medium_narrow.png";
 const Header = () => {
   const navigate = useNavigate();
   const [authority, setAuthority] = useState("");
-  const [username, setUsername] = useState("");
+  const [nickname, setNickname] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("authority")) {
       //authority라는 값이 있으면
       setAuthority(JSON.parse(localStorage.getItem("authority")).role);
-      setUsername(JSON.parse(localStorage.getItem("authority")).username);
+      setNickname(JSON.parse(localStorage.getItem("authority")).nickname);
     }
   }, [authority]);
 
@@ -86,7 +86,7 @@ const Header = () => {
                       </Nav.Item>
                       <Navbar.Collapse className="justify-content-end">
                         <NavDropdown
-                          title={username}
+                          title={nickname}
                           id="collasible-nav-dropdown"
                           style={{ marginRight: "125px" }}
                         >
@@ -111,7 +111,7 @@ const Header = () => {
                         Logout
                       </Nav.Item>
                       <NavDropdown
-                        title={username}
+                        title={nickname}
                         id="collasible-nav-dropdown"
                         style={{ marginRight: "125px", marginLeft: "auto" }}
                       >

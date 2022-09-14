@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Badge, Button, Card, Form, InputGroup } from "react-bootstrap";
 
 const ReReplyItem = (props) => {
-  const { content, id, username, createDate } = props.reReply;
+  const { content, id, user, createDate } = props.reReply;
 
   const [accessor, setAccessor] = useState("");
   const reReplyDate = createDate.substr(0, 10);
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("authority"))) {
-      setAccessor(JSON.parse(localStorage.getItem("authority")).username);
+      setAccessor(JSON.parse(localStorage.getItem("authority")).nickname);
     }
   }, [accessor]);
 
@@ -80,10 +80,10 @@ const ReReplyItem = (props) => {
               <Card.Body>
                 <span>↳ {content} </span>
                 <div style={{ float: "right" }}>
-                  {username}
+                  {user.nickname}
                   {" / "}
                   {reReplyDate}{" "}
-                  {username === accessor ? (
+                  {user.nickname === accessor ? (
                     <>
                       <Button variant="outline-secondary" onClick={deleteReply}>
                         삭제
