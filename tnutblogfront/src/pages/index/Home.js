@@ -88,7 +88,7 @@ const Home = () => {
             일상 속의 여유를 찾아주는 개발자입니다!
           </div>
         </div>
-        <div style={{ marginLeft: "30px" }}>블라블라</div>
+        <div style={{ marginLeft: "30px", textAlign: "center" }}>블라블라</div>
       </div>
       <div>
         <hr />

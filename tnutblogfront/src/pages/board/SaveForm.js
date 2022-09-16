@@ -36,28 +36,32 @@ const SaveForm = () => {
 
   const submitBoard = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/admin/api/board/save", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        AccessToken: localStorage.getItem("Tnut's accessToken"),
-      },
-      body: JSON.stringify(board),
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        } else {
-          return null;
-        }
+    if (board.subCategory_id === "") {
+      alert("카테고리를 선택하세요.");
+    } else {
+      fetch("http://localhost:8080/admin/api/board/save", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          AccessToken: localStorage.getItem("Tnut's accessToken"),
+        },
+        body: JSON.stringify(board),
       })
-      .then((res) => {
-        if (res !== null) {
-          navigate("/categoryPage"); //글 등록 후 이전 페이지로
-        } else {
-          alert("글 등록 실패!");
-        }
-      });
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json();
+          } else {
+            return null;
+          }
+        })
+        .then((res) => {
+          if (res !== null) {
+            navigate("/categoryPage"); //글 등록 후 이전 페이지로
+          } else {
+            alert("글 등록 실패!");
+          }
+        });
+    }
   };
 
   return (
@@ -76,7 +80,7 @@ const SaveForm = () => {
       </Button>
       <hr />
       <Form.Select size="sm" onChange={selectLC}>
-        <option>Large Category</option>
+        <option>[Select LargeCategory]</option>
         {categories
           .filter((category) => category.categoryType === "LARGE") //largeCategory 리스트가 출력됨
           .map((category) => {
@@ -88,7 +92,7 @@ const SaveForm = () => {
           })}
       </Form.Select>
       <Form.Select size="sm" onChange={changeValue} name="subCategory_id">
-        <option>Sub Category</option>
+        <option>[Select SubCategory]</option>
         {categories
           .filter(
             (category) =>
