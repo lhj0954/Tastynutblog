@@ -141,7 +141,9 @@ const Content = () => {
       <h6>{board.data.createDate}</h6>
       <hr />
       <Card>
-        <Card.Body>{board.data.content}</Card.Body>
+        <Card.Body>
+          <div dangerouslySetInnerHTML={{ __html: board.data.content }}></div>
+        </Card.Body>
       </Card>
       <hr />
       <h2>댓글 달기</h2>
