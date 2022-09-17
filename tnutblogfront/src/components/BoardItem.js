@@ -8,9 +8,13 @@ const BoardItem = (props) => {
   return (
     <>
       <Card>
-        <Card.Body>
+        <Card.Body style={{ display: "flex" }}>
           <Card.Title>{title}</Card.Title>
-          <Link to={"/board/content/" + id} className="btn btn-secondary">
+          <Link
+            to={"/board/content/" + id}
+            className="btn btn-outline-secondary"
+            style={{ marginLeft: "auto" }}
+          >
             상세보기
           </Link>
         </Card.Body>

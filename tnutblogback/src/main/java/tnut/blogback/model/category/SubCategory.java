@@ -29,7 +29,7 @@ public class SubCategory {
     private LargeCategory largeCategory;
 
     @OneToMany(mappedBy = "subCategory", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JsonIgnoreProperties({"subCategory", "replies"})
+    @JsonIgnoreProperties(value = {"subCategory", "replies"})
     @OrderBy("id desc")
     private List<Board> boards = new ArrayList<>();
 }

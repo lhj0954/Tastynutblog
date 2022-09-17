@@ -77,7 +77,15 @@ const SaveForm = () => {
   const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],
-      ["bold", "italic", "underline", "strike", "blockquote", { font: [] }],
+      [
+        "bold",
+        "italic",
+        "underline",
+        "strike",
+        "blockquote",
+        { font: [] },
+        "code-block",
+      ],
       [
         { list: "ordered" },
         { list: "bullet" },
@@ -108,6 +116,7 @@ const SaveForm = () => {
     "width",
     "align",
     "font",
+    "code-block",
   ];
 
   return (
@@ -124,7 +133,7 @@ const SaveForm = () => {
               onChange={selectLC}
               className={styles.category}
             >
-              <option>[Select LargeCategory]</option>
+              <option>=Select LargeCategory=</option>
               {categories
                 .filter((category) => category.categoryType === "LARGE") //largeCategory 리스트가 출력됨
                 .map((category) => {
@@ -141,7 +150,7 @@ const SaveForm = () => {
               name="subCategory_id"
               className={styles.category}
             >
-              <option>[Select SubCategory]</option>
+              <option>=Select SubCategory=</option>
               {categories
                 .filter(
                   (category) =>
@@ -158,7 +167,7 @@ const SaveForm = () => {
             </Form.Select>
           </div>
           <Button
-            variant="outline-secondary"
+            variant="secondary"
             type="submit"
             onClick={submitBoard}
             style={{ marginLeft: "auto" }}

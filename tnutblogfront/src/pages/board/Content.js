@@ -4,6 +4,7 @@ import { Button, Card, Form, InputGroup } from "react-bootstrap";
 import ReplyItem from "../../components/user/ReplyItem";
 import AdminReplyItem from "../../components/admin/AdminReplyItem";
 import styles from "../../css/Content.module.css";
+import "../../css/Content.css";
 
 const Content = () => {
   const propsParam = useParams();
@@ -107,42 +108,47 @@ const Content = () => {
   return (
     <div>
       <br />
-      <Link
-        to="/categoryPage"
-        style={{ textDecoration: "none", color: "black", fontWeight: "bold" }}
-        title="카테고리 별 게시글 페이지로 이동합니다."
-      >
-        Category: {subCategoryName.subCategoryName}
-      </Link>
-      <br />
-      <br />
-      <div className={styles.contentTop}>
-        <h1 style={{ margin: "0" }}>{board.data.title}</h1>
-        {authority === "ROLE_TNUT" ? (
-          <div className={styles.utilButton}>
-            <Button variant="secondary" onClick={() => updateBoard()}>
-              수정
-            </Button>{" "}
-            <Button variant="secondary" onClick={() => deleteBoard()}>
-              삭제
-            </Button>{" "}
-            <Button variant="secondary" onClick={() => navigate(-1)}>
-              돌아가기
-            </Button>
-          </div>
-        ) : (
-          <div className={styles.utilButton}>
-            <Button variant="secondary" onClick={() => navigate(-1)}>
-              돌아가기
-            </Button>
-          </div>
-        )}
+      <div>
+        <Link
+          to="/categoryPage"
+          style={{ textDecoration: "none", color: "black", fontWeight: "bold" }}
+          title="카테고리 별 게시글 페이지로 이동합니다."
+        >
+          Category: {subCategoryName.subCategoryName}
+        </Link>
+        <br />
+        <br />
+        <div className={styles.contentTop}>
+          <h1 style={{ margin: "0" }}>{board.data.title}</h1>
+          {authority === "ROLE_TNUT" ? (
+            <div className={styles.utilButton}>
+              <Button variant="secondary" onClick={() => updateBoard()}>
+                수정
+              </Button>{" "}
+              <Button variant="secondary" onClick={() => deleteBoard()}>
+                삭제
+              </Button>{" "}
+              <Button variant="secondary" onClick={() => navigate(-1)}>
+                돌아가기
+              </Button>
+            </div>
+          ) : (
+            <div className={styles.utilButton}>
+              <Button variant="secondary" onClick={() => navigate(-1)}>
+                돌아가기
+              </Button>
+            </div>
+          )}
+        </div>
+        <h6>{board.data.createDate}</h6>
+        <hr />
       </div>
-      <h6>{board.data.createDate}</h6>
-      <hr />
       <Card>
         <Card.Body>
-          <div dangerouslySetInnerHTML={{ __html: board.data.content }}></div>
+          <div
+            className={styles.content}
+            dangerouslySetInnerHTML={{ __html: board.data.content }}
+          />
         </Card.Body>
       </Card>
       <hr />

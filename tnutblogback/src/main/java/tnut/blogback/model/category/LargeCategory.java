@@ -25,7 +25,7 @@ public class LargeCategory {
     private String largeCategoryName;
 
     @OneToMany(mappedBy = "largeCategory", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) //largeCategory가 연관관계의 주인이며 largeCategory가 지워지면 subCateory도 지워짐
-    @JsonIgnoreProperties("largeCategory")
+    @JsonIgnoreProperties(value = {"largeCategory"})
     @OrderBy("id asc") //먼저 만든게 앞에 옴
     private List<SubCategory> subCategories = new ArrayList<>();
 }
