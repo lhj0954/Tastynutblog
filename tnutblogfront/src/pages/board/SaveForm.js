@@ -1,6 +1,9 @@
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
+import styles from "../../css/SaveForm.module.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const SaveForm = () => {
   const navigate = useNavigate();
@@ -34,6 +37,13 @@ const SaveForm = () => {
     }));
   };
 
+  const changeContentValue = (e) => {
+    setBoard((board) => ({
+      ...board,
+      content: e,
+    }));
+  };
+
   const submitBoard = (e) => {
     e.preventDefault();
     if (board.subCategory_id === "") {
@@ -64,10 +74,99 @@ const SaveForm = () => {
     }
   };
 
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote", { font: [] }],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      [{ color: [] }, { background: [] }],
+      [("link", "image")],
+      [{ align: [] }],
+      ["clean"],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "background",
+    "color",
+    "indent",
+    "link",
+    "image",
+    "width",
+    "align",
+    "font",
+  ];
+
   return (
-    <Form onSubmit={submitBoard}>
-      <Form.Group className="mb-3" controlId="formGroupTitle">
-        <Form.Label>Title</Form.Label>
+    <Form as={"div"}>
+      <Form.Group
+        className="mb-3"
+        controlId="formGroupTitle"
+        style={{ marginTop: "20px" }}
+      >
+        <div style={{ display: "flex" }}>
+          <div>
+            <Form.Select
+              size="sm"
+              onChange={selectLC}
+              className={styles.category}
+            >
+              <option>[Select LargeCategory]</option>
+              {categories
+                .filter((category) => category.categoryType === "LARGE") //largeCategory 리스트가 출력됨
+                .map((category) => {
+                  return (
+                    <option key={category.id} value={category.lcId}>
+                      {category.categoryName}
+                    </option>
+                  );
+                })}
+            </Form.Select>
+            <Form.Select
+              size="sm"
+              onChange={changeValue}
+              name="subCategory_id"
+              className={styles.category}
+            >
+              <option>[Select SubCategory]</option>
+              {categories
+                .filter(
+                  (category) =>
+                    category.categoryType === "SUB" &&
+                    String(category.lcId) === largeCategoryId
+                )
+                .map((category) => {
+                  return (
+                    <option key={category.id} value={category.scId}>
+                      {category.categoryName}
+                    </option>
+                  );
+                })}
+            </Form.Select>
+          </div>
+          <Button
+            variant="outline-secondary"
+            type="submit"
+            onClick={submitBoard}
+            style={{ marginLeft: "auto" }}
+          >
+            저장하기
+          </Button>
+        </div>
+        <Form.Label className={styles.title}>Title</Form.Label>
         <Form.Control
           type="title"
           placeholder="Title..."
@@ -75,46 +174,16 @@ const SaveForm = () => {
           name="title"
         />
       </Form.Group>
-      <Button variant="outline-secondary" type="submit">
-        저장하기
-      </Button>
-      <hr />
-      <Form.Select size="sm" onChange={selectLC}>
-        <option>[Select LargeCategory]</option>
-        {categories
-          .filter((category) => category.categoryType === "LARGE") //largeCategory 리스트가 출력됨
-          .map((category) => {
-            return (
-              <option key={category.id} value={category.lcId}>
-                {category.categoryName}
-              </option>
-            );
-          })}
-      </Form.Select>
-      <Form.Select size="sm" onChange={changeValue} name="subCategory_id">
-        <option>[Select SubCategory]</option>
-        {categories
-          .filter(
-            (category) =>
-              category.categoryType === "SUB" &&
-              String(category.lcId) === largeCategoryId
-          )
-          .map((category) => {
-            return (
-              <option key={category.id} value={category.scId}>
-                {category.categoryName}
-              </option>
-            );
-          })}
-      </Form.Select>
       <br />
       <Form.Group className="mb-3" controlId="formGroupContent">
         <Form.Label>Content</Form.Label>
-        <Form.Control
-          type="content"
-          placeholder="Content..."
-          onChange={changeValue}
-          name="content"
+        <ReactQuill
+          theme="snow"
+          placeholder="내용을 입력해 주세요"
+          onChange={changeContentValue}
+          modules={modules}
+          formats={formats}
+          className={styles.quill}
         />
       </Form.Group>
     </Form>
