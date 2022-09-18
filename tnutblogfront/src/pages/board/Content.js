@@ -153,7 +153,7 @@ const Content = () => {
       </Card>
       <hr />
       <h2>댓글 달기</h2>
-      <Form onSubmit={submitReply}>
+      <Form as={"div"}>
         <InputGroup className="mb-3">
           <Form.Control
             type="reply"

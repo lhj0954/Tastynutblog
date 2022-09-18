@@ -31,9 +31,17 @@ const MyReplyItem = (props) => {
           </span>
         </div>
         <div className={styles.replyBody}>
-          <Card>
-            <Card.Body>{reply.content}</Card.Body>
-          </Card>
+          {reply.content ? (
+            <Card>
+              <Card.Body>{reply.content}</Card.Body>
+            </Card>
+          ) : (
+            <Card>
+              <Card.Body style={{ color: "gray", fontStyle: "italic" }}>
+                -삭제된 댓글입니다.-
+              </Card.Body>
+            </Card>
+          )}
         </div>
       </div>
     </div>
