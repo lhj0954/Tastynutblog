@@ -17,6 +17,7 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+    open-in-view: false
 
   security:
     oauth2:

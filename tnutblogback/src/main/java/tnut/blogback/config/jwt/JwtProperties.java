@@ -1,8 +1,8 @@
 package tnut.blogback.config.jwt;
 
 public interface JwtProperties {
-    String ACCESS_SECRET = "AcCeSsSeCrEt";
-    String REFRESH_SECRET = "ReFrEsHsEcReT";
+    String ACCESS_SECRET = "acToken";
+    String REFRESH_SECRET = "rsToken";
     int ACCESS_EXPIRATION_TIME =  1000*60*30; //30분
     Long REFRESH_EXPIRATION_TIME = 1000L * 60 * 60 * 24 * 30; //30일
     String HEADER_ACCESS = "AccessToken";
