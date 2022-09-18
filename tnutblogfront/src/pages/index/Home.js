@@ -3,7 +3,7 @@ import { Carousel } from "react-bootstrap";
 import IndexBoardItem from "../../components/index/IndexBoardItem";
 import IndexBoardItemBlank from "../../components/index/IndexBoardItemBlank";
 import styles from "../../css/Home.module.css";
-import profile_img from "../../img/profile.jpg";
+import profile_img from "../../img/android-icon-144x144.png";
 
 const Home = () => {
   // const [page, setPage] = useState(0);
@@ -84,7 +84,9 @@ const Home = () => {
               className={styles.profile_img}
             />
           </div>
-          <div className={styles.one_line_introduction}>한 줄 자기소개</div>
+          <div className={styles.one_line_introduction}>
+            블로그 주인장 Tasty Nut 입니다.
+          </div>
         </div>
         <div style={{ marginLeft: "30px", textAlign: "center" }}>블라블라</div>
       </div>

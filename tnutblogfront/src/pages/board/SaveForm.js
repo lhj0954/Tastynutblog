@@ -133,7 +133,7 @@ const SaveForm = () => {
               onChange={selectLC}
               className={styles.category}
             >
-              <option>=Select LargeCategory=</option>
+              <option value={""}>=Select LargeCategory=</option>
               {categories
                 .filter((category) => category.categoryType === "LARGE") //largeCategory 리스트가 출력됨
                 .map((category) => {
@@ -150,7 +150,7 @@ const SaveForm = () => {
               name="subCategory_id"
               className={styles.category}
             >
-              <option>=Select SubCategory=</option>
+              <option value={""}>=Select SubCategory=</option>
               {categories
                 .filter(
                   (category) =>

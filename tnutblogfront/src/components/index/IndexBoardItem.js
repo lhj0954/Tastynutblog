@@ -6,13 +6,14 @@ import styles from "../../css/IndexBoardItem.module.css";
 const IndexBoardItem = (props) => {
   const { id, title, content, subCategory } = props.board;
 
-  let subContent = content.substr(0, 70);
-  if (subContent.length >= 70) {
+  let subContent = content.replace(/<[^>]*>?/g, ""); //태그 지우기
+  subContent = subContent.substr(0, 55);
+  if (subContent.length >= 55) {
     subContent += "...";
   }
 
-  let subTitle = title.substr(0, 15);
-  if (subTitle.length >= 15) {
+  let subTitle = title.substr(0, 10);
+  if (subTitle.length >= 10) {
     subTitle += "...";
   }
 

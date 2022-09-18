@@ -19,7 +19,7 @@ const UpdateForm = () => {
   });
 
   const [categories, setCategories] = useState([]); //카테고리 받아 올 곳 초기화
-  const [largeCategoryId, setLargeCategoryId] = useState(""); //selection으로 부터 값을 받음
+  const [largeCategoryId, setLargeCategoryId] = useState("");
 
   const selectLC = (e) => {
     //largeCategory id값을 넘겨줌
@@ -143,12 +143,8 @@ const UpdateForm = () => {
         >
           <div style={{ display: "flex" }}>
             <div>
-              <Form.Select
-                size="sm"
-                onChange={selectLC}
-                value={board.subCategory_id || ""}
-              >
-                <option>=Select LargeCategory=</option>
+              <Form.Select size="sm" onChange={selectLC}>
+                <option value={""}>=Select LargeCategory=</option>
                 {categories
                   .filter((category) => category.categoryType === "LARGE") //largeCategory 리스트가 출력됨
                   .map((category) => {
@@ -163,9 +159,8 @@ const UpdateForm = () => {
                 size="sm"
                 onChange={changeValue}
                 name="subCategory_id"
-                value={board.subCategory_id || ""}
               >
-                <option>=Select SubCategory=</option>
+                <option value={""}>=Select SubCategory=</option>
                 {categories
                   .filter(
                     (category) =>
