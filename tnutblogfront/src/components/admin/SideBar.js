@@ -51,7 +51,6 @@ const SideBar = (props) => {
         }
       })
       .then((res) => {
-        console.log(res);
         setSubCategories((subCategories) => ({
           ...subCategories,
           largeCategory_id: id,

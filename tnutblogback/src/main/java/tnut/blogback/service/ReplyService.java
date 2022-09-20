@@ -2,9 +2,9 @@ package tnut.blogback.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tnut.blogback.dto.replyDTO.ReplySaveRequestDto;
-import tnut.blogback.dto.replyDTO.ReplyUpdateDto;
-import tnut.blogback.dto.replyDTO.RereplySaveRequestDto;
+import tnut.blogback.dto.replyDTO.ReplySaveDto;
+import tnut.blogback.dto.replyDTO.ReplyServiceDto;
+import tnut.blogback.dto.replyDTO.ReReplySaveDto;
 import tnut.blogback.model.Board;
 import tnut.blogback.model.Reply;
 import tnut.blogback.model.User;
@@ -24,37 +24,41 @@ public class ReplyService {
     }
 
     @Transactional
-    public Reply replySave(ReplySaveRequestDto replySaveRequestDto, User user) { //postMapping  User는 pincipalDatails에서 가져옴
+    public ReplyServiceDto replySave(ReplySaveDto replySaveDto, User user) { //postMapping  User는 pincipalDatails에서 가져옴
 
-        Board board = boardRepository.findById(replySaveRequestDto.getBoard_id()) //보드 있는지 확인
+        Board board = boardRepository.findById(replySaveDto.getBoard_id()) //보드 있는지 확인
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 게시글 입니다."));
 
         Reply replyEntity = Reply.builder()
                 .board(board)
                 .user(user)
-                .content(replySaveRequestDto.getContent())
+                .content(replySaveDto.getContent())
                 .build();
 
-        return replyRepository.save(replyEntity);
+        Reply reply = replyRepository.save(replyEntity);
+
+        return new ReplyServiceDto(reply.getId());
     }
 
     @Transactional
-    public Reply reReplySave(RereplySaveRequestDto reReplySaveRequestDto, User user) { //대댓글 User는 pincipalDatails에서 가져옴
+    public ReplyServiceDto reReplySave(ReReplySaveDto reReplySaveDto, User user) { //대댓글 User는 pincipalDatails에서 가져옴
 
-        Reply parentReply = replyRepository.findById(reReplySaveRequestDto.getParentReply_id())
+        Reply parentReply = replyRepository.findById(reReplySaveDto.getParentReply_id())
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 댓글입니다."));
 
-        Board board = boardRepository.findById(reReplySaveRequestDto.getBoard_id()) //보드 있는지 확인
+        Board board = boardRepository.findById(reReplySaveDto.getBoard_id()) //보드 있는지 확인
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 게시글 입니다."));
 
-        Reply replyEntity = Reply.builder()
+        Reply reReplyEntity = Reply.builder()
                 .parentReply(parentReply)
                 .board(board)
                 .user(user)
-                .content(reReplySaveRequestDto.getContent())
+                .content(reReplySaveDto.getContent())
                 .build();
 
-        return replyRepository.save(replyEntity);
+        Reply reReply = replyRepository.save(reReplyEntity);
+
+        return new ReplyServiceDto(reReply.getId());
     }
 
     @Transactional
@@ -102,12 +106,12 @@ public class ReplyService {
     }
 
     @Transactional
-    public Reply replyUpdate(ReplyUpdateDto replyUpdateDto, User user) {  //User는 pincipalDatails에서 가져옴
-        Reply replyEntity = replyRepository.findByIdAndUser(replyUpdateDto.getId(), user)
+    public ReplyServiceDto replyUpdate(Long id, ReplySaveDto replySaveDto, User user) {  //User는 pincipalDatails에서 가져옴
+        Reply replyEntity = replyRepository.findByIdAndUser(id, user)
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 댓글이거나 권한이 없습니다."));
 
-        replyEntity.setContent(replyUpdateDto.getContent());
+        replyEntity.setContent(replySaveDto.getContent());
 
-        return replyEntity;
+        return new ReplyServiceDto(replyEntity.getId());
     }
 }

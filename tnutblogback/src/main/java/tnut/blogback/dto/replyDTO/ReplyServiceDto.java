@@ -5,9 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class ReplyUpdateDto { //reply, reReply 모두 update 할 때 이용
+@NoArgsConstructor
+public class ReplyServiceDto {
     private Long id;
-    private String content;
 }

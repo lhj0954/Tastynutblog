@@ -67,7 +67,7 @@ const ReReplyItem = (props) => {
         })
         .then((res) => {
           if (res !== null) {
-            window.location.reload();
+            //window.location.reload();
           } else {
             alert("댓글 수정 실패!");
           }

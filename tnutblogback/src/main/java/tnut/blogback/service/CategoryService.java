@@ -7,7 +7,6 @@ import tnut.blogback.dto.categoryDto.LargeCategoryServiceDto;
 import tnut.blogback.dto.categoryDto.LargeCategorySaveDto;
 import tnut.blogback.dto.categoryDto.SubCategorySaveDto;
 import tnut.blogback.dto.categoryDto.SubCategoryServiceDto;
-import tnut.blogback.model.Board;
 import tnut.blogback.model.category.CategoryNameList;
 import tnut.blogback.model.category.CategoryType;
 import tnut.blogback.model.category.LargeCategory;
@@ -29,13 +28,10 @@ public class CategoryService {
 
     private final CategoryNameRepository categoryNameRepository;
 
-    private final BoardRepository boardRepository;
-
-    public CategoryService(LargeCategoryRepository largeCategoryRepository, SubCategoryRepository subCategoryRepository, CategoryNameRepository categoryNameRepository, BoardRepository boardRepository) {
+    public CategoryService(LargeCategoryRepository largeCategoryRepository, SubCategoryRepository subCategoryRepository, CategoryNameRepository categoryNameRepository) {
         this.largeCategoryRepository = largeCategoryRepository;
         this.subCategoryRepository = subCategoryRepository;
         this.categoryNameRepository = categoryNameRepository;
-        this.boardRepository = boardRepository;
     }
 
     @Transactional(readOnly = true)
