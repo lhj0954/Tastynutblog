@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tnut.blogback.dto.boardDTO.BoardIndexDto;
 import tnut.blogback.dto.boardDTO.BoardSaveDto;
+import tnut.blogback.dto.boardDTO.BoardServiceDto;
 import tnut.blogback.dto.boardDTO.BoardUpdateDto;
 import tnut.blogback.model.Board;
 import tnut.blogback.model.category.SubCategory;

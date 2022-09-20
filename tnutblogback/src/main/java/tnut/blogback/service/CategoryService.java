@@ -2,15 +2,22 @@ package tnut.blogback.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tnut.blogback.dto.SubCategorySaveRequestDto;
+import tnut.blogback.dto.boardDTO.BoardServiceDto;
+import tnut.blogback.dto.categoryDto.LargeCategoryServiceDto;
+import tnut.blogback.dto.categoryDto.LargeCategorySaveDto;
+import tnut.blogback.dto.categoryDto.SubCategorySaveDto;
+import tnut.blogback.dto.categoryDto.SubCategoryServiceDto;
+import tnut.blogback.model.Board;
 import tnut.blogback.model.category.CategoryNameList;
 import tnut.blogback.model.category.CategoryType;
 import tnut.blogback.model.category.LargeCategory;
 import tnut.blogback.model.category.SubCategory;
+import tnut.blogback.repository.BoardRepository;
 import tnut.blogback.repository.categoryrepository.CategoryNameRepository;
 import tnut.blogback.repository.categoryrepository.LargeCategoryRepository;
 import tnut.blogback.repository.categoryrepository.SubCategoryRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,30 +29,43 @@ public class CategoryService {
 
     private final CategoryNameRepository categoryNameRepository;
 
-    public CategoryService(LargeCategoryRepository largeCategoryRepository, SubCategoryRepository subCategoryRepository, CategoryNameRepository categoryNameRepository) {
+    private final BoardRepository boardRepository;
+
+    public CategoryService(LargeCategoryRepository largeCategoryRepository, SubCategoryRepository subCategoryRepository, CategoryNameRepository categoryNameRepository, BoardRepository boardRepository) {
         this.largeCategoryRepository = largeCategoryRepository;
         this.subCategoryRepository = subCategoryRepository;
         this.categoryNameRepository = categoryNameRepository;
+        this.boardRepository = boardRepository;
     }
 
     @Transactional(readOnly = true)
-    public List<LargeCategory> largeCategoryList () {
-        return largeCategoryRepository.findAll();
+    public List<LargeCategoryServiceDto> largeCategoryList () {
+        List<LargeCategory> largeCategoryList = largeCategoryRepository.findAll();
+
+        List<LargeCategoryServiceDto> largeCategoryDtoList = new ArrayList<>();
+        largeCategoryList.forEach(largeCategory ->
+                largeCategoryDtoList.add(new LargeCategoryServiceDto(largeCategory.getId(), largeCategory.getLargeCategoryName())));
+
+        return largeCategoryDtoList;
     }
 
     @Transactional
-    public LargeCategory largeCategorySave (LargeCategory largeCategory) {
-        LargeCategory largeCategoryEntity= largeCategoryRepository.save(largeCategory);
+    public LargeCategoryServiceDto largeCategorySave (LargeCategorySaveDto largeCategorySaveDto) {
+        LargeCategory largeCategoryEntity= LargeCategory.builder() //save할 데이터를 받음
+                .largeCategoryName(largeCategorySaveDto.getLargeCategoryName())
+                .build();
 
-        CategoryNameList categoryNameList = CategoryNameList.builder() //largecategory를 저장하면서 categoryNameList에 값을 저장함
+        LargeCategory largeCategory = largeCategoryRepository.save(largeCategoryEntity); //저장 후 반환
+
+        CategoryNameList categoryNameList = CategoryNameList.builder()
                 .lcId(largeCategory.getId())
-                .categoryName(largeCategoryEntity.getLargeCategoryName())
+                .categoryName(largeCategory.getLargeCategoryName())
                 .categoryType(CategoryType.LARGE)
                 .build();
 
-        categoryNameRepository.save(categoryNameList);
+        categoryNameRepository.save(categoryNameList); //largecategory를 저장하면서 categoryNameList에 값을 저장함
 
-        return largeCategoryEntity;
+        return new LargeCategoryServiceDto(largeCategory.getId(), largeCategory.getLargeCategoryName());
     }
 
     @Transactional
@@ -59,35 +79,62 @@ public class CategoryService {
     }
 
     @Transactional
-    public LargeCategory largeCategoryUpdate(Long id, LargeCategory largeCategory) {
+    public LargeCategoryServiceDto largeCategoryUpdate(Long id, LargeCategorySaveDto largeCategorySaveDto) {
         LargeCategory largeCategoryEntity = largeCategoryRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("이미 삭제된 카테고리 입니다."));
-        largeCategoryEntity.setLargeCategoryName(largeCategory.getLargeCategoryName());
-        return largeCategoryEntity;
+
+        largeCategoryEntity.setLargeCategoryName(largeCategorySaveDto.getLargeCategoryName());
+
+        return new LargeCategoryServiceDto(largeCategoryEntity.getId(), largeCategoryEntity.getLargeCategoryName());
+    }
+
+    @Transactional(readOnly = true)
+    public List<SubCategoryServiceDto> setSubCategories (Long id) {
+        LargeCategory largeCategoryEntity = largeCategoryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("없는 대분류 카테고리 입니다."));
+
+        List<SubCategoryServiceDto> subCategoryServiceDtoList = new ArrayList<>();
+
+        largeCategoryEntity.getSubCategories()
+                .forEach(subCategory ->
+                        {
+                            List<BoardServiceDto> boardServiceDtoList = new ArrayList<>();
+                            subCategory.getBoards().forEach(board ->
+                                    boardServiceDtoList.add(new BoardServiceDto(board.getId(), board.getTitle())));
+
+                            subCategoryServiceDtoList
+                                    .add(new SubCategoryServiceDto(subCategory.getId(), subCategory.getSubCategoryName(), boardServiceDtoList));
+                        });
+
+        return subCategoryServiceDtoList;
     }
 
     @Transactional //subCategory 저장
-    public SubCategory subCategorySave (SubCategorySaveRequestDto subCategorySaveRequestDto) {
-        LargeCategory largeCategory = largeCategoryRepository.findById(subCategorySaveRequestDto.getLargeCategory_id())
+    public SubCategoryServiceDto subCategorySave (SubCategorySaveDto subCategorySaveDto) {
+        LargeCategory largeCategoryEntity = largeCategoryRepository.findById(subCategorySaveDto.getLargeCategory_id())
                 .orElseThrow(()-> new IllegalArgumentException("없는 대분류 카테고리 입니다."));
 
-        SubCategory subCategory = SubCategory.builder()
-                .largeCategory(largeCategory)
-                .subCategoryName(subCategorySaveRequestDto.getSubCategoryName())
+        SubCategory subCategoryEntity = SubCategory.builder()
+                .largeCategory(largeCategoryEntity)
+                .subCategoryName(subCategorySaveDto.getSubCategoryName())
                 .build();
 
-        SubCategory subCategoryEntity = subCategoryRepository.save(subCategory);
+        SubCategory subCategory = subCategoryRepository.save(subCategoryEntity);
+
+        List<BoardServiceDto> boardServiceDtoList = new ArrayList<>();
+        subCategory.getBoards().forEach(board ->
+                boardServiceDtoList.add(new BoardServiceDto(board.getId(), board.getTitle())));
 
         CategoryNameList categoryNameList = CategoryNameList.builder() //subCategory를 저장하면서 categoryNameList에 값을 저장함
-                .lcId(largeCategory.getId())
+                .lcId(largeCategoryEntity.getId())
                 .scId(subCategoryEntity.getId())
-                .categoryName(subCategorySaveRequestDto.getSubCategoryName())
+                .categoryName(subCategorySaveDto.getSubCategoryName())
                 .categoryType(CategoryType.SUB)
                 .build();
 
         categoryNameRepository.save(categoryNameList);
 
-        return subCategoryEntity;
+        return new SubCategoryServiceDto(subCategory.getId(), subCategory.getSubCategoryName(), boardServiceDtoList);
     }
 
     @Transactional //subCategory delete
@@ -100,11 +147,17 @@ public class CategoryService {
     }
 
     @Transactional //서브 카테고리 이름 바꾸기
-    public SubCategory subCategoryUpdate(Long id, SubCategory subCategory) {
+    public SubCategoryServiceDto subCategoryUpdate(Long id, SubCategorySaveDto subCategorySaveDto) {
         SubCategory subCategoryEntity = subCategoryRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("이미 삭제된 카테고리 입니다."));
-        subCategoryEntity.setSubCategoryName(subCategory.getSubCategoryName());
-        return subCategoryEntity;
+
+        subCategoryEntity.setSubCategoryName(subCategorySaveDto.getSubCategoryName());
+
+        List<BoardServiceDto> boardServiceDtoList = new ArrayList<>();
+        subCategoryEntity.getBoards().forEach(board ->
+                boardServiceDtoList.add(new BoardServiceDto(board.getId(), board.getTitle())));
+
+        return new SubCategoryServiceDto(subCategoryEntity.getId(), subCategoryEntity.getSubCategoryName(),boardServiceDtoList);
     }
 
     @Transactional //categoryNameList 가져오기

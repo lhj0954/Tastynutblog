@@ -13,7 +13,7 @@ const SideBarLargecategory = (props) => {
   });
 
   const deleteLargeCategory = (e) => {
-    console.log(e);
+    e.preventDefault();
     fetch(
       "http://localhost:8080/admin/api/largeCategory/" +
         e.target.id +
@@ -25,7 +25,6 @@ const SideBarLargecategory = (props) => {
     )
       .then((res) => res.text())
       .then((res) => {
-        console.log(res);
         if (res === "success delete") {
           window.location.reload();
         } else {
@@ -34,7 +33,7 @@ const SideBarLargecategory = (props) => {
       });
   };
 
-  const updateLargeCategoryV = (e) => {
+  const changeValue_updateLarge = (e) => {
     setUpdateLC((updateLC) => ({
       ...updateLC,
       largeCategoryName: e.target.value,
@@ -117,7 +116,7 @@ const SideBarLargecategory = (props) => {
                   aria-label="Fix largeCategory"
                   aria-describedby="basic-addon2"
                   id={largeCategory.id}
-                  onChange={updateLargeCategoryV}
+                  onChange={changeValue_updateLarge}
                   value={updateLC.largeCategoryName || ""}
                 />
                 <Badge

@@ -1,13 +1,13 @@
-package tnut.blogback.dto;
+package tnut.blogback.dto.categoryDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class SubCategorySaveRequestDto {
+@NoArgsConstructor
+public class SubCategorySaveDto {
     private Long largeCategory_id;
     private String subCategoryName;
 }

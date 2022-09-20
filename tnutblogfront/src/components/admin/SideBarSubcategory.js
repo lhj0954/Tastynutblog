@@ -41,7 +41,6 @@ const SideBarSubcategory = (props) => {
 
   const updateSubCategory = (e) => {
     e.preventDefault();
-    console.log(updateSC);
     fetch(
       "http://localhost:8080/admin/api/subCategory/" + updateSC.id + "/update",
       {
@@ -54,7 +53,6 @@ const SideBarSubcategory = (props) => {
       }
     )
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           return res.json;
         } else {

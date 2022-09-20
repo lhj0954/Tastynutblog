@@ -15,7 +15,8 @@ import SideBarLargecategory from "./SideBarLargecategory";
 import SideBarSubcategory from "./SideBarSubcategory";
 
 const SideBar = (props) => {
-  const defaultLargeCategory = props.data[0];
+  const { largeCategories } = props;
+  const defaultLargeCategory = largeCategories[0];
   const [key, setKey] = useState();
 
   const [largeCategory, setLargeCategory] = useState({
@@ -24,28 +25,39 @@ const SideBar = (props) => {
 
   useEffect(() => {
     if (defaultLargeCategory) {
-      setResult(defaultLargeCategory);
+      getSubCategories(defaultLargeCategory.id);
     }
   }, [defaultLargeCategory]);
 
-  const changeValue = (e) => {
+  const changeValue_large = (e) => {
     setLargeCategory((largeCategory) => ({
       ...largeCategory,
       [e.target.name]: e.target.value,
     }));
   };
 
-  const [result, setResult] = useState({
-    id: "",
-    largeCategoryName: "",
+  const [subCategories, setSubCategories] = useState({
+    largeCategory_id: "",
     subCategories: [],
   });
 
-  const setSubCategory = (e) => {
-    setResult(e);
-    if (e.subCategories[0]) {
-      setKey(e.subCategories[0].subCategoryName);
-    }
+  const getSubCategories = (id) => {
+    fetch("http://localhost:8080/sideBar/" + id + "/subCategories")
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          return null;
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        setSubCategories((subCategories) => ({
+          ...subCategories,
+          largeCategory_id: id,
+          subCategories: res.data,
+        }));
+      });
   };
 
   const submitLargeCategory = (e) => {
@@ -63,7 +75,7 @@ const SideBar = (props) => {
       })
         .then((res) => {
           if (res.status === 200) {
-            return res.json;
+            return res.json();
           } else {
             return null;
           }
@@ -80,12 +92,11 @@ const SideBar = (props) => {
 
   const [subCategory, setsubCategory] = useState({
     //savesubCategory 초기화
-    largeCategory_id: "", //
-    subCategoryName: "", //target.value
+    largeCategory_id: "",
+    subCategoryName: "",
   });
 
-  const saveSubCategory = (e) => {
-    //e.target.value, e.target.id
+  const changeValue_sub = (e) => {
     setsubCategory((subCategory) => ({
       ...subCategory,
       largeCategory_id: e.target.id,
@@ -112,7 +123,6 @@ const SideBar = (props) => {
         }
       )
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
             return res.json;
           } else {
@@ -155,7 +165,7 @@ const SideBar = (props) => {
                       <Form.Control
                         type="text"
                         placeholder="add Category"
-                        onChange={changeValue}
+                        onChange={changeValue_large}
                         name="largeCategoryName"
                       />
                     </Form.Group>
@@ -164,13 +174,13 @@ const SideBar = (props) => {
               </Accordion.Item>
             </Accordion>
             <br />
-            {props.data.map((largeCategory) => {
+            {largeCategories.map((largeCategory) => {
               return (
                 <div
                   key={largeCategory.id}
                   style={{ cursor: "pointer" }}
                   onClick={() => {
-                    setSubCategory(largeCategory);
+                    getSubCategories(largeCategory.id);
                   }}
                 >
                   <SideBarLargecategory largeCategory={largeCategory} />
@@ -186,16 +196,14 @@ const SideBar = (props) => {
             onSelect={(k) => setKey(k)}
             className="mb-3"
           >
-            {result.subCategories.map((subCategory) => {
-              //result={선택한 largeCategory의 id, largeCategoryName ,subCategories: id, subCategoryName, boards}
+            {subCategories.subCategories.map((subCategory) => {
               return (
                 <Tab
-                  as="span"
                   key={subCategory.id}
                   title={<SideBarSubcategory subCategory={subCategory} />}
                   eventKey={subCategory.subCategoryName}
                 >
-                  {subCategory.boards.map((board) => {
+                  {subCategory.boardServiceDtoList.map((board) => {
                     return <BoardItem key={board.id} board={board} />;
                   })}
                 </Tab>
@@ -208,8 +216,8 @@ const SideBar = (props) => {
                     placeholder="Create subCategory"
                     aria-label="Create subCategory"
                     aria-describedby="basic-addon2"
-                    id={result.id}
-                    onChange={saveSubCategory}
+                    id={subCategories.largeCategory_id}
+                    onChange={changeValue_sub}
                   />
                   <Button
                     variant="outline-secondary"

@@ -3,10 +3,7 @@ import SideBar from "../../components/admin/SideBar";
 import UserSideBar from "../../components/user/UserSideBar";
 
 const Category = () => {
-  const [largeCategory, setLargeCategory] = useState({
-    stasus: "",
-    data: [],
-  });
+  const [largeCategories, setLargeCategories] = useState([]);
 
   const [authority, setAuthority] = useState("");
 
@@ -20,16 +17,17 @@ const Category = () => {
     fetch("http://localhost:8080/category")
       .then((res) => res.json())
       .then((res) => {
-        setLargeCategory(res); //공백에 가져온 정보로 채워줌
+        setLargeCategories(res.data); //공백에 가져온 정보로 채워줌
       });
   }, []);
 
   return (
     <div>
       {authority === "ROLE_TNUT" ? (
-        <SideBar data={largeCategory.data} />
+        <SideBar largeCategories={largeCategories} />
       ) : (
-        <UserSideBar data={largeCategory.data} />
+        <></>
+        //<UserSideBar largeCategories={largeCategories.data} />
       )}
     </div>
   );

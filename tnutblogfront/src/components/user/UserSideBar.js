@@ -4,7 +4,7 @@ import BoardItem from "../BoardItem";
 import styles from "../../css/UserSidebar.module.css";
 
 const UserSideBar = (props) => {
-  const defaultLargeCategory = props.data[0];
+  const defaultLargeCategory = props.largeCategory[0];
 
   const [result, setResult] = useState({
     id: "",
@@ -33,7 +33,7 @@ const UserSideBar = (props) => {
       <div className={styles.sidebarGrid}>
         <div className={styles.largeCategory}>
           <ul className={styles.largeCategoryItems}>
-            {props.data.map((largeCategory) => {
+            {props.largeCategory.map((largeCategory) => {
               return (
                 <li
                   key={largeCategory.id}
