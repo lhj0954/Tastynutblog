@@ -1,4 +1,4 @@
-package tnut.blogback.dto;
+package tnut.blogback.dto.boardDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

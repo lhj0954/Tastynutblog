@@ -42,7 +42,7 @@ public class User { //유저에 담길 내용: 유저네임, 비밀번호, 이�
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @OrderBy("id desc") //최신 댓글 순으로 정렬
-    @JsonIgnoreProperties({"subReplies"})
+    @JsonIgnoreProperties(value = {"subReplies"})
     private List<Reply> replies = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

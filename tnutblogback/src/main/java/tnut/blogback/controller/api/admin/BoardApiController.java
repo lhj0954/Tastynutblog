@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import tnut.blogback.dto.BoardSaveDto;
+import tnut.blogback.dto.boardDTO.BoardSaveDto;
 import tnut.blogback.dto.ResponseDto;
 import tnut.blogback.service.BoardService;
 

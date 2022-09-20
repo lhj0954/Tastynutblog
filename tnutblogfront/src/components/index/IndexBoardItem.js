@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styles from "../../css/IndexBoardItem.module.css";
 
 const IndexBoardItem = (props) => {
-  const { id, title, content, subCategory } = props.board;
+  const { id, title, content, subCategoryName } = props.board;
 
   let subContent = content.replace(/<[^>]*>?/g, ""); //태그 지우기
   subContent = subContent.substr(0, 55);
@@ -20,7 +20,7 @@ const IndexBoardItem = (props) => {
   return (
     <>
       <Card border="secondary" style={{ width: "18rem", marginRight: "30px" }}>
-        <Card.Header>{subCategory.subCategoryName}</Card.Header>
+        <Card.Header>{subCategoryName}</Card.Header>
         <Card.Body className={styles.cardBody}>
           <div className={styles.cardWrap}>
             <Card.Title>{subTitle}</Card.Title>

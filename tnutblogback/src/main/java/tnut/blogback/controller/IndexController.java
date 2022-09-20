@@ -2,11 +2,9 @@ package tnut.blogback.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tnut.blogback.dto.boardDTO.BoardIndexDto;
 import tnut.blogback.model.Board;
 import tnut.blogback.service.BoardService;
 
@@ -24,7 +22,7 @@ public class IndexController {
     }
 
     @GetMapping({"","/"}) //indexPage에 전체 게시물 목록을 넘겨줌
-    public List<Board> boardRecentList() {
+    public List<BoardIndexDto> boardRecentList() {
         return boardService.boardRecentList();
     }
 }
