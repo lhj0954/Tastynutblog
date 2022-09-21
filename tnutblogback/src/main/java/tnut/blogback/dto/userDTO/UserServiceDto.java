@@ -1,12 +1,12 @@
-package tnut.blogback.dto;
+package tnut.blogback.dto.userDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class UsernameDto {
-    private String changingNickname;
+@NoArgsConstructor
+public class UserServiceDto {
+    private String nickname;
 }

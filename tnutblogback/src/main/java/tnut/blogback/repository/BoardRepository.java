@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findTop15ByOrderByIdDesc();
-    List<Board> findAllBySubCategory_Id(Long id);
+    //List<Board> findAllBySubCategory_Id(Long id); <Tab> 선택시 해당 subCategory와 연관된 boards를 가져오려고 했으나 onClick()지원 안함..
 }

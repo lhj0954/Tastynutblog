@@ -1,19 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styles from "../../css/MyReplies.module.css";
 
 const MyReplyItem = (props) => {
-  const [reply, setReply] = useState({
-    board: { id: "", title: "" },
-    content: "",
-    createDate: "",
-    id: "",
-  });
-
-  useEffect(() => {
-    setReply(props.reply);
-  }, [props.reply]);
+  const reply = props.reply;
 
   return (
     <div>
@@ -23,10 +14,10 @@ const MyReplyItem = (props) => {
           <span style={{ float: "right" }}>
             게시글 :{" "}
             <Link
-              to={"/board/content/" + reply.board.id}
+              to={"/board/content/" + reply.boardServiceDto.id}
               style={{ color: "black" }}
             >
-              {reply.board.title}
+              {reply.boardServiceDto.title}
             </Link>
           </span>
         </div>

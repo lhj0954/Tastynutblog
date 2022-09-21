@@ -7,7 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import tnut.blogback.config.auth.PrincipalDetails;
 import tnut.blogback.dto.ResponseDto;
-import tnut.blogback.dto.UsernameDto;
+import tnut.blogback.dto.userDTO.NicknameDto;
 import tnut.blogback.service.UserService;
 
 @RequiredArgsConstructor
@@ -20,18 +20,8 @@ public class UserApiController {
         this.userService = userService;
     }
 
-    @GetMapping("/user/api/info")
-    public ResponseDto<?> userInfo (@AuthenticationPrincipal PrincipalDetails principal) {
-        return new ResponseDto<>(HttpStatus.OK.value(), userService.userInfo(principal.getUser().getUsername()));
-    }
-
-    @GetMapping("/{nickname}/checkNickname")
-    public ResponseDto<Boolean> checkNickname(@PathVariable String nickname) {
-        return new ResponseDto<>(HttpStatus.OK.value(), userService.checkNickname(nickname));
-    }
-
     @PutMapping("/user/api/changeNickname") // jwt의 username 이용
-    public ResponseDto<?> changeNickname (@RequestBody UsernameDto usernameDto, @AuthenticationPrincipal PrincipalDetails principal) {
-        return new ResponseDto<>(HttpStatus.OK.value(), userService.changeNickname(usernameDto, principal));
+    public ResponseDto<?> changeNickname (@RequestBody NicknameDto nicknameDto, @AuthenticationPrincipal PrincipalDetails principal) {
+        return new ResponseDto<>(HttpStatus.OK.value(), userService.changeNickname(nicknameDto, principal));
     }
 }

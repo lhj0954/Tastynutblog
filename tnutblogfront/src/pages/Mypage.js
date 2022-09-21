@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ChangeNickname from "../components/user/ChangeNickname";
-import Mycomments from "../components/user/MyReplies";
+import MyReplies from "../components/user/MyReplies";
 import styles from "../css/Mypage.module.css";
 
 const Mypage = () => {
@@ -10,11 +10,9 @@ const Mypage = () => {
 
   const navigate = useNavigate();
 
-  const [me, setMe] = useState({
-    createDate: "",
-    replies: [],
-    roleType: "",
+  const [userInfo, setUserInfo] = useState({
     nickname: "",
+    replies: [],
   });
 
   useEffect(() => {
@@ -26,7 +24,7 @@ const Mypage = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.status === 200) {
-          setMe(res.data);
+          setUserInfo(res.data);
         } else {
           alert("없는 회원입니다.");
           navigate("/");
@@ -48,7 +46,7 @@ const Mypage = () => {
             </li>
             <li
               style={{ cursor: "pointer" }}
-              onClick={() => setPage("myComments")}
+              onClick={() => setPage("myReplies")}
             >
               내가 쓴 댓글
             </li>
@@ -57,8 +55,8 @@ const Mypage = () => {
         <div className={styles.subpage}>
           {
             {
-              changeNickname: <ChangeNickname username={me.nickname} />,
-              myComments: <Mycomments replies={me.replies} />,
+              changeNickname: <ChangeNickname username={userInfo.nickname} />,
+              myReplies: <MyReplies replies={userInfo.replies} />,
             }[page]
           }
         </div>

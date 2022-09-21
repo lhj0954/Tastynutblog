@@ -22,11 +22,11 @@ const UserReply = () => {
             return (
               <tr key={reply.id}>
                 <td>{reply.id}</td>
-                <td>{reply.createDate}</td>
+                <td>{reply.creteDate}</td>
                 <td>{reply.content}</td>
                 <td style={{ width: "100px" }}>
                   <Link
-                    to={"/board/content/" + reply.board.id}
+                    to={"/board/content/" + reply.boardServiceDto.id}
                     style={{ color: "black" }}
                   >
                     게시글
