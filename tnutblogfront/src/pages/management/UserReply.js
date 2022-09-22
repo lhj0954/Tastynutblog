@@ -22,7 +22,7 @@ const UserReply = () => {
             return (
               <tr key={reply.id}>
                 <td>{reply.id}</td>
-                <td>{reply.creteDate}</td>
+                <td>{reply.createDate}</td>
                 <td>{reply.content}</td>
                 <td style={{ width: "100px" }}>
                   <Link

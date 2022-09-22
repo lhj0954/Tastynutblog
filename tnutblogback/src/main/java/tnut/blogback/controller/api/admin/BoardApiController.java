@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tnut.blogback.dto.boardDTO.BoardSaveDto;
 import tnut.blogback.dto.ResponseDto;
+import tnut.blogback.dto.boardDTO.BoardServiceDto;
+import tnut.blogback.model.Board;
 import tnut.blogback.service.BoardService;
 
 @RequiredArgsConstructor
@@ -30,7 +32,7 @@ public class BoardApiController { //게시글 작성(save), 삭제, 수정
     }
 
     @DeleteMapping("/admin/api/board/{id}/delete") //저장된 board 삭제
-    public String boardDelete (@PathVariable Long id) {
-        return boardService.boardDelete(id);
+    public ResponseDto<?> boardDelete (@PathVariable Long id) {
+        return new ResponseDto<>(HttpStatus.OK.value(), boardService.boardDelete(id));
     }
 }

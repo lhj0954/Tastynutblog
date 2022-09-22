@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tnut.blogback.dto.boardDTO.BoardIndexDto;
+import tnut.blogback.dto.boardDTO.BoardContentDto;
 import tnut.blogback.service.BoardService;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class IndexController {
     }
 
     @GetMapping({"","/"}) //indexPage에 전체 게시물 목록을 넘겨줌
-    public List<BoardIndexDto> boardRecentList() {
+    public List<BoardContentDto> boardRecentList() {
         return boardService.boardRecentList();
     }
 }

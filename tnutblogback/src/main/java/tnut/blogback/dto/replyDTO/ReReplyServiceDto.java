@@ -5,17 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReplyServiceDto {
+public class ReReplyServiceDto {
     private Long id;
     private String content;
     private String nickname;
     private Timestamp createDate;
-    private boolean deletable;
-    private Long board_id;
-    private List<ReReplyServiceDto> reReplyServiceDtoList;
 }

@@ -40,4 +40,10 @@ public class Board { // 보드에 담길 내용: 제목, 내용, 댓글, (글은
 
     @CreationTimestamp
     private Timestamp createDate;
+
+    public Board(SubCategory subCategory, String title, String content) {
+        this.subCategory = subCategory;
+        this.title = title;
+        this.content = content;
+    }
 }

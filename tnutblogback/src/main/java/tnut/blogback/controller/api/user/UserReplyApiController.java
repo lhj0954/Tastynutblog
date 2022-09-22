@@ -33,8 +33,8 @@ public class UserReplyApiController {
     }
 
     @DeleteMapping("/user/api/reply/{id}/delete") //댓글 삭제
-    public String replyDelete (@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principal) {
-        return replyService.replyDelete(id, principal.getUser());
+    public ResponseDto<?> replyDelete (@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principal) {
+        return new ResponseDto<>(HttpStatus.OK.value(), replyService.replyDelete(id, principal.getUser()));
     }
 
     @PutMapping("/user/api/reply/{id}/update")

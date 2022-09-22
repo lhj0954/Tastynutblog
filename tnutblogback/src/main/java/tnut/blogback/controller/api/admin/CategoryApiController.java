@@ -27,8 +27,8 @@ public class CategoryApiController {
     }
 
     @DeleteMapping("/admin/api/largeCategory/{id}/delete") //카테고리 삭제
-    public String largeCategoryDelete (@PathVariable Long id) {
-        return categoryService.largeCategoryDelete(id);
+    public ResponseDto<?> largeCategoryDelete (@PathVariable Long id) {
+        return new ResponseDto<>(HttpStatus.OK.value(), categoryService.largeCategoryDelete(id));
     }
 
     @PutMapping("/admin/api/largeCategory/{id}/update") //카테고리 이름 변경
@@ -42,8 +42,8 @@ public class CategoryApiController {
     }
 
     @DeleteMapping("/admin/api/subCategory/{id}/delete") //카테고리 삭제
-    public String subCategoryDelete (@PathVariable Long id) {
-        return categoryService.subCategoryDelete(id);
+    public ResponseDto<?> subCategoryDelete (@PathVariable Long id) {
+        return new ResponseDto<>(HttpStatus.OK.value(), categoryService.subCategoryDelete(id));
     }
 
     @PutMapping("/admin/api/subCategory/{id}/update") //카테고리 이름 변경

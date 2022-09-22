@@ -35,9 +35,9 @@ public class ReplyService {
                 .content(replySaveDto.getContent())
                 .build();
 
-        Reply reply = replyRepository.save(replyEntity);
+        replyRepository.save(replyEntity);
 
-        return new ReplyServiceDto(reply.getId());
+        return new ReplyServiceDto();
     }
 
     @Transactional
@@ -56,13 +56,13 @@ public class ReplyService {
                 .content(reReplySaveDto.getContent())
                 .build();
 
-        Reply reReply = replyRepository.save(reReplyEntity);
+        replyRepository.save(reReplyEntity);
 
-        return new ReplyServiceDto(reReply.getId());
+        return new ReplyServiceDto();
     }
 
     @Transactional
-    public String replyDelete(Long id, User user) { //유저 댓글 삭제 DeleteMapping User는 pincipalDatails에서 가져옴
+    public ReplyServiceDto replyDelete(Long id, User user) { //유저 댓글 삭제 DeleteMapping User는 pincipalDatails에서 가져옴
         Reply replyEntity = replyRepository.findByIdAndUser(id, user)
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제되거나 권한이 없는 이용자 입니다."));
 
@@ -73,18 +73,18 @@ public class ReplyService {
             replyRepository.deleteById(id); //삭제 대상은 삭제하고
             replyRepository.flush(); //플러쉬 하지 않으면 삭제가 맨 마지막에 DB에서 처리 되기 때문에 부모댓글의 대댓글이 존재한 채로 다음 로직이 먼저 실행
             if (replyEntity.getParentReply() == null) {
-                return "success delete!";
+                return new ReplyServiceDto();
             } else {
                 if (replyEntity.getParentReply().isDeletable()) {
                     replyDelete(replyEntity.getParentReply().getId(), replyEntity.getParentReply().getUser()); //부모에 대한 삭제도 진행
                 }
             }
         }
-        return "success delete!";
+        return new ReplyServiceDto();
     }
 
     @Transactional
-    public String replyDelete(Long id) { //관리자 댓글 삭제
+    public ReplyServiceDto replyDelete(Long id) { //관리자 댓글 삭제
         Reply replyEntity = replyRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 댓글입니다."));
 
@@ -95,14 +95,14 @@ public class ReplyService {
             replyRepository.deleteById(id);
             replyRepository.flush();
             if (replyEntity.getParentReply() == null) {
-                return "success delete!";
+                return new ReplyServiceDto();
             } else {
                 if (replyEntity.getParentReply().isDeletable()) {
                     replyDelete(replyEntity.getParentReply().getId());
                 }
             }
         }
-        return "success delete!";
+        return new ReplyServiceDto();
     }
 
     @Transactional
@@ -112,6 +112,6 @@ public class ReplyService {
 
         replyEntity.setContent(replySaveDto.getContent());
 
-        return new ReplyServiceDto(replyEntity.getId());
+        return new ReplyServiceDto();
     }
 }

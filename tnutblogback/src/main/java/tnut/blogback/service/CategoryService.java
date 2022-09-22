@@ -65,13 +65,13 @@ public class CategoryService {
     }
 
     @Transactional
-    public String largeCategoryDelete (Long id) {
+    public LargeCategoryServiceDto largeCategoryDelete (Long id) {
 
         categoryNameRepository.deleteCategoryNameListsByLcId(id);
 
         largeCategoryRepository.deleteById(id);
 
-        return "success delete";
+        return new LargeCategoryServiceDto();
     }
 
     @Transactional
@@ -134,12 +134,13 @@ public class CategoryService {
     }
 
     @Transactional //subCategory delete
-    public String subCategoryDelete (Long id) {
+    public SubCategoryServiceDto subCategoryDelete (Long id) {
 
         categoryNameRepository.deleteCategoryNameListsByScId(id);
 
         subCategoryRepository.deleteById(id);
-        return "success delete";
+
+        return new SubCategoryServiceDto();
     }
 
     @Transactional //서브 카테고리 이름 바꾸기
