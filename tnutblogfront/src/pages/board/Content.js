@@ -22,26 +22,23 @@ const Content = () => {
 
   const [board, setBoard] = useState({
     //처음에 공백
-    data: [],
-    status: "",
+    title: "",
+    content: "",
+    subCategoryName: "",
+    replies: [],
   });
 
-  const [replyList, setReplyList] = useState([]);
-
   const [reply, setReply] = useState({
+    //댓글 작성 정보
     board_id: id,
     content: "",
   });
-
-  const [subCategoryName, setSubCategoryName] = useState({});
 
   useEffect(() => {
     fetch("http://localhost:8080/board/" + id) //id를 통해서 게시판 정보를 가져옴
       .then((res) => res.json())
       .then((res) => {
-        setBoard(res); //공백에 가져온 정보로 채워줌
-        setSubCategoryName(res.data.subCategory);
-        setReplyList(res.data.replies);
+        setBoard(res.data); //공백에 가져온 정보로 채워줌
       });
   }, [id]);
 
@@ -114,12 +111,12 @@ const Content = () => {
           style={{ textDecoration: "none", color: "black", fontWeight: "bold" }}
           title="카테고리 별 게시글 페이지로 이동합니다."
         >
-          Category: {subCategoryName.subCategoryName}
+          Category: {board.subCategoryName}
         </Link>
         <br />
         <br />
         <div className={styles.contentTop}>
-          <h1 style={{ margin: "0" }}>{board.data.title}</h1>
+          <h1 style={{ margin: "0" }}>{board.title}</h1>
           {authority === "ROLE_TNUT" ? (
             <div className={styles.utilButton}>
               <Button variant="secondary" onClick={() => updateBoard()}>
@@ -140,14 +137,14 @@ const Content = () => {
             </div>
           )}
         </div>
-        <h6>{board.data.createDate}</h6>
+        <h6>{board.createDate}</h6>
         <hr />
       </div>
       <Card>
         <Card.Body>
           <div
             className={styles.content}
-            dangerouslySetInnerHTML={{ __html: board.data.content }}
+            dangerouslySetInnerHTML={{ __html: board.content }}
           />
         </Card.Body>
       </Card>
@@ -182,15 +179,13 @@ const Content = () => {
       </Form>
       <hr />
       <>
-        {replyList
-          .filter((reply) => reply.parentReply === null) //대댓글 렌더링 방지
-          .map((reply) => {
-            if (authority === "ROLE_TNUT") {
-              return <AdminReplyItem key={reply.id} reply={reply} />;
-            } else {
-              return <ReplyItem key={reply.id} reply={reply} />;
-            }
-          })}
+        {board.replies.map((reply) => {
+          if (authority === "ROLE_TNUT") {
+            return <AdminReplyItem key={reply.id} reply={reply} />;
+          } else {
+            return <ReplyItem key={reply.id} reply={reply} />;
+          }
+        })}
       </>
     </div>
   );

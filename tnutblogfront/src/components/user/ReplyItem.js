@@ -11,8 +11,15 @@ import {
 import ReReplyItem from "./ReReplyItem";
 
 const ReplyItem = (props) => {
-  const { content, id, reReplies, createDate, board, user, deletable } =
-    props.reply;
+  const {
+    board_id,
+    content,
+    createDate,
+    deletable,
+    id,
+    nickname,
+    reReplyServiceDtoList,
+  } = props.reply;
 
   let accessor;
   if (localStorage.getItem("authority")) {
@@ -25,7 +32,7 @@ const ReplyItem = (props) => {
 
   const [reReply, setReReply] = useState({
     parentReply_id: id,
-    board_id: board.id,
+    board_id: board_id,
     content: "",
     username: accessor,
   });
@@ -152,11 +159,11 @@ const ReplyItem = (props) => {
         <Card>
           <Card.Header as="h5">
             <div>
-              <span> {user.nickname}</span>
+              <span> {nickname}</span>
               <span style={{ float: "right" }}>
                 {replyDate}
                 {"  "}
-                {user.nickname === accessor ? (
+                {nickname === accessor ? (
                   <>
                     {deletable === true ? (
                       <></>
@@ -253,7 +260,7 @@ const ReplyItem = (props) => {
               </Form>
             )}
             <>
-              {reReplies.map((reReply) => {
+              {reReplyServiceDtoList.map((reReply) => {
                 return <ReReplyItem key={reReply.id} reReply={reReply} />;
               })}
             </>

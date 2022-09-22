@@ -14,6 +14,7 @@ import tnut.blogback.repository.categoryrepository.SubCategoryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, 글 목록 불러오기         댓글 작성, 삭제, 수정
@@ -42,6 +43,7 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
         List<Board> boards = boardRepository.findTop15ByOrderByIdDesc();
 
         List<BoardContentDto> boardContentDtoList = new ArrayList<>();
+        List<ReplyServiceDto> replies = new ArrayList<>();
 
         boards.forEach(board -> boardContentDtoList
                 .add(new BoardContentDto(
@@ -49,7 +51,7 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
                         board.getTitle(),
                         board.getContent(),
                         board.getSubCategory().getSubCategoryName(),
-                        board.getReplies()
+                        replies
                 )));
 
         return boardContentDtoList;
@@ -63,34 +65,40 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
         List<ReplyServiceDto> replies = new ArrayList<>();
         List<ReReplyServiceDto> reReplies = new ArrayList<>();
 
-        boardEntity.getReplies().forEach(reply -> {
-            reply.getReReplies().forEach(reReply -> reReplies.add(
-                    new ReReplyServiceDto(
-                            reReply.getId(),
-                            reReply.getContent(),
-                            reReply.getUser().getNickname(),
-                            reReply.getCreateDate()
-                    )
-            ));
-            replies.add(
-                    new ReplyServiceDto(
-                            reply.getId(),
-                            reply.getContent(),
-                            reply.getUser().getNickname(),
-                            reply.getCreateDate(),
-                            reply.isDeletable(),
-                            reply.getBoard().getId(),
-                            reReplies
-                    )
-            );
-        });
+        boardEntity.getReplies()
+                .forEach(reply -> {
+                    reply.getReReplies().stream()
+                            .filter(reReply ->
+                                    reReply.getParentReply().getId() == reply.getId()
+                            )
+                            .forEach(reReply -> reReplies.add(
+                                    new ReReplyServiceDto(
+                                            reReply.getId(),
+                                            reReply.getContent(),
+                                            reReply.getUser().getNickname(),
+                                            reReply.getCreateDate()
+                                    )
+                            ));
+
+                    replies.add(
+                            new ReplyServiceDto(
+                                    reply.getId(),
+                                    reply.getContent(),
+                                    reply.getUser().getNickname(),
+                                    reply.getCreateDate(),
+                                    reply.isDeletable(),
+                                    reply.getBoard().getId(),
+                                    reReplies
+                            )
+                    );
+                });
 
         return new BoardContentDto(
                 boardEntity.getId(),
                 boardEntity.getTitle(),
                 boardEntity.getContent(),
                 boardEntity.getSubCategory().getSubCategoryName(),
-                boardEntity.getReplies()
+                replies
         );
     }
 

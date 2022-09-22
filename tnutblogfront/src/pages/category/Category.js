@@ -26,8 +26,7 @@ const Category = () => {
       {authority === "ROLE_TNUT" ? (
         <SideBar largeCategories={largeCategories} />
       ) : (
-        <></>
-        //<UserSideBar largeCategories={largeCategories.data} />
+        <UserSideBar largeCategories={largeCategories} />
       )}
     </div>
   );

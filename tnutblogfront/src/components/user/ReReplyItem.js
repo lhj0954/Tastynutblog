@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Badge, Button, Card, Form, InputGroup } from "react-bootstrap";
 
 const ReReplyItem = (props) => {
-  const { content, id, user, createDate } = props.reReply;
+  console.log(props);
+  const { content, id, nickname, createDate } = props.reReply;
 
   const [accessor, setAccessor] = useState("");
   const reReplyDate = createDate.substr(0, 10);
@@ -84,10 +85,10 @@ const ReReplyItem = (props) => {
               <Card.Body>
                 <span>↳ {content} </span>
                 <div style={{ float: "right" }}>
-                  {user.nickname}
+                  {nickname}
                   {" / "}
                   {reReplyDate}{" "}
-                  {user.nickname === accessor ? (
+                  {nickname === accessor ? (
                     <>
                       <Button variant="outline-secondary" onClick={deleteReply}>
                         삭제

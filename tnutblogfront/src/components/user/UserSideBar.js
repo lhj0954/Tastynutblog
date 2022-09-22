@@ -4,27 +4,38 @@ import BoardItem from "../BoardItem";
 import styles from "../../css/UserSidebar.module.css";
 
 const UserSideBar = (props) => {
-  const defaultLargeCategory = props.largeCategory[0];
-
-  const [result, setResult] = useState({
-    id: "",
-    largeCategoryName: "",
-    subCategories: [],
-  });
+  const largeCategories = props.largeCategories;
+  const defaultLargeCategory = largeCategories[0];
 
   useEffect(() => {
     if (defaultLargeCategory) {
-      setResult(defaultLargeCategory);
+      getSubCategories(defaultLargeCategory.id);
     }
   }, [defaultLargeCategory]);
 
   const [key, setKey] = useState();
 
-  const setSubCategory = (e) => {
-    setResult(e);
-    if (e.subCategories[0]) {
-      setKey(e.subCategories[0].subCategoryName);
-    }
+  const [subCategories, setSubCategories] = useState({
+    largeCategory_id: "",
+    subCategories: [],
+  });
+
+  const getSubCategories = (id) => {
+    fetch("http://localhost:8080/sideBar/" + id + "/subCategories")
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          return null;
+        }
+      })
+      .then((res) => {
+        setSubCategories((subCategories) => ({
+          ...subCategories,
+          largeCategory_id: id,
+          subCategories: res.data,
+        }));
+      });
   };
 
   return (
@@ -33,12 +44,12 @@ const UserSideBar = (props) => {
       <div className={styles.sidebarGrid}>
         <div className={styles.largeCategory}>
           <ul className={styles.largeCategoryItems}>
-            {props.largeCategory.map((largeCategory) => {
+            {largeCategories.map((largeCategory) => {
               return (
                 <li
                   key={largeCategory.id}
                   onClick={() => {
-                    setSubCategory(largeCategory);
+                    getSubCategories(largeCategory.id);
                   }}
                   className={styles.largeCategoryItem}
                 >
@@ -55,14 +66,14 @@ const UserSideBar = (props) => {
             onSelect={(k) => setKey(k)}
             className="mb-3"
           >
-            {result.subCategories.map((subCategory) => {
+            {subCategories.subCategories.map((subCategory) => {
               return (
                 <Tab
                   key={subCategory.id}
                   title={subCategory.subCategoryName}
                   eventKey={subCategory.subCategoryName}
                 >
-                  {subCategory.boards.map((board) => {
+                  {subCategory.boardServiceDtoList.map((board) => {
                     return <BoardItem key={board.id} board={board} />;
                   })}
                 </Tab>

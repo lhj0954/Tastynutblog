@@ -6,48 +6,7 @@ import styles from "../../css/Home.module.css";
 import profile_img from "../../img/android-icon-144x144.png";
 
 const Home = () => {
-  // const [page, setPage] = useState(0);
-
-  // const [disableFirst, setDisableFirst] = useState(false);
-  // const [disableLast, setDisableLast] = useState(false);
-
   const [boards, setBoards] = useState([]);
-
-  // const previousPage = () => {
-  //   setPage(page - 1);
-  // };
-
-  // const nextPage = () => {
-  //   setPage(page + 1);
-  // };
-
-  // const firstPage = () => {
-  //   setPage(page - page);
-  // };
-
-  // const lastPage = () => {
-  //   setPage(boards.totalPages - 1);
-  // };
-
-  // useEffect(() => {
-  //   fetch("http://localhost:8080/?page=" + page) //localhost:8080에게 Get방식(기본값으로 표기안해도 됨)으로 요청을 보내면 controller가 받아서 로직실행
-  //     .then((res) => res.json()) //받아온 데이터를 json으로 감싸서
-  //     .then((res) => {
-  //       //setBoards에게 깊은 복사-> 렌더링;
-  //       setBoards(res);
-  //       if (res.first) {
-  //         setDisableFirst(true);
-  //       } else {
-  //         setDisableFirst(false);
-  //       }
-  //       if (res.last) {
-  //         setDisableLast(true);
-  //       } else {
-  //         setDisableLast(false);
-  //       }
-  //     });
-  // }, [page]); //page가 변할 때마다 한번씩
-  //=> index페이지 변화 : 최근 글 15개만 받아오면 됨 해당 코드는 모든 게시글을 pageable로 받아오는 코드
 
   useEffect(() => {
     //인덱스 화면에 불러올 게시글 정보
@@ -170,11 +129,6 @@ const Home = () => {
             </div>
           </Carousel.Item>
         </Carousel>
-        {/* <div style={{ display: "flex" }}>
-          {boards.map((board) => {
-            return <IndexBoardItem key={board.id} board={board} />;
-          })}
-        </div> */}
         <br />
       </div>
     </div>
