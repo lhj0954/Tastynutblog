@@ -81,7 +81,14 @@ public class CategoryService {
 
         largeCategoryEntity.setLargeCategoryName(largeCategorySaveDto.getLargeCategoryName());
 
-        return new LargeCategoryServiceDto();
+        List<SubCategoryServiceDto> subCategoryServiceDtoList = new ArrayList<>();
+
+        return new LargeCategoryServiceDto
+                (
+                        largeCategoryEntity.getId(),
+                        largeCategoryEntity.getLargeCategoryName(),
+                        subCategoryServiceDtoList
+                );
     }
 
     @Transactional(readOnly = true)

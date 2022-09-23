@@ -16,6 +16,7 @@ import SideBarSubcategory from "./SideBarSubcategory";
 
 const SideBar = (props) => {
   const { largeCategories } = props;
+
   const defaultLargeCategory = largeCategories[0];
   const [key, setKey] = useState();
 
@@ -80,6 +81,7 @@ const SideBar = (props) => {
           }
         })
         .then((res) => {
+          console.log(res);
           if (res !== null) {
             window.location.reload();
           } else {

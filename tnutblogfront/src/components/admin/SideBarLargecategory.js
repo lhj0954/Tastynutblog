@@ -3,12 +3,16 @@ import { Badge, Form, FormControl, InputGroup, Nav } from "react-bootstrap";
 import styles from "../../css/SideBarLargeCategory.module.css";
 
 const SideBarLargecategory = (props) => {
-  const largeCategory = props.largeCategory;
+  const { id } = props.largeCategory;
+
+  const [largeCategoryName, setLargeCategoryName] = useState(
+    props.largeCategory.largeCategoryName
+  );
 
   const [mode, setMode] = useState("read");
 
   const [updateLC, setUpdateLC] = useState({
-    largeCategoryName: largeCategory.largeCategoryName,
+    largeCategoryName: largeCategoryName,
     id: "",
   });
 
@@ -23,9 +27,9 @@ const SideBarLargecategory = (props) => {
         headers: { AccessToken: localStorage.getItem("Tnut's accessToken") },
       }
     )
-      .then((res) => res.text())
+      .then((res) => res.json())
       .then((res) => {
-        if (res === "success delete") {
+        if (res.status === 200) {
           window.location.reload();
         } else {
           alert("삭제 실패");
@@ -61,14 +65,15 @@ const SideBarLargecategory = (props) => {
       )
         .then((res) => {
           if (res.status === 200) {
-            return res.json;
+            return res.json();
           } else {
             return null;
           }
         })
         .then((res) => {
           if (res !== null) {
-            window.location.reload();
+            setMode("read");
+            setLargeCategoryName(res.data.largeCategoryName);
           } else {
             alert("글 수정 실패!");
           }
@@ -81,9 +86,7 @@ const SideBarLargecategory = (props) => {
       <Nav.Item className={styles.largeCategoryItem}>
         {mode === "read" ? (
           <>
-            <h3 style={{ display: "inline" }}>
-              {largeCategory.largeCategoryName}
-            </h3>
+            <h3 style={{ display: "inline" }}>{largeCategoryName}</h3>
             <div
               style={{ float: "right", paddingTop: "6px", paddingRight: "4px" }}
             >
@@ -91,7 +94,7 @@ const SideBarLargecategory = (props) => {
                 bg="danger"
                 style={{ cursor: "pointer", marginRight: "4px" }}
                 onClick={deleteLargeCategory}
-                id={largeCategory.id}
+                id={id}
               >
                 삭제
               </Badge>
@@ -115,7 +118,7 @@ const SideBarLargecategory = (props) => {
                   placeholder="대분류 입력"
                   aria-label="Fix largeCategory"
                   aria-describedby="basic-addon2"
-                  id={largeCategory.id}
+                  id={id}
                   onChange={changeValue_updateLarge}
                   value={updateLC.largeCategoryName || ""}
                 />
@@ -126,7 +129,7 @@ const SideBarLargecategory = (props) => {
                     setMode("read");
                     setUpdateLC((updateLC) => ({
                       ...updateLC,
-                      largeCategoryName: largeCategory.largeCategoryName,
+                      largeCategoryName: largeCategoryName,
                     }));
                   }}
                   style={{ padding: "10px" }}
