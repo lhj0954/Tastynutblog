@@ -14,7 +14,7 @@ const SaveForm = () => {
     subCategory_id: "",
   });
 
-  const [categories, setCategories] = useState([]); //카테고리 받아 올 곳 초기화
+  const [categories, setCategories] = useState([]); //카테고리 받아 올 곳
   const [subCategories, setSubCategories] = useState([]); //selection으로 부터 값을 받음
 
   const selectLC = (e) => {

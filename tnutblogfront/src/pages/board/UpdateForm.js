@@ -18,21 +18,23 @@ const UpdateForm = () => {
     subCategory_id: "",
   });
 
-  const [categories, setCategories] = useState([]); //카테고리 받아 올 곳 초기화
-  const [largeCategoryId, setLargeCategoryId] = useState("");
-
-  const selectLC = (e) => {
-    //largeCategory id값을 넘겨줌
-    setLargeCategoryId(e.target.value);
-  };
+  const [categories, setCategories] = useState([]); //카테고리 받아 올 곳
+  const [subCategories, setSubCategories] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/categoryNameList")
+    fetch("http://localhost:8080/category")
       .then((res) => res.json())
       .then((res) => {
         setCategories(res.data); //공백에 가져온 정보로 채워줌
       });
   }, []);
+
+  const selectLC = (e) => {
+    const categoryList = categories.filter(
+      (category) => String(category.id) === e.target.value
+    );
+    setSubCategories(categoryList[0].subCategoryServiceDtoList);
+  };
 
   useEffect(() => {
     fetch("http://localhost:8080/board/" + id) //update할 게시글의 데이터를 받아옴
@@ -42,7 +44,6 @@ const UpdateForm = () => {
           ...board,
           title: res.data.title,
           content: res.data.content,
-          subCategory_id: res.data.subCategory.id,
         }));
       });
   }, [id]);
@@ -63,28 +64,32 @@ const UpdateForm = () => {
 
   const submitBoard = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/admin/api/board/" + id + "/update", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        AccessToken: localStorage.getItem("Tnut's accessToken"),
-      },
-      body: JSON.stringify(board),
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json;
-        } else {
-          return null;
-        }
+    if (board.subCategory_id === "") {
+      alert("카테고리를 선택하세요");
+    } else {
+      fetch("http://localhost:8080/admin/api/board/" + id + "/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          AccessToken: localStorage.getItem("Tnut's accessToken"),
+        },
+        body: JSON.stringify(board),
       })
-      .then((res) => {
-        if (res !== null) {
-          navigate(-1); //글 등록 후 이전 페이지로
-        } else {
-          alert("글 수정 실패!");
-        }
-      });
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json;
+          } else {
+            return null;
+          }
+        })
+        .then((res) => {
+          if (res !== null) {
+            navigate(-1); //글 등록 후 이전 페이지로
+          } else {
+            alert("글 수정 실패!");
+          }
+        });
+    }
   };
 
   const modules = {
@@ -145,15 +150,13 @@ const UpdateForm = () => {
             <div>
               <Form.Select size="sm" onChange={selectLC}>
                 <option value={""}>=Select LargeCategory=</option>
-                {categories
-                  .filter((category) => category.categoryType === "LARGE") //largeCategory 리스트가 출력됨
-                  .map((category) => {
-                    return (
-                      <option key={category.id} value={category.lcId}>
-                        {category.categoryName}
-                      </option>
-                    );
-                  })}
+                {categories.map((category) => {
+                  return (
+                    <option key={category.id} value={category.id}>
+                      {category.largeCategoryName}
+                    </option>
+                  );
+                })}
               </Form.Select>
               <Form.Select
                 size="sm"
@@ -161,19 +164,13 @@ const UpdateForm = () => {
                 name="subCategory_id"
               >
                 <option value={""}>=Select SubCategory=</option>
-                {categories
-                  .filter(
-                    (category) =>
-                      category.categoryType === "SUB" &&
-                      String(category.lcId) === largeCategoryId
-                  )
-                  .map((category) => {
-                    return (
-                      <option key={category.id} value={category.scId}>
-                        {category.categoryName}
-                      </option>
-                    );
-                  })}
+                {subCategories.map((subCategory) => {
+                  return (
+                    <option key={subCategory.id} value={subCategory.id}>
+                      {subCategory.subCategoryName}
+                    </option>
+                  );
+                })}
               </Form.Select>
             </div>
             <br />
