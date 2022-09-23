@@ -50,9 +50,10 @@ const Content = () => {
         AccessToken: localStorage.getItem("Tnut's accessToken"),
       },
     })
-      .then((res) => res.text())
+      .then((res) => res.json())
       .then((res) => {
-        if (res === "success delete!") {
+        if (res.status === 200) {
+          alert("삭제 성공");
           navigate("/");
         } else {
           alert("삭제 실패");
