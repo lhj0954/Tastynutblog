@@ -11,15 +11,13 @@ import {
 import ReReplyItem from "./ReReplyItem";
 
 const ReplyItem = (props) => {
-  const {
-    board_id,
-    content,
-    createDate,
-    deletable,
-    id,
-    nickname,
-    reReplyServiceDtoList,
-  } = props.reply;
+  const { board_id, createDate, deletable, id, nickname } = props.reply;
+
+  const [content, setContent] = useState(props.reply.content);
+
+  const [reReplyServiceDtoList, setReReplyServiceDtoList] = useState(
+    props.reply.reReplyServiceDtoList
+  );
 
   let accessor;
   if (localStorage.getItem("authority")) {
@@ -39,23 +37,72 @@ const ReplyItem = (props) => {
 
   const [mode, setMode] = useState("read");
 
-  const [contentValue, setContentValue] = useState({
+  const [replyValue, setReplyValue] = useState({
     id: id,
     content: content,
   });
 
-  const changeValue1 = (e) => {
+  const changeRereplyValue = (e) => {
     setReReply((reReply) => ({
       ...reReply,
       content: e.target.value,
     }));
   };
 
-  const changeValue2 = (e) => {
-    setContentValue((contentValue) => ({
-      ...contentValue,
+  const changeReplyValue = (e) => {
+    setReplyValue((replyValue) => ({
+      ...replyValue,
       content: e.target.value,
     }));
+  };
+
+  const updateReply = (e) => {
+    e.preventDefault();
+    if (replyValue.content.length === 0) {
+      alert("빈 댓글은 작성하실 수 없습니다.");
+    } else {
+      fetch("http://localhost:8080/user/api/reply/" + id + "/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          AccessToken: localStorage.getItem("Tnut's accessToken"),
+        },
+        body: JSON.stringify(replyValue),
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json();
+          } else {
+            return null;
+          }
+        })
+        .then((res) => {
+          if (res !== null) {
+            setContent(res.data);
+            setMode("read");
+          } else {
+            alert("댓글 수정 실패!");
+          }
+        });
+    }
+  };
+
+  const deleteReply = () => {
+    fetch("http://localhost:8080/user/api/reply/" + id + "/delete", {
+      method: "DELETE",
+      headers: {
+        AccessToken: localStorage.getItem("Tnut's accessToken"),
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 200) {
+          window.location.reload();
+          alert("삭제 되었습니다.");
+        } else {
+          alert("삭제 실패");
+        }
+      });
   };
 
   const submitRereply = (e) => {
@@ -84,54 +131,11 @@ const ReplyItem = (props) => {
           if (res === null) {
             alert("댓글 등록 실패!");
           } else {
-            window.location.reload();
-          }
-        });
-    }
-  };
-
-  const deleteReply = () => {
-    fetch("http://localhost:8080/user/api/reply/" + id + "/delete", {
-      method: "DELETE",
-      headers: {
-        AccessToken: localStorage.getItem("Tnut's accessToken"),
-      },
-    })
-      .then((res) => res.text())
-      .then((res) => {
-        if (res === "success delete!") {
-          window.location.reload();
-        } else {
-          alert("삭제 실패");
-        }
-      });
-  };
-
-  const updateReply = (e) => {
-    e.preventDefault();
-    if (contentValue.content.length === 0) {
-      alert("빈 댓글은 작성하실 수 없습니다.");
-    } else {
-      fetch("http://localhost:8080/user/api/reply/" + id + "/update", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          AccessToken: localStorage.getItem("Tnut's accessToken"),
-        },
-        body: JSON.stringify(contentValue),
-      })
-        .then((res) => {
-          if (res.status === 200) {
-            return res.json;
-          } else {
-            return null;
-          }
-        })
-        .then((res) => {
-          if (res !== null) {
-            window.location.reload();
-          } else {
-            alert("댓글 수정 실패!");
+            setReReply((reReply) => ({
+              ...reReply,
+              content: "",
+            }));
+            setReReplyServiceDtoList([...reReplyServiceDtoList, res.data]);
           }
         });
     }
@@ -199,8 +203,9 @@ const ReplyItem = (props) => {
                 <InputGroup className="mb-3">
                   <Form.Control
                     type="reReply"
-                    onChange={changeValue1}
+                    onChange={changeRereplyValue}
                     name="reReply"
+                    value={reReply.content || ""}
                   />
                   {accessor ? (
                     <Button
@@ -238,17 +243,17 @@ const ReplyItem = (props) => {
                 <InputGroup className="mb-3">
                   <Form.Control
                     type="replyUpdate"
-                    onChange={changeValue2}
+                    onChange={changeReplyValue}
                     name="replyUpdates"
-                    value={contentValue.content || ""}
+                    value={replyValue.content || ""}
                   />
                   <Badge
                     bg="secondary"
                     variant="outline-secondary"
                     onClick={() => {
                       setMode("read");
-                      setContentValue((contentValue) => ({
-                        ...contentValue,
+                      setReplyValue((replyValue) => ({
+                        ...replyValue,
                         content: content,
                       }));
                     }}

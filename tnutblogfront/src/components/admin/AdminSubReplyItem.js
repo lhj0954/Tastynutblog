@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Badge, Button, Card, Form, InputGroup } from "react-bootstrap";
 
 const AdminSubReplyItem = (props) => {
-  const { content, id, user, createDate } = props.subreply[0];
-  const accessor = props.subreply[1];
+  const { content, id, nickname, createDate } = props.reReply[0];
+
+  const [_content, set_Content] = useState(content);
+
+  const accessor = props.reReply[1];
 
   const [mode, setMode] = useState("read");
 
@@ -11,7 +14,7 @@ const AdminSubReplyItem = (props) => {
 
   const [contentValue, setContentValue] = useState({
     id: id,
-    content: content,
+    content: _content,
   });
 
   const changeValue = (e) => {
@@ -28,10 +31,9 @@ const AdminSubReplyItem = (props) => {
         AccessToken: localStorage.getItem("Tnut's accessToken"),
       },
     })
-      .then((res) => res.text())
+      .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        if (res === "success delete!") {
+        if (res.status === 200) {
           window.location.reload();
         } else {
           alert("삭제 실패");
@@ -54,14 +56,15 @@ const AdminSubReplyItem = (props) => {
       })
         .then((res) => {
           if (res.status === 200) {
-            return res.json;
+            return res.json();
           } else {
             return null;
           }
         })
         .then((res) => {
           if (res !== null) {
-            window.location.reload();
+            set_Content(res.data);
+            setMode("read");
           } else {
             alert("댓글 수정 실패!");
           }
@@ -74,14 +77,14 @@ const AdminSubReplyItem = (props) => {
       <Card>
         {mode === "read" ? (
           <>
-            {content !== null ? (
+            {_content !== null ? (
               <Card.Body>
-                <span>↳ {content}</span>
+                <span>↳ {_content}</span>
                 <span style={{ float: "right" }}>
-                  {user.nickname}
+                  {nickname}
                   {" / "}
                   {reReplyDateDate}{" "}
-                  {accessor === user.nickname ? (
+                  {accessor === nickname ? (
                     <>
                       {}
                       <Button
@@ -131,7 +134,7 @@ const AdminSubReplyItem = (props) => {
                   setMode("read");
                   setContentValue((contentValue) => ({
                     ...contentValue,
-                    content: content,
+                    content: _content,
                   }));
                 }}
                 style={{ padding: "10px", cursor: "pointer" }}

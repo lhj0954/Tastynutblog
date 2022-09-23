@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Badge, Button, Card, Form, InputGroup } from "react-bootstrap";
 
 const ReReplyItem = (props) => {
-  console.log(props);
-  const { content, id, nickname, createDate } = props.reReply;
+  const { id, nickname, createDate } = props.reReply;
+
+  const [content, setContent] = useState(props.reReply.content);
 
   const [accessor, setAccessor] = useState("");
   const reReplyDate = createDate.substr(0, 10);
@@ -28,24 +29,6 @@ const ReReplyItem = (props) => {
     }));
   };
 
-  const deleteReply = () => {
-    fetch("http://localhost:8080/user/api/reply/" + id + "/delete", {
-      method: "DELETE",
-      headers: {
-        AccessToken: localStorage.getItem("Tnut's accessToken"),
-      },
-    })
-      .then((res) => res.text())
-      .then((res) => {
-        console.log(res);
-        if (res === "success delete!") {
-          window.location.reload();
-        } else {
-          alert("삭제 실패");
-        }
-      });
-  };
-
   const updateReply = (e) => {
     e.preventDefault();
     if (contentValue.content.length === 0) {
@@ -61,19 +44,38 @@ const ReReplyItem = (props) => {
       })
         .then((res) => {
           if (res.status === 200) {
-            return res.json;
+            return res.json();
           } else {
             return null;
           }
         })
         .then((res) => {
           if (res !== null) {
-            window.location.reload();
+            setContent(res.data);
+            setMode("read");
           } else {
             alert("댓글 수정 실패!");
           }
         });
     }
+  };
+
+  const deleteReReply = (id) => {
+    fetch("http://localhost:8080/user/api/reply/" + id + "/delete", {
+      method: "DELETE",
+      headers: {
+        AccessToken: localStorage.getItem("Tnut's accessToken"),
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 200) {
+          alert("삭제 되었습니다.");
+          window.location.reload();
+        } else {
+          alert("삭제 실패");
+        }
+      });
   };
 
   return (
@@ -90,7 +92,10 @@ const ReReplyItem = (props) => {
                   {reReplyDate}{" "}
                   {nickname === accessor ? (
                     <>
-                      <Button variant="outline-secondary" onClick={deleteReply}>
+                      <Button
+                        variant="outline-secondary"
+                        onClick={() => deleteReReply(id)}
+                      >
                         삭제
                       </Button>{" "}
                       <Button

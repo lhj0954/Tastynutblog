@@ -93,10 +93,17 @@ const Content = () => {
           }
         })
         .then((res) => {
-          if (res !== null) {
-            window.location.reload();
-          } else {
+          if (res === null) {
             alert("댓글 등록 실패!");
+          } else {
+            setReply((reply) => ({
+              ...reply,
+              content: "",
+            }));
+            setBoard((prevState) => ({
+              ...prevState,
+              replies: [...prevState.replies, res.data],
+            }));
           }
         });
     }
@@ -157,6 +164,7 @@ const Content = () => {
             onChange={changeValue}
             name="reply"
             placeholder="댓글을 입력하세요"
+            value={reply.content || ""}
           />
           {authority ? (
             <>

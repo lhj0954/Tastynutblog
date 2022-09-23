@@ -20,7 +20,6 @@ const UserManagement = () => {
       })
       .then((res) => {
         if (res !== null) {
-          console.log(res.data);
           setUserList(res.data);
         }
       });

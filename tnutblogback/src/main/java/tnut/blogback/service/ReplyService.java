@@ -2,6 +2,7 @@ package tnut.blogback.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tnut.blogback.dto.replyDTO.ReReplyServiceDto;
 import tnut.blogback.dto.replyDTO.ReplySaveDto;
 import tnut.blogback.dto.replyDTO.ReplyServiceDto;
 import tnut.blogback.dto.replyDTO.ReReplySaveDto;
@@ -10,6 +11,9 @@ import tnut.blogback.model.Reply;
 import tnut.blogback.model.User;
 import tnut.blogback.repository.BoardRepository;
 import tnut.blogback.repository.ReplyRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ReplyService {
@@ -35,13 +39,24 @@ public class ReplyService {
                 .content(replySaveDto.getContent())
                 .build();
 
-        replyRepository.save(replyEntity);
+        Reply reply = replyRepository.save(replyEntity);
 
-        return new ReplyServiceDto();
+        List<ReReplyServiceDto> reReplyServiceDtoList = new ArrayList<>();
+
+        return new ReplyServiceDto
+                (
+                        reply.getId(),
+                        reply.getContent(),
+                        reply.getUser().getNickname(),
+                        reply.getCreateDate(),
+                        reply.isDeletable(),
+                        reply.getBoard().getId(),
+                        reReplyServiceDtoList
+                );
     }
 
     @Transactional
-    public ReplyServiceDto reReplySave(ReReplySaveDto reReplySaveDto, User user) { //대댓글 User는 pincipalDatails에서 가져옴
+    public ReReplyServiceDto reReplySave(ReReplySaveDto reReplySaveDto, User user) { //대댓글 User는 pincipalDatails에서 가져옴
 
         Reply parentReply = replyRepository.findById(reReplySaveDto.getParentReply_id())
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 댓글입니다."));
@@ -56,9 +71,15 @@ public class ReplyService {
                 .content(reReplySaveDto.getContent())
                 .build();
 
-        replyRepository.save(reReplyEntity);
+        Reply reReply = replyRepository.save(reReplyEntity);
 
-        return new ReplyServiceDto();
+        return new ReReplyServiceDto
+                (
+                        reReply.getId(),
+                        reReply.getContent(),
+                        reReply.getUser().getNickname(),
+                        reReply.getCreateDate()
+                );
     }
 
     @Transactional
@@ -106,12 +127,12 @@ public class ReplyService {
     }
 
     @Transactional
-    public ReplyServiceDto replyUpdate(Long id, ReplySaveDto replySaveDto, User user) {  //User는 pincipalDatails에서 가져옴
+    public String replyUpdate(Long id, ReplySaveDto replySaveDto, User user) {  //User는 pincipalDatails에서 가져옴
         Reply replyEntity = replyRepository.findByIdAndUser(id, user)
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 댓글이거나 권한이 없습니다."));
 
         replyEntity.setContent(replySaveDto.getContent());
 
-        return new ReplyServiceDto();
+        return replySaveDto.getContent();
     }
 }

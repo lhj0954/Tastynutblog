@@ -63,43 +63,45 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 게시글 입니다."));
 
         List<ReplyServiceDto> replies = new ArrayList<>();
-        List<ReReplyServiceDto> reReplies = new ArrayList<>();
 
         boardEntity.getReplies()
+                .stream().filter(reply -> reply.getParentReply() == null)//대댓글 방지
                 .forEach(reply -> {
-                    reply.getReReplies().stream()
-                            .filter(reReply ->
-                                    reReply.getParentReply().getId() == reply.getId()
-                            )
-                            .forEach(reReply -> reReplies.add(
-                                    new ReReplyServiceDto(
-                                            reReply.getId(),
-                                            reReply.getContent(),
-                                            reReply.getUser().getNickname(),
-                                            reReply.getCreateDate()
-                                    )
-                            ));
 
+                    List<ReReplyServiceDto> reReplies = new ArrayList<>();
+
+                    reply.getReReplies()
+                            .forEach(reReply ->
+                                    reReplies.add(
+                                            new ReReplyServiceDto
+                                                    (
+                                                            reReply.getId(),
+                                                            reReply.getContent(),
+                                                            reReply.getUser().getNickname(),
+                                                            reReply.getCreateDate()
+                                                    )));
                     replies.add(
-                            new ReplyServiceDto(
-                                    reply.getId(),
-                                    reply.getContent(),
-                                    reply.getUser().getNickname(),
-                                    reply.getCreateDate(),
-                                    reply.isDeletable(),
-                                    reply.getBoard().getId(),
-                                    reReplies
-                            )
+                            new ReplyServiceDto
+                                    (
+                                            reply.getId(),
+                                            reply.getContent(),
+                                            reply.getUser().getNickname(),
+                                            reply.getCreateDate(),
+                                            reply.isDeletable(),
+                                            reply.getBoard().getId(),
+                                            reReplies
+                                    )
                     );
                 });
 
-        return new BoardContentDto(
-                boardEntity.getId(),
-                boardEntity.getTitle(),
-                boardEntity.getContent(),
-                boardEntity.getSubCategory().getSubCategoryName(),
-                replies
-        );
+        return new BoardContentDto
+                (
+                        boardEntity.getId(),
+                        boardEntity.getTitle(),
+                        boardEntity.getContent(),
+                        boardEntity.getSubCategory().getSubCategoryName(),
+                        replies
+                );
     }
 
     @Transactional

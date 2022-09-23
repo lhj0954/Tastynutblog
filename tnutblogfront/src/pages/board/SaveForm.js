@@ -15,15 +15,17 @@ const SaveForm = () => {
   });
 
   const [categories, setCategories] = useState([]); //카테고리 받아 올 곳 초기화
-  const [largeCategoryId, setLargeCategoryId] = useState(""); //selection으로 부터 값을 받음
+  const [subCategories, setSubCategories] = useState([]); //selection으로 부터 값을 받음
 
   const selectLC = (e) => {
-    //largeCategory id값을 넘겨줌
-    setLargeCategoryId(e.target.value);
+    const categoryList = categories.filter(
+      (category) => String(category.id) === e.target.value
+    );
+    setSubCategories(categoryList[0].subCategoryServiceDtoList);
   };
 
   useEffect(() => {
-    fetch("http://localhost:8080/categoryNameList")
+    fetch("http://localhost:8080/category")
       .then((res) => res.json())
       .then((res) => {
         setCategories(res.data); //공백에 가져온 정보로 채워줌
@@ -134,15 +136,13 @@ const SaveForm = () => {
               className={styles.category}
             >
               <option value={""}>=Select LargeCategory=</option>
-              {categories
-                .filter((category) => category.categoryType === "LARGE") //largeCategory 리스트가 출력됨
-                .map((category) => {
-                  return (
-                    <option key={category.id} value={category.lcId}>
-                      {category.categoryName}
-                    </option>
-                  );
-                })}
+              {categories.map((category) => {
+                return (
+                  <option key={category.id} value={category.id}>
+                    {category.largeCategoryName}
+                  </option>
+                );
+              })}
             </Form.Select>
             <Form.Select
               size="sm"
@@ -151,19 +151,13 @@ const SaveForm = () => {
               className={styles.category}
             >
               <option value={""}>=Select SubCategory=</option>
-              {categories
-                .filter(
-                  (category) =>
-                    category.categoryType === "SUB" &&
-                    String(category.lcId) === largeCategoryId
-                )
-                .map((category) => {
-                  return (
-                    <option key={category.id} value={category.scId}>
-                      {category.categoryName}
-                    </option>
-                  );
-                })}
+              {subCategories.map((subCategory) => {
+                return (
+                  <option key={subCategory.id} value={subCategory.id}>
+                    {subCategory.subCategoryName}
+                  </option>
+                );
+              })}
             </Form.Select>
           </div>
           <Button

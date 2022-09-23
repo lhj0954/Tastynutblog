@@ -20,14 +20,9 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/category") //-> 사이드 바
+    @GetMapping("/category")
     public ResponseDto<?> categoryPage () {
         return new ResponseDto<> (HttpStatus.OK.value(), categoryService.largeCategoryList());
-    }
-
-    @GetMapping("/categoryNameList")
-    public ResponseDto<?> categoryNameList () {
-        return new ResponseDto<> (HttpStatus.OK.value(), categoryService.categoryNameList());
     }
 
     @GetMapping("/sideBar/{largeCategory_id}/subCategories")

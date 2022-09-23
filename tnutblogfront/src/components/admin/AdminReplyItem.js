@@ -11,8 +11,13 @@ import {
 import AdminSubReplyItem from "./AdminSubReplyItem";
 
 const AdminReplyItem = (props) => {
-  const { content, id, reReplies, user, createDate, board, deletable } =
-    props.reply;
+  const { board_id, createDate, deletable, id, nickname } = props.reply;
+
+  const [content, setContent] = useState(props.reply.content);
+
+  const [reReplyServiceDtoList, setReReplyServiceDtoList] = useState(
+    props.reply.reReplyServiceDtoList
+  );
 
   const [mode, setMode] = useState("read");
 
@@ -33,19 +38,19 @@ const AdminReplyItem = (props) => {
 
   const [reReply, setReReply] = useState({
     parentReply_id: id,
-    board_id: board.id,
+    board_id: board_id,
     content: "",
     username: JSON.parse(localStorage.getItem("authority")).nickname, //관리자는 무조건 로그인 상태이므로 null고려 x
   });
 
-  const changeValue1 = (e) => {
+  const reReplyValue = (e) => {
     setReReply((reReply) => ({
       ...reReply,
       content: e.target.value,
     }));
   };
 
-  const changeValue2 = (e) => {
+  const rePlyUpdateValue = (e) => {
     setContentValue((contentValue) => ({
       ...contentValue,
       content: e.target.value,
@@ -76,27 +81,14 @@ const AdminReplyItem = (props) => {
           if (res === null) {
             alert("댓글 등록 실패!");
           } else {
-            window.location.reload();
+            setReReply((reReply) => ({
+              ...reReply,
+              content: "",
+            }));
+            setReReplyServiceDtoList([...reReplyServiceDtoList, res.data]);
           }
         });
     }
-  };
-
-  const deleteReply = () => {
-    fetch("http://localhost:8080/admin/api/reply/" + id + "/delete", {
-      method: "DELETE",
-      headers: {
-        AccessToken: localStorage.getItem("Tnut's accessToken"),
-      },
-    })
-      .then((res) => res.text())
-      .then((res) => {
-        if (res === "success delete!") {
-          window.location.reload();
-        } else {
-          alert("삭제 실패");
-        }
-      });
   };
 
   const updateReply = (e) => {
@@ -114,19 +106,37 @@ const AdminReplyItem = (props) => {
       })
         .then((res) => {
           if (res.status === 200) {
-            return res.json;
+            return res.json();
           } else {
             return null;
           }
         })
         .then((res) => {
           if (res !== null) {
-            window.location.reload();
+            setContent(res.data);
+            setMode("read");
           } else {
             alert("댓글 수정 실패!");
           }
         });
     }
+  };
+
+  const deleteReply = () => {
+    fetch("http://localhost:8080/admin/api/reply/" + id + "/delete", {
+      method: "DELETE",
+      headers: {
+        AccessToken: localStorage.getItem("Tnut's accessToken"),
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 200) {
+          window.location.reload();
+        } else {
+          alert("삭제 실패");
+        }
+      });
   };
 
   function CustomToggle({ children, eventKey }) {
@@ -150,10 +160,10 @@ const AdminReplyItem = (props) => {
       <Accordion>
         <Card>
           <Card.Header as="h5">
-            <span>{user.nickname} </span>
+            <span>{nickname} </span>
             <span style={{ float: "right" }}>
               {replyDate}{" "}
-              {accessor === user.nickname ? (
+              {accessor === nickname ? (
                 <>
                   {deletable === true ? (
                     <></>
@@ -194,9 +204,9 @@ const AdminReplyItem = (props) => {
               <Form onSubmit={submitRereply}>
                 <InputGroup className="mb-3">
                   <Form.Control
-                    type="subReply"
-                    onChange={changeValue1}
-                    name="subReply"
+                    type="reReply"
+                    onChange={reReplyValue}
+                    value={reReply.content || ""}
                   />
                   <Button
                     variant="outline-secondary"
@@ -224,7 +234,7 @@ const AdminReplyItem = (props) => {
                 <InputGroup className="mb-3">
                   <Form.Control
                     type="replyUpdate"
-                    onChange={changeValue2}
+                    onChange={rePlyUpdateValue}
                     name="replyUpdates"
                     value={contentValue.content || ""}
                   />
@@ -247,11 +257,11 @@ const AdminReplyItem = (props) => {
             )}
 
             <>
-              {reReplies.map((subreply) => {
+              {reReplyServiceDtoList.map((reReply) => {
                 return (
                   <AdminSubReplyItem
-                    key={subreply.id}
-                    subreply={[subreply, accessor]}
+                    key={reReply.id}
+                    reReply={[reReply, accessor]}
                   />
                 );
               })}
