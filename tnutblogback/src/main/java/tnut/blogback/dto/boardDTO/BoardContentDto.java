@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import tnut.blogback.dto.replyDTO.ReplyServiceDto;
-import tnut.blogback.model.Reply;
 
 import java.util.List;
 

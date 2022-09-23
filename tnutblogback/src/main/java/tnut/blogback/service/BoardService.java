@@ -14,7 +14,6 @@ import tnut.blogback.repository.categoryrepository.SubCategoryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, 글 목록 불러오기         댓글 작성, 삭제, 수정
