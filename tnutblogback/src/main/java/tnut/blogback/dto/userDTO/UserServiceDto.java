@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserServiceDto {
     private String nickname;
+    private String provider;
 }

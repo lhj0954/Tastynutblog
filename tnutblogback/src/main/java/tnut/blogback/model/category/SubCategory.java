@@ -1,17 +1,14 @@
 package tnut.blogback.model.category;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import tnut.blogback.model.Board;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -29,7 +26,6 @@ public class SubCategory {
     private LargeCategory largeCategory;
 
     @OneToMany(mappedBy = "subCategory", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JsonIgnoreProperties(value = {"subCategory", "replies"})
     @OrderBy("id desc")
     private List<Board> boards = new ArrayList<>();
 }

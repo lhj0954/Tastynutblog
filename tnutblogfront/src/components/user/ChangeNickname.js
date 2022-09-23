@@ -15,6 +15,7 @@ const ChangeNickname = (props) => {
       ...username,
       changingNickname: e.target.value,
     }));
+    setIsDuplicated("y");
   };
 
   const checkUsername = (e) => {
@@ -62,7 +63,6 @@ const ChangeNickname = (props) => {
           }
         })
         .then((res) => {
-          console.log(res);
           if (res !== null) {
             if (res.data.provider === "google") {
               window.location.href = `http://localhost:8080/oauth2/authorization/google`;

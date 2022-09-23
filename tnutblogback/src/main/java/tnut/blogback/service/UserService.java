@@ -54,7 +54,11 @@ public class UserService {
 
         userEntity.setNickname(nicknameDto.getChangingNickname());
 
-        return new UserServiceDto(userEntity.getNickname());
+        return new UserServiceDto
+                (
+                        userEntity.getNickname(),
+                        userEntity.getProvider()
+                );
     }
 
     @Transactional

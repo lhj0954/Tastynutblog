@@ -1,16 +1,13 @@
 package tnut.blogback.model.category;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,7 +22,6 @@ public class LargeCategory {
     private String largeCategoryName;
 
     @OneToMany(mappedBy = "largeCategory", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) //largeCategory가 연관관계의 주인이며 largeCategory가 지워지면 subCateory도 지워짐
-    @JsonIgnoreProperties(value = {"largeCategory"})
     @OrderBy("id asc") //먼저 만든게 앞에 옴
     private List<SubCategory> subCategories = new ArrayList<>();
 }

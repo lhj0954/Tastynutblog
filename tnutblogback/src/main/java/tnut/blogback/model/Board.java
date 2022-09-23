@@ -1,10 +1,6 @@
 package tnut.blogback.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import tnut.blogback.model.category.SubCategory;
 
@@ -13,7 +9,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -31,7 +28,6 @@ public class Board { // 보드에 담길 내용: 제목, 내용, 댓글, (글은
 
     @ManyToOne
     @JoinColumn(name = "subCategory_id")
-    @JsonIgnoreProperties(value = {"largeCategory", "boards"})
     private SubCategory subCategory;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
