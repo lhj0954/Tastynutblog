@@ -30,6 +30,7 @@ public class Reply { //댓글에 담길 내용: 닉네임(유저), 댓글 내용
     @JoinColumn(name = "parentReply_id")
     private Reply parentReply;
 
+    @Builder.Default
     @OneToMany(mappedBy = "parentReply", fetch = FetchType.LAZY)
     @OrderBy("id asc ")
     private List<Reply> reReplies = new ArrayList<>();

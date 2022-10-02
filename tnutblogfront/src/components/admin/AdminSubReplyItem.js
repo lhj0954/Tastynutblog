@@ -25,7 +25,7 @@ const AdminSubReplyItem = (props) => {
   };
 
   const deleteReply = () => {
-    fetch("http://localhost:8080/admin/api/reply/" + id + "/delete", {
+    fetch("http://blog_back:8080/admin/api/reply/" + id + "/delete", {
       method: "DELETE",
       headers: {
         AccessToken: localStorage.getItem("Tnut's accessToken"),
@@ -46,7 +46,7 @@ const AdminSubReplyItem = (props) => {
     if (contentValue.content.length === 0) {
       alert("빈 댓글은 작성하실 수 없습니다.");
     } else {
-      fetch("http://localhost:8080/user/api/reply/" + id + "/update", {
+      fetch("http://blog_back:8080/user/api/reply/" + id + "/update", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json; charset=utf-8",

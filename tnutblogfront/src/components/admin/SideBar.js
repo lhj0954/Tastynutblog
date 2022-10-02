@@ -43,7 +43,7 @@ const SideBar = (props) => {
   });
 
   const getSubCategories = (id) => {
-    fetch("http://localhost:8080/sideBar/" + id + "/subCategories")
+    fetch("http://blog_back:8080/sideBar/" + id + "/subCategories")
       .then((res) => {
         if (res.status === 200) {
           return res.json();
@@ -65,7 +65,7 @@ const SideBar = (props) => {
     if (largeCategory.largeCategoryName.length === 0) {
       alert("빈칸 입력 불가");
     } else {
-      fetch("http://localhost:8080/admin/api/largeCategory/save", {
+      fetch("http://blog_back:8080/admin/api/largeCategory/save", {
         method: "post",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -111,7 +111,7 @@ const SideBar = (props) => {
       alert("빈칸 입력 불가");
     } else {
       fetch(
-        "http://localhost:8080/admin/api/subCategory/" +
+        "http://blog_back:8080/admin/api/subCategory/" +
           subCategory.largeCategory_id +
           "/save",
         {

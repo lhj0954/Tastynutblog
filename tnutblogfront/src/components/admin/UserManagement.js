@@ -6,7 +6,7 @@ const UserManagement = () => {
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/admin/api/userList", {
+    fetch("http://blog_back:8080/admin/api/userList", {
       headers: {
         AccessToken: localStorage.getItem("Tnut's accessToken"),
       },

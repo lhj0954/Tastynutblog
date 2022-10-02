@@ -16,7 +16,7 @@ const Mypage = () => {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8080/user/api/info", {
+    fetch("http://blog_back:8080/user/api/info", {
       headers: {
         AccessToken: localStorage.getItem("Tnut's accessToken"),
       },

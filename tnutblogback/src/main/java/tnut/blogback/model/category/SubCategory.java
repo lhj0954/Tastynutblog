@@ -25,6 +25,7 @@ public class SubCategory {
     @JoinColumn(name = "largeCategory_id") //largeCategory_id를 참조해서 연관관계를 맺음
     private LargeCategory largeCategory;
 
+    @Builder.Default
     @OneToMany(mappedBy = "subCategory", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @OrderBy("id desc")
     private List<Board> boards = new ArrayList<>();

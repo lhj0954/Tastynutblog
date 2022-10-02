@@ -43,11 +43,11 @@ const Header = () => {
 
   const handleLogin = (loginType) => {
     if (loginType === "google") {
-      window.location.href = `http://localhost:8080/oauth2/authorization/google`;
+      window.location.href = `http://blog_back:8080/oauth2/authorization/google`;
     } else if (loginType === "naver") {
-      window.location.href = `http://localhost:8080/oauth2/authorization/naver`;
+      window.location.href = `http://blog_back:8080/oauth2/authorization/naver`;
     } else if (loginType === "kakao") {
-      window.location.href = `http://localhost:8080/oauth2/authorization/kakao`;
+      window.location.href = `http://blog_back:8080/oauth2/authorization/kakao`;
     }
   };
 

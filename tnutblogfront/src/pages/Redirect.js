@@ -12,7 +12,7 @@ const Redirect = () => {
       localStorage.setItem("Tnut's accessToken", token.accessToken);
       localStorage.setItem("Tnut's refreshToken", token.refreshToken);
 
-      fetch("http://localhost:8080/authority", {
+      fetch("http://blog_back:8080/authority", {
         headers: {
           AccessToken: localStorage.getItem("Tnut's accessToken"),
         },
@@ -24,7 +24,7 @@ const Redirect = () => {
 
       setInterval(() => {
         //로그인 시 29분 간격으로 accessToken 재발급
-        fetch("http://localhost:8080/refresh", {
+        fetch("http://blog_back:8080/refresh", {
           //access토큰이 만료되었을 경우(다양한 경우가 있지만 일단은)
           method: "post",
           headers: {

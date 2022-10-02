@@ -25,7 +25,7 @@ const SaveForm = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8080/category")
+    fetch("http://blog_back:8080/category")
       .then((res) => res.json())
       .then((res) => {
         setCategories(res.data); //공백에 가져온 정보로 채워줌
@@ -51,7 +51,7 @@ const SaveForm = () => {
     if (board.subCategory_id === "") {
       alert("카테고리를 선택하세요.");
     } else {
-      fetch("http://localhost:8080/admin/api/board/save", {
+      fetch("http://blog_back:8080/admin/api/board/save", {
         method: "post",
         headers: {
           "Content-Type": "application/json; charset=utf-8",

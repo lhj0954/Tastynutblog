@@ -10,7 +10,7 @@ const Home = () => {
 
   useEffect(() => {
     //인덱스 화면에 불러올 게시글 정보
-    fetch("http://localhost:8080")
+    fetch("http://blog_back:8080")
       .then((res) => res.json())
       .then((res) => {
         setBoards(res);

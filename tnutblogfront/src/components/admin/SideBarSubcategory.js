@@ -25,7 +25,7 @@ const SideBarSubcategory = (props) => {
 
   const deleteSubCategory = (e) => {
     fetch(
-      "http://localhost:8080/admin/api/subCategory/" + e.target.id + "/delete",
+      "http://blog_back:8080/admin/api/subCategory/" + e.target.id + "/delete",
       {
         method: "delete",
         headers: {
@@ -49,7 +49,7 @@ const SideBarSubcategory = (props) => {
       alert("빈칸 입력 불가");
     } else {
       fetch(
-        "http://localhost:8080/admin/api/subCategory/" +
+        "http://blog_back:8080/admin/api/subCategory/" +
           updateSC.id +
           "/update",
         {
