@@ -35,7 +35,7 @@ const Content = () => {
   });
 
   useEffect(() => {
-    fetch("http://blog_back:8080/board/" + id) //id를 통해서 게시판 정보를 가져옴
+    fetch("http://43.200.119.175:8080/board/" + id) //id를 통해서 게시판 정보를 가져옴
       .then((res) => res.json())
       .then((res) => {
         setBoard(res.data); //공백에 가져온 정보로 채워줌
@@ -44,7 +44,7 @@ const Content = () => {
 
   const deleteBoard = () => {
     //해당 게시글 삭제
-    fetch("http://blog_back:8080/admin/api/board/" + id + "/delete", {
+    fetch("http://43.200.119.175:8080/admin/api/board/" + id + "/delete", {
       method: "DELETE",
       headers: {
         AccessToken: localStorage.getItem("Tnut's accessToken"),
@@ -78,7 +78,7 @@ const Content = () => {
       alert("빈 댓글을 등록할 수 없습니다.");
     } else {
       e.preventDefault();
-      fetch("http://blog_back:8080/user/api/reply/save", {
+      fetch("http://43.200.119.175:8080/user/api/reply/save", {
         method: "POST",
         headers: {
           "Content-Type": "application/json; charset=utf-8",

@@ -61,7 +61,7 @@ const ReplyItem = (props) => {
     if (replyValue.content.length === 0) {
       alert("빈 댓글은 작성하실 수 없습니다.");
     } else {
-      fetch("http://blog_back:8080/user/api/reply/" + id + "/update", {
+      fetch("http://43.200.119.175:8080/user/api/reply/" + id + "/update", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -88,7 +88,7 @@ const ReplyItem = (props) => {
   };
 
   const deleteReply = () => {
-    fetch("http://blog_back:8080/user/api/reply/" + id + "/delete", {
+    fetch("http://43.200.119.175:8080/user/api/reply/" + id + "/delete", {
       method: "DELETE",
       headers: {
         AccessToken: localStorage.getItem("Tnut's accessToken"),
@@ -112,7 +112,7 @@ const ReplyItem = (props) => {
     } else if (reReply.content.length === 0) {
       alert("빈 댓글은 작성하실 수 없습니다.");
     } else {
-      fetch("http://blog_back:8080/user/api/reReply/save", {
+      fetch("http://43.200.119.175:8080/user/api/reReply/save", {
         method: "post",
         headers: {
           "Content-Type": "application/json; charset=utf-8",

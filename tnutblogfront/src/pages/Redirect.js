@@ -12,7 +12,7 @@ const Redirect = () => {
       localStorage.setItem("Tnut's accessToken", token.accessToken);
       localStorage.setItem("Tnut's refreshToken", token.refreshToken);
 
-      fetch("http://blog_back:8080/authority", {
+      fetch("http://43.200.119.175:8080/authority", {
         headers: {
           AccessToken: localStorage.getItem("Tnut's accessToken"),
         },
@@ -24,7 +24,7 @@ const Redirect = () => {
 
       setInterval(() => {
         //로그인 시 29분 간격으로 accessToken 재발급
-        fetch("http://blog_back:8080/refresh", {
+        fetch("http://43.200.119.175:8080/refresh", {
           //access토큰이 만료되었을 경우(다양한 경우가 있지만 일단은)
           method: "post",
           headers: {
@@ -44,7 +44,8 @@ const Redirect = () => {
       }, 1000 * 60 * 29);
 
       setTimeout(() => {
-        navigate(-1);
+        //google, kakao는 문제 없으나 naver는 반응이 느리게 옴
+        window.location.href = `/`;
       }, 500);
     } else {
       navigate(-1);

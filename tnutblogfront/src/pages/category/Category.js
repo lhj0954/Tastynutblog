@@ -14,7 +14,7 @@ const Category = () => {
   }, [authority]);
 
   useEffect(() => {
-    fetch("http://blog_back:8080/category")
+    fetch("http://43.200.119.175:8080/category")
       .then((res) => res.json())
       .then((res) => {
         setLargeCategories(res.data); //공백에 가져온 정보로 채워줌

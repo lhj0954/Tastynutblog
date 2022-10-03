@@ -21,7 +21,7 @@ const UserSideBar = (props) => {
   });
 
   const getSubCategories = (id) => {
-    fetch("http://blog_back:8080/sideBar/" + id + "/subCategories")
+    fetch("http://43.200.119.175:8080/sideBar/" + id + "/subCategories")
       .then((res) => {
         if (res.status === 200) {
           return res.json();

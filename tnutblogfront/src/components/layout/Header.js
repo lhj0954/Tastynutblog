@@ -24,7 +24,7 @@ const Header = () => {
       setAuthority(JSON.parse(localStorage.getItem("authority")).role);
       setNickname(JSON.parse(localStorage.getItem("authority")).nickname);
     }
-  }, [authority]);
+  }, [nickname]);
 
   const handleLogout = () => {
     //localstorage 삭제
@@ -43,11 +43,11 @@ const Header = () => {
 
   const handleLogin = (loginType) => {
     if (loginType === "google") {
-      window.location.href = `http://blog_back:8080/oauth2/authorization/google`;
+      window.location.href = `http://ec2-43-200-119-175.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google`;
     } else if (loginType === "naver") {
-      window.location.href = `http://blog_back:8080/oauth2/authorization/naver`;
+      window.location.href = `http://ec2-43-200-119-175.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/naver`;
     } else if (loginType === "kakao") {
-      window.location.href = `http://blog_back:8080/oauth2/authorization/kakao`;
+      window.location.href = `http://ec2-43-200-119-175.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao`;
     }
   };
 

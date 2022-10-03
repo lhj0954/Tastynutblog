@@ -27,7 +27,9 @@ const ChangeNickname = (props) => {
       alert("닉네임은 1~10글자 사이로 작성해 주세요");
     } else {
       fetch(
-        "http://blog_back:8080/" + nickname.changingNickname + "/checkNickname"
+        "http://43.200.119.175:8080/" +
+          nickname.changingNickname +
+          "/checkNickname"
       )
         .then((res) => {
           return res.json();
@@ -47,7 +49,7 @@ const ChangeNickname = (props) => {
   const changeUsername = (e) => {
     e.preventDefault();
     if (isDuplicated === "n") {
-      fetch("http://blog_back:8080/user/api/changeNickname", {
+      fetch("http://43.200.119.175:8080/user/api/changeNickname", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -65,11 +67,11 @@ const ChangeNickname = (props) => {
         .then((res) => {
           if (res !== null) {
             if (res.data.provider === "google") {
-              window.location.href = `http://blog_back:8080/oauth2/authorization/google`;
+              window.location.href = `http://ec2-43-200-119-175.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google`;
             } else if (res.data.provider === "naver") {
-              window.location.href = `http://blog_back:8080/oauth2/authorization/naver`;
+              window.location.href = `http://ec2-43-200-119-175.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/naver`;
             } else if (res.data.provider === "kakao") {
-              window.location.href = `http://blog_back:8080/oauth2/authorization/kakao`;
+              window.location.href = `http://ec2-43-200-119-175.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao`;
             }
           } else {
             alert("username 수정 실패!");
