@@ -65,7 +65,7 @@ const SideBar = (props) => {
     if (largeCategory.largeCategoryName.length === 0) {
       alert("빈칸 입력 불가");
     } else {
-      fetch("http://43.200.119.175:8080/admin/api/largeCategory/save", {
+      fetch("http://43.200.119.175:8080/admin/api/large-category/save", {
         method: "post",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -111,7 +111,7 @@ const SideBar = (props) => {
       alert("빈칸 입력 불가");
     } else {
       fetch(
-        "http://43.200.119.175:8080/admin/api/subCategory/" +
+        "http://43.200.119.175:8080/admin/api/sub-category/" +
           subCategory.largeCategory_id +
           "/save",
         {

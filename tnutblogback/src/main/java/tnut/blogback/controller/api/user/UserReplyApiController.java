@@ -27,7 +27,7 @@ public class UserReplyApiController {
         return new ResponseDto<>(HttpStatus.OK.value(), replyService.replySave(replySaveRequestDto, principal.getUser()));
     }
 
-    @PostMapping("/user/api/reReply/save") //대댓글 내용 받아서 저장
+    @PostMapping("/user/api/re-reply/save") //대댓글 내용 받아서 저장
     public ResponseDto<?> reReplySave (@RequestBody ReReplySaveDto reReplySaveRequestDto, @AuthenticationPrincipal PrincipalDetails principal) {
         return new ResponseDto<>(HttpStatus.OK.value(), replyService.reReplySave(reReplySaveRequestDto, principal.getUser()));
     }

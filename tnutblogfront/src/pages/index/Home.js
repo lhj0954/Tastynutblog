@@ -10,7 +10,7 @@ const Home = () => {
 
   useEffect(() => {
     //인덱스 화면에 불러올 게시글 정보
-    fetch("http://43.200.119.175:8080")
+    fetch("http://3.35.149.98:8080")
       .then((res) => res.json())
       .then((res) => {
         setBoards(res);

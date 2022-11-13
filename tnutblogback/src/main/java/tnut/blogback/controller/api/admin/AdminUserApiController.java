@@ -18,7 +18,7 @@ public class AdminUserApiController {
         this.userService = userService;
     }
 
-    @GetMapping("/admin/api/userList")
+    @GetMapping("/admin/api/users")
     public ResponseDto<?> userList () {
         return new ResponseDto<>(HttpStatus.OK.value(), userService.userList());
     }

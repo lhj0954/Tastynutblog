@@ -19,7 +19,7 @@ const SideBarLargecategory = (props) => {
   const deleteLargeCategory = (e) => {
     e.preventDefault();
     fetch(
-      "http://43.200.119.175:8080/admin/api/largeCategory/" +
+      "http://43.200.119.175:8080/admin/api/large-category/" +
         e.target.id +
         "/delete",
       {
@@ -51,7 +51,7 @@ const SideBarLargecategory = (props) => {
       alert("빈칸 입력 불가");
     } else {
       fetch(
-        "http://43.200.119.175:8080/admin/api/largeCategory/" +
+        "http://43.200.119.175:8080/admin/api/large-category/" +
           updateLC.id +
           "/update",
         {

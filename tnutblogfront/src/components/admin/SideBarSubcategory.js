@@ -25,7 +25,7 @@ const SideBarSubcategory = (props) => {
 
   const deleteSubCategory = (e) => {
     fetch(
-      "http://43.200.119.175:8080/admin/api/subCategory/" +
+      "http://43.200.119.175:8080/admin/api/sub-category/" +
         e.target.id +
         "/delete",
       {
@@ -51,7 +51,7 @@ const SideBarSubcategory = (props) => {
       alert("빈칸 입력 불가");
     } else {
       fetch(
-        "http://43.200.119.175:8080/admin/api/subCategory/" +
+        "http://43.200.119.175:8080/admin/api/sub-category/" +
           updateSC.id +
           "/update",
         {

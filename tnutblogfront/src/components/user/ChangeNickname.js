@@ -29,7 +29,7 @@ const ChangeNickname = (props) => {
       fetch(
         "http://43.200.119.175:8080/" +
           nickname.changingNickname +
-          "/checkNickname"
+          "/check-nickname"
       )
         .then((res) => {
           return res.json();
@@ -49,7 +49,7 @@ const ChangeNickname = (props) => {
   const changeUsername = (e) => {
     e.preventDefault();
     if (isDuplicated === "n") {
-      fetch("http://43.200.119.175:8080/user/api/changeNickname", {
+      fetch("http://43.200.119.175:8080/user/api/change-nickname", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json; charset=utf-8",

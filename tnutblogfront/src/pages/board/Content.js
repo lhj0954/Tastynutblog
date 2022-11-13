@@ -35,7 +35,7 @@ const Content = () => {
   });
 
   useEffect(() => {
-    fetch("http://43.200.119.175:8080/board/" + id) //id를 통해서 게시판 정보를 가져옴
+    fetch("http://3.35.149.98:8080/board/" + id) //id를 통해서 게시판 정보를 가져옴
       .then((res) => res.json())
       .then((res) => {
         setBoard(res.data); //공백에 가져온 정보로 채워줌

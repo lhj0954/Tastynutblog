@@ -24,7 +24,7 @@ public class UserController {
         return new ResponseDto<>(HttpStatus.OK.value(), userService.userInfo(principal.getUser().getUsername()));
     }
 
-    @GetMapping("/{nickname}/checkNickname")
+    @GetMapping("/{nickname}/check-nickname")
     public ResponseDto<Boolean> checkNickname(@PathVariable String nickname) {
         return new ResponseDto<>(HttpStatus.OK.value(), userService.checkNickname(nickname));
     }

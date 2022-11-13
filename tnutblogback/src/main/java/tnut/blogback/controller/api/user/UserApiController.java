@@ -20,7 +20,7 @@ public class UserApiController {
         this.userService = userService;
     }
 
-    @PutMapping("/user/api/changeNickname") // jwt의 username 이용
+    @PutMapping("/user/api/change-nickname") // jwt의 username 이용
     public ResponseDto<?> changeNickname (@RequestBody NicknameDto nicknameDto, @AuthenticationPrincipal PrincipalDetails principal) {
         return new ResponseDto<>(HttpStatus.OK.value(), userService.changeNickname(nicknameDto, principal));
     }
