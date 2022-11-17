@@ -12,7 +12,7 @@ DB: MariaDB
 배포: AWS, Docker, DNS
 
 ## 구성도
-
+<img width="80%" src="user-images.githubusercontent.com/74577825/202366723-49e93f96-a15e-4c80-b83c-8daed4616c7c.png"> 
 
 ## 개선해 나가야 할 점
  - 로그인하면 도메인으로 연결이 되지 않음...
