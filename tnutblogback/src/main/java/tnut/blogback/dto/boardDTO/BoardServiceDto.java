@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class BoardServiceDto {
     private Long id;
     private String title;
+    private String content;
+    private String subCategoryName;
 }

@@ -2,11 +2,9 @@ package tnut.blogback.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tnut.blogback.dto.boardDTO.BoardListDto;
 import tnut.blogback.dto.boardDTO.BoardServiceDto;
-import tnut.blogback.dto.categoryDto.LargeCategoryServiceDto;
-import tnut.blogback.dto.categoryDto.LargeCategorySaveDto;
-import tnut.blogback.dto.categoryDto.SubCategorySaveDto;
-import tnut.blogback.dto.categoryDto.SubCategoryServiceDto;
+import tnut.blogback.dto.categoryDto.*;
 import tnut.blogback.model.category.LargeCategory;
 import tnut.blogback.model.category.SubCategory;
 import tnut.blogback.repository.categoryrepository.LargeCategoryRepository;
@@ -28,31 +26,19 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public List<LargeCategoryServiceDto> largeCategoryList() {
+    public LargeCategoryListDto largeCategoryList() {
         List<LargeCategory> largeCategoryList = largeCategoryRepository.findAll();
+        LargeCategoryListDto largeCategoryListDto = new LargeCategoryListDto();
 
         List<LargeCategoryServiceDto> largeCategoryDtoList = new ArrayList<>();
-        largeCategoryList.forEach(largeCategory -> {
-            List<SubCategoryServiceDto> subCategoryServiceDtoList = new ArrayList<>();
-            List<BoardServiceDto> boardServiceDtoList = new ArrayList<>();
+        largeCategoryList.forEach(largeCategory -> largeCategoryDtoList.add(
+                new LargeCategoryServiceDto(largeCategory.getId(), largeCategory.getLargeCategoryName())
+        ));
 
-            largeCategory.getSubCategories().forEach(subCategory ->
-                    subCategoryServiceDtoList.add
-                            (
-                                    new SubCategoryServiceDto
-                                            (
-                                                    subCategory.getId(),
-                                                    subCategory.getSubCategoryName(),
-                                                    boardServiceDtoList))
-            );
+        largeCategoryListDto.setLargeCategoryList(largeCategoryDtoList);
+        largeCategoryListDto.setTotal(largeCategoryDtoList.size());
 
-            largeCategoryDtoList.add(
-                    new LargeCategoryServiceDto
-                            (largeCategory.getId(), largeCategory.getLargeCategoryName(), subCategoryServiceDtoList)
-            );
-        });
-
-        return largeCategoryDtoList;
+        return largeCategoryListDto;
     }
 
     @Transactional
@@ -81,35 +67,36 @@ public class CategoryService {
 
         largeCategoryEntity.setLargeCategoryName(largeCategorySaveDto.getLargeCategoryName());
 
-        List<SubCategoryServiceDto> subCategoryServiceDtoList = new ArrayList<>();
-
-        return new LargeCategoryServiceDto
-                (
-                        largeCategoryEntity.getId(),
-                        largeCategoryEntity.getLargeCategoryName(),
-                        subCategoryServiceDtoList
-                );
+        return new LargeCategoryServiceDto();
     }
 
     @Transactional(readOnly = true)
-    public List<SubCategoryServiceDto> setSubCategories(Long id) {
+    public SubCategoryListDto setSubCategories(Long id) {
         LargeCategory largeCategoryEntity = largeCategoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("없는 대분류 카테고리 입니다."));
 
         List<SubCategoryServiceDto> subCategoryServiceDtoList = new ArrayList<>();
+        SubCategoryListDto subCategoryListDto = new SubCategoryListDto();
 
         largeCategoryEntity.getSubCategories()
                 .forEach(subCategory ->
                 {
                     List<BoardServiceDto> boardServiceDtoList = new ArrayList<>();
+                    BoardListDto boardListDto = new BoardListDto();
                     subCategory.getBoards().forEach(board ->
-                            boardServiceDtoList.add(new BoardServiceDto(board.getId(), board.getTitle())));
+                            boardServiceDtoList.add(new BoardServiceDto(board.getId(), board.getTitle(), board.getContent(), board.getSubCategory().getSubCategoryName())));
+
+                    boardListDto.setBoardServiceDtoList(boardServiceDtoList);
+                    boardListDto.setTotal(boardServiceDtoList.size());
 
                     subCategoryServiceDtoList
-                            .add(new SubCategoryServiceDto(subCategory.getId(), subCategory.getSubCategoryName(), boardServiceDtoList));
+                            .add(new SubCategoryServiceDto(subCategory.getId(), subCategory.getSubCategoryName(), boardListDto));
                 });
 
-        return subCategoryServiceDtoList;
+        subCategoryListDto.setSubCategoryServiceDtoList(subCategoryServiceDtoList);
+        subCategoryListDto.setTotal(subCategoryServiceDtoList.size());
+
+        return subCategoryListDto;
     }
 
     @Transactional //subCategory 저장
@@ -142,11 +129,7 @@ public class CategoryService {
 
         subCategoryEntity.setSubCategoryName(subCategorySaveDto.getSubCategoryName());
 
-        List<BoardServiceDto> boardServiceDtoList = new ArrayList<>();
-        subCategoryEntity.getBoards().forEach(board ->
-                boardServiceDtoList.add(new BoardServiceDto(board.getId(), board.getTitle())));
-
-        return new SubCategoryServiceDto(subCategoryEntity.getId(), subCategoryEntity.getSubCategoryName(), boardServiceDtoList);
+        return new SubCategoryServiceDto();
     }
 
 }

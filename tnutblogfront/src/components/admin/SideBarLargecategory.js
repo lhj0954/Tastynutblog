@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Badge, Form, FormControl, InputGroup, Nav } from "react-bootstrap";
 import styles from "../../css/SideBarLargeCategory.module.css";
+import { host } from "../../variation.js";
 
 const SideBarLargecategory = (props) => {
   const { id } = props.largeCategory;
@@ -18,15 +19,10 @@ const SideBarLargecategory = (props) => {
 
   const deleteLargeCategory = (e) => {
     e.preventDefault();
-    fetch(
-      "http://43.200.119.175:8080/admin/api/large-category/" +
-        e.target.id +
-        "/delete",
-      {
-        method: "delete",
-        headers: { AccessToken: localStorage.getItem("Tnut's accessToken") },
-      }
-    )
+    fetch("http://" + host + ":8080/admin/api/large-category/" + e.target.id, {
+      method: "delete",
+      headers: { AccessToken: localStorage.getItem("Tnut's accessToken") },
+    })
       .then((res) => res.json())
       .then((res) => {
         if (res.status === 200) {
@@ -51,9 +47,7 @@ const SideBarLargecategory = (props) => {
       alert("빈칸 입력 불가");
     } else {
       fetch(
-        "http://43.200.119.175:8080/admin/api/large-category/" +
-          updateLC.id +
-          "/update",
+        "http://" + host + ":8080/admin/api/large-category/" + updateLC.id,
         {
           method: "PUT",
           headers: {

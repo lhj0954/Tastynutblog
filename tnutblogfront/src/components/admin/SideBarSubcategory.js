@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Badge, Form, FormControl, InputGroup } from "react-bootstrap";
+import { host } from "../../variation.js";
 
 const SideBarSubcategory = (props) => {
   const { id } = props.subCategory;
@@ -24,17 +25,12 @@ const SideBarSubcategory = (props) => {
   };
 
   const deleteSubCategory = (e) => {
-    fetch(
-      "http://43.200.119.175:8080/admin/api/sub-category/" +
-        e.target.id +
-        "/delete",
-      {
-        method: "delete",
-        headers: {
-          AccessToken: localStorage.getItem("Tnut's accessToken"),
-        },
-      }
-    )
+    fetch("http://" + host + ":8080/admin/api/sub-category/" + e.target.id, {
+      method: "delete",
+      headers: {
+        AccessToken: localStorage.getItem("Tnut's accessToken"),
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
         if (res.status === 200) {
@@ -50,19 +46,14 @@ const SideBarSubcategory = (props) => {
     if (updateSC.subCategoryName.length === 0) {
       alert("빈칸 입력 불가");
     } else {
-      fetch(
-        "http://43.200.119.175:8080/admin/api/sub-category/" +
-          updateSC.id +
-          "/update",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            AccessToken: localStorage.getItem("Tnut's accessToken"),
-          },
-          body: JSON.stringify(updateSC),
-        }
-      )
+      fetch("http://" + host + ":8080/admin/api/sub-category/" + updateSC.id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          AccessToken: localStorage.getItem("Tnut's accessToken"),
+        },
+        body: JSON.stringify(updateSC),
+      })
         .then((res) => {
           if (res.status === 200) {
             return res.json();

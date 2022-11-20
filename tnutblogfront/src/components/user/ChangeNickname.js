@@ -27,9 +27,7 @@ const ChangeNickname = (props) => {
       alert("닉네임은 1~10글자 사이로 작성해 주세요");
     } else {
       fetch(
-        "http://43.200.119.175:8080/" +
-          nickname.changingNickname +
-          "/check-nickname"
+        "http://43.200.119.175:8080/new-nickname" + nickname.changingNickname
       )
         .then((res) => {
           return res.json();
@@ -49,7 +47,7 @@ const ChangeNickname = (props) => {
   const changeUsername = (e) => {
     e.preventDefault();
     if (isDuplicated === "n") {
-      fetch("http://43.200.119.175:8080/user/api/change-nickname", {
+      fetch("http://43.200.119.175:8080/user/api/nickname", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json; charset=utf-8",

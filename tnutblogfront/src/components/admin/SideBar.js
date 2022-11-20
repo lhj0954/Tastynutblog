@@ -13,6 +13,7 @@ import styles from "../../css/Sidebar.module.css";
 import BoardItem from "../BoardItem";
 import SideBarLargecategory from "./SideBarLargecategory";
 import SideBarSubcategory from "./SideBarSubcategory";
+import { host } from "../../variation.js";
 
 const SideBar = (props) => {
   const { largeCategories } = props;
@@ -43,7 +44,8 @@ const SideBar = (props) => {
   });
 
   const getSubCategories = (id) => {
-    fetch("http://43.200.119.175:8080/sideBar/" + id + "/subCategories")
+    //대분류 선택시 subCategory 목록 불러오기
+    fetch("http://" + host + ":8080/side-bar/" + id + "/sub-categories")
       .then((res) => {
         if (res.status === 200) {
           return res.json();
@@ -55,7 +57,7 @@ const SideBar = (props) => {
         setSubCategories((subCategories) => ({
           ...subCategories,
           largeCategory_id: id,
-          subCategories: res.data,
+          subCategories: res.data.subCategoryServiceDtoList,
         }));
       });
   };
@@ -65,7 +67,7 @@ const SideBar = (props) => {
     if (largeCategory.largeCategoryName.length === 0) {
       alert("빈칸 입력 불가");
     } else {
-      fetch("http://43.200.119.175:8080/admin/api/large-category/save", {
+      fetch("http://" + host + ":8080/admin/api/large-category", {
         method: "post",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -111,9 +113,10 @@ const SideBar = (props) => {
       alert("빈칸 입력 불가");
     } else {
       fetch(
-        "http://43.200.119.175:8080/admin/api/sub-category/" +
-          subCategory.largeCategory_id +
-          "/save",
+        "http://" +
+          host +
+          ":8080/admin/api/sub-category/" +
+          subCategory.largeCategory_id,
         {
           method: "post",
           headers: {
@@ -204,7 +207,7 @@ const SideBar = (props) => {
                   title={<SideBarSubcategory subCategory={subCategory} />}
                   eventKey={subCategory.subCategoryName}
                 >
-                  {subCategory.boardServiceDtoList.map((board) => {
+                  {subCategory.boardListDto.boardServiceDtoList.map((board) => {
                     return <BoardItem key={board.id} board={board} />;
                   })}
                 </Tab>

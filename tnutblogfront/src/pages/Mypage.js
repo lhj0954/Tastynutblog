@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ChangeNickname from "../components/user/ChangeNickname";
 import MyReplies from "../components/user/MyReplies";
 import styles from "../css/Mypage.module.css";
+import { host } from "../variation.js";
 
 const Mypage = () => {
   //user정보 api로 부터 받아와서 props로 전달
@@ -12,11 +13,11 @@ const Mypage = () => {
 
   const [userInfo, setUserInfo] = useState({
     nickname: "",
-    replies: [],
+    replies: { userReplyInfoDtoList: [], total: "" },
   });
 
   useEffect(() => {
-    fetch("http://43.200.119.175:8080/user/api/info", {
+    fetch("http://" + host + ":8080/user/api/info", {
       headers: {
         AccessToken: localStorage.getItem("Tnut's accessToken"),
       },
@@ -56,7 +57,9 @@ const Mypage = () => {
           {
             {
               changeNickname: <ChangeNickname username={userInfo.nickname} />,
-              myReplies: <MyReplies replies={userInfo.replies} />,
+              myReplies: (
+                <MyReplies replies={userInfo.replies.userReplyInfoDtoList} />
+              ),
             }[page]
           }
         </div>

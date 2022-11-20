@@ -9,6 +9,7 @@ import {
   useAccordionButton,
 } from "react-bootstrap";
 import AdminSubReplyItem from "./AdminSubReplyItem";
+import { host } from "../../variation.js";
 
 const AdminReplyItem = (props) => {
   const { board_id, createDate, deletable, id, nickname } = props.reply;
@@ -62,7 +63,7 @@ const AdminReplyItem = (props) => {
     if (reReply.content.length === 0) {
       alert("빈 댓글은 작성하실 수 없습니다.");
     } else {
-      fetch("http://43.200.119.175:8080/user/api/reReply/save", {
+      fetch("http://" + host + ":8080/user/api/re-reply", {
         method: "post",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -96,7 +97,7 @@ const AdminReplyItem = (props) => {
     if (contentValue.content.length === 0) {
       alert("빈 댓글은 작성하실 수 없습니다.");
     } else {
-      fetch("http://43.200.119.175:8080/user/api/reply/" + id + "/update", {
+      fetch("http://" + host + ":8080/user/api/reply/" + id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -123,7 +124,7 @@ const AdminReplyItem = (props) => {
   };
 
   const deleteReply = () => {
-    fetch("http://43.200.119.175:8080/admin/api/reply/" + id + "/delete", {
+    fetch("http://" + host + ":8080/admin/api/reply/" + id, {
       method: "DELETE",
       headers: {
         AccessToken: localStorage.getItem("Tnut's accessToken"),

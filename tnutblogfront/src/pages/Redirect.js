@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import queryString from "query-string";
 import { useNavigate } from "react-router-dom";
+import { host } from "../variation.js";
 
 const Redirect = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Redirect = () => {
       localStorage.setItem("Tnut's accessToken", token.accessToken);
       localStorage.setItem("Tnut's refreshToken", token.refreshToken);
 
-      fetch("http://43.200.119.175:8080/authority", {
+      fetch("http://" + host + ":8080/authority", {
         headers: {
           AccessToken: localStorage.getItem("Tnut's accessToken"),
         },
@@ -24,8 +25,8 @@ const Redirect = () => {
 
       setInterval(() => {
         //로그인 시 29분 간격으로 accessToken 재발급
-        fetch("http://43.200.119.175:8080/refresh", {
-          //access토큰이 만료되었을 경우(다양한 경우가 있지만 일단은)
+        fetch("http://" + host + ":8080/refresh", {
+          //access토큰이 만료되었을 경우
           method: "post",
           headers: {
             "Content-Type": "applicaiton/json; charset=utf-8",

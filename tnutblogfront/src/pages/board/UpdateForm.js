@@ -4,6 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import styles from "../../css/SaveForm.module.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { host } from "../../variation.js";
 
 const UpdateForm = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const UpdateForm = () => {
   const [subCategories, setSubCategories] = useState([]);
 
   useEffect(() => {
-    fetch("http://43.200.119.175:8080/category")
+    fetch("http://" + host + ":8080/category")
       .then((res) => res.json())
       .then((res) => {
         setCategories(res.data); //공백에 가져온 정보로 채워줌
@@ -37,7 +38,7 @@ const UpdateForm = () => {
   };
 
   useEffect(() => {
-    fetch("http://43.200.119.175:8080/board/" + id) //update할 게시글의 데이터를 받아옴
+    fetch("http://" + host + ":8080/board/" + id) //update할 게시글의 데이터를 받아옴
       .then((res) => res.json())
       .then((res) => {
         setBoard((board) => ({
@@ -67,7 +68,7 @@ const UpdateForm = () => {
     if (board.subCategory_id === "") {
       alert("카테고리를 선택하세요");
     } else {
-      fetch("http://43.200.119.175:8080/admin/api/board/" + id + "/update", {
+      fetch("http://" + host + ":8080/admin/api/board/" + id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json; charset=utf-8",

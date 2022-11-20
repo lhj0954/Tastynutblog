@@ -3,9 +3,11 @@ package tnut.blogback.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tnut.blogback.dto.boardDTO.BoardContentDto;
+import tnut.blogback.dto.boardDTO.BoardListDto;
 import tnut.blogback.dto.boardDTO.BoardSaveDto;
 import tnut.blogback.dto.boardDTO.BoardServiceDto;
 import tnut.blogback.dto.replyDTO.ReReplyServiceDto;
+import tnut.blogback.dto.replyDTO.ReplyListDto;
 import tnut.blogback.dto.replyDTO.ReplyServiceDto;
 import tnut.blogback.model.Board;
 import tnut.blogback.model.category.SubCategory;
@@ -32,28 +34,40 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
         SubCategory subCategory = subCategoryRepository.findById(boardSaveDto.getSubCategory_id())
                 .orElseThrow(() -> new IllegalArgumentException("없는 카테고리 입니다."));
 
-        Board boardEntity = boardRepository.save(new Board(subCategory, boardSaveDto.getTitle(), boardSaveDto.getContent()));
+        boardRepository.save(new Board(subCategory, boardSaveDto.getTitle(), boardSaveDto.getContent()));
 
-        return new BoardServiceDto(boardEntity.getId(), boardEntity.getTitle());
+        return new BoardServiceDto();
     }
 
     @Transactional(readOnly = true) //글들을 리스트로 받아옴 -> 인덱스 페이지에 넣을 거임 GetMapping
-    public List<BoardContentDto> boardRecentList() {
+    public BoardListDto boardRecentList() {
         List<Board> boards = boardRepository.findTop15ByOrderByIdDesc();
 
-        List<BoardContentDto> boardContentDtoList = new ArrayList<>();
-        List<ReplyServiceDto> replies = new ArrayList<>();
+        List<BoardServiceDto> boardServiceDtoList = new ArrayList<>();
+        BoardListDto boardListDto = new BoardListDto();
 
-        boards.forEach(board -> boardContentDtoList
-                .add(new BoardContentDto(
-                        board.getId(),
-                        board.getTitle(),
-                        board.getContent(),
-                        board.getSubCategory().getSubCategoryName(),
-                        replies
-                )));
+        boards.forEach(board ->
+                {
+                    String content;
+                    if(board.getContent().length() >= 100) { //앞부분만 간추려서 보내야 함
+                        content = board.getContent().substring(0, 99);
+                    } else {
+                        content = board.getContent();
+                    }
+                    boardServiceDtoList.add(new BoardServiceDto(
+                            board.getId(),
+                            board.getTitle(),
+                            content,
+                            board.getSubCategory().getSubCategoryName()
+                    ));
+                }
+        );
 
-        return boardContentDtoList;
+
+        boardListDto.setBoardServiceDtoList(boardServiceDtoList);
+        boardListDto.setTotal(boardServiceDtoList.size());
+
+        return boardListDto;
     }
 
     @Transactional //게시글 내용보기 GetMapping
@@ -62,6 +76,7 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 게시글 입니다."));
 
         List<ReplyServiceDto> replies = new ArrayList<>();
+        ReplyListDto replyListDto = new ReplyListDto();
 
         boardEntity.getReplies()
                 .stream().filter(reply -> reply.getParentReply() == null)//대댓글 방지
@@ -78,7 +93,10 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
                                                             reReply.getContent(),
                                                             reReply.getUser().getNickname(),
                                                             reReply.getCreateDate()
-                                                    )));
+                                                    )
+                                    )
+                            );
+
                     replies.add(
                             new ReplyServiceDto
                                     (
@@ -93,13 +111,16 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
                     );
                 });
 
+        replyListDto.setReplies(replies);
+        replyListDto.setTotal(replies.size());
+
         return new BoardContentDto
                 (
                         boardEntity.getId(),
                         boardEntity.getTitle(),
                         boardEntity.getContent(),
                         boardEntity.getSubCategory().getSubCategoryName(),
-                        replies
+                        replyListDto
                 );
     }
 
@@ -115,7 +136,7 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
         boardEntity.setTitle(boardSaveDto.getTitle());
         boardEntity.setContent(boardSaveDto.getContent());
 
-        return new BoardServiceDto(boardEntity.getId(), boardEntity.getTitle());
+        return new BoardServiceDto();
     }
 
     @Transactional

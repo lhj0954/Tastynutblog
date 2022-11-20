@@ -16,5 +16,5 @@ public class UserInfoDto {
     private RoleType roleType;
     private String nickname;
     private Timestamp createDate;
-    private List<UserReplyInfoDto> replies;
+    private UserReplyListDto replies;
 }

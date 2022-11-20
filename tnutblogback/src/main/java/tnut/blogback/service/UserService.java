@@ -4,10 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tnut.blogback.config.auth.PrincipalDetails;
 import tnut.blogback.dto.boardDTO.BoardServiceDto;
-import tnut.blogback.dto.userDTO.NicknameDto;
-import tnut.blogback.dto.userDTO.UserInfoDto;
-import tnut.blogback.dto.userDTO.UserReplyInfoDto;
-import tnut.blogback.dto.userDTO.UserServiceDto;
+import tnut.blogback.dto.userDTO.*;
 import tnut.blogback.model.User;
 import tnut.blogback.repository.UserRepository;
 
@@ -28,19 +25,23 @@ public class UserService {
         User userEntity = userRepository.findByUsername(username);
 
         List<UserReplyInfoDto> replies = new ArrayList<>();
+        UserReplyListDto userReplyListDto = new UserReplyListDto();
+
         userEntity.getReplies().forEach(reply ->
         {
-            BoardServiceDto boardServiceDto = new BoardServiceDto(reply.getBoard().getId(), reply.getBoard().getTitle());
-
+            BoardServiceDto boardServiceDto = new BoardServiceDto(reply.getBoard().getId(), reply.getBoard().getTitle(), reply.getBoard().getContent(), reply.getBoard().getSubCategory().getSubCategoryName());
             replies.add(new UserReplyInfoDto(boardServiceDto, reply.getCreateDate(), reply.getContent(), reply.getId()));
         });
+
+        userReplyListDto.setUserReplyInfoDtoList(replies);
+        userReplyListDto.setTotal(replies.size());
 
         return new UserInfoDto(
                 userEntity.getId(),
                 userEntity.getRoleType(),
                 userEntity.getNickname(),
                 userEntity.getCreateDate(),
-                replies);
+                userReplyListDto);
     }
 
     @Transactional
@@ -62,28 +63,37 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserInfoDto> userList() {
+    public UserListDto userList() {
         List<User> userList = userRepository.findAll();
 
         List<UserInfoDto> userInfoDtoList = new ArrayList<>();
         List<UserReplyInfoDto> userReplyInfoDtoList = new ArrayList<>();
+
+        UserListDto userListDto = new UserListDto();
+        UserReplyListDto userReplyListDto = new UserReplyListDto();
+
         userList.forEach(userEntity ->
                 {
                     userEntity.getReplies().forEach(replyEntity ->
                             userReplyInfoDtoList.add(new UserReplyInfoDto(
-                                    new BoardServiceDto(replyEntity.getBoard().getId(), replyEntity.getBoard().getTitle()),
+                                    new BoardServiceDto(replyEntity.getBoard().getId(), replyEntity.getBoard().getTitle(), replyEntity.getBoard().getContent(), replyEntity.getBoard().getSubCategory().getSubCategoryName()),
                                     replyEntity.getCreateDate(),
                                     replyEntity.getContent(),
                                     replyEntity.getId())));
+
+                    userReplyListDto.setUserReplyInfoDtoList(userReplyInfoDtoList);
+                    userReplyListDto.setTotal(userReplyInfoDtoList.size());
                     userInfoDtoList.add(new UserInfoDto(
                             userEntity.getId(),
                             userEntity.getRoleType(),
                             userEntity.getNickname(),
                             userEntity.getCreateDate(),
-                            userReplyInfoDtoList));
+                            userReplyListDto));
                 });
+        userListDto.setUserInfoDtoList(userInfoDtoList);
+        userListDto.setTotal(userInfoDtoList.size());
 
-        return userInfoDtoList;
+        return userListDto;
     }
 
 }

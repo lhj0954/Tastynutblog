@@ -7,7 +7,10 @@ const IndexBoardItemBlank = () => {
   const [authority, setAuthority] = useState("");
 
   useEffect(() => {
-    if (localStorage.getItem("authority")) {
+    if (
+      localStorage.getItem("authority") ||
+      localStorage.getItem("authority") === undefined
+    ) {
       //authority라는 값이 있으면
       setAuthority(JSON.parse(localStorage.getItem("authority")).role);
     }

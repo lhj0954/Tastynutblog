@@ -21,17 +21,17 @@ public class BoardApiController { //게시글 작성(save), 삭제, 수정
         this.boardService = boardService;
     }
 
-    @PostMapping("/admin/api/board/save") //board의 내용을 입력받아서 저장하고 반환
+    @PostMapping("/admin/api/board") //board의 내용을 입력받아서 저장하고 반환
     public ResponseDto<?> boardSave (@RequestBody BoardSaveDto boardSaveDto) {
         return new ResponseDto<>(HttpStatus.CREATED.value(), boardService.boardSave(boardSaveDto));
     }
 
-    @PutMapping("/admin/api/board/{id}/update") //저장된 board의 내용을 수정하고 반환
+    @PutMapping("/admin/api/board/{id}") //저장된 board의 내용을 수정하고 반환
     public ResponseDto<?> boardUpdate (@PathVariable Long id, @RequestBody BoardSaveDto boardSaveDto) {
         return new ResponseDto<>(HttpStatus.OK.value(), boardService.boardUpdate(id, boardSaveDto));
     }
 
-    @DeleteMapping("/admin/api/board/{id}/delete") //저장된 board 삭제
+    @DeleteMapping("/admin/api/board/{id}") //저장된 board 삭제
     public ResponseDto<?> boardDelete (@PathVariable Long id) {
         return new ResponseDto<>(HttpStatus.OK.value(), boardService.boardDelete(id));
     }

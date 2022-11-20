@@ -12,6 +12,7 @@ import styles from "../../css/LoginModal.module.css";
 import google_login_img from "../../img/btn_google_signin_light_normal_web.png";
 import naver_login_img from "../../img/btnW_perfect.png";
 import kakao_login_img from "../../img/kakao_login_medium_narrow.png";
+import { host } from "../../variation.js";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -19,7 +20,10 @@ const Header = () => {
   const [nickname, setNickname] = useState("");
 
   useEffect(() => {
-    if (localStorage.getItem("authority")) {
+    if (
+      localStorage.getItem("authority") ||
+      localStorage.getItem("authority") === undefined
+    ) {
       //authority라는 값이 있으면
       setAuthority(JSON.parse(localStorage.getItem("authority")).role);
       setNickname(JSON.parse(localStorage.getItem("authority")).nickname);
@@ -43,11 +47,14 @@ const Header = () => {
 
   const handleLogin = (loginType) => {
     if (loginType === "google") {
-      window.location.href = `http://ec2-43-200-119-175.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google`;
+      window.location.href =
+        `http://` + host + `:8080/oauth2/authorization/google`;
     } else if (loginType === "naver") {
-      window.location.href = `http://ec2-43-200-119-175.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/naver`;
+      window.location.href =
+        `http://` + host + `:8080/oauth2/authorization/naver`;
     } else if (loginType === "kakao") {
-      window.location.href = `http://ec2-43-200-119-175.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao`;
+      window.location.href =
+        `http://` + host + `:8080/oauth2/authorization/kakao`;
     }
   };
 

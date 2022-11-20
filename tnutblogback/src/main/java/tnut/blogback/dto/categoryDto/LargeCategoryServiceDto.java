@@ -12,5 +12,5 @@ import java.util.List;
 public class LargeCategoryServiceDto {
     private Long id;
     private String largeCategoryName;
-    private List<SubCategoryServiceDto> subCategoryServiceDtoList;
+    //private List<SubCategoryServiceDto> subCategoryServiceDtoList;
 }

@@ -5,6 +5,7 @@ import ReplyItem from "../../components/user/ReplyItem";
 import AdminReplyItem from "../../components/admin/AdminReplyItem";
 import styles from "../../css/Content.module.css";
 import "../../css/Content.css";
+import { host } from "../../variation.js";
 
 const Content = () => {
   const propsParam = useParams();
@@ -25,7 +26,7 @@ const Content = () => {
     title: "",
     content: "",
     subCategoryName: "",
-    replies: [],
+    replies: { replies: [], total: "" },
   });
 
   const [reply, setReply] = useState({
@@ -35,7 +36,7 @@ const Content = () => {
   });
 
   useEffect(() => {
-    fetch("http://3.35.149.98:8080/board/" + id) //id를 통해서 게시판 정보를 가져옴
+    fetch("http://" + host + ":8080/board/" + id) //id를 통해서 게시판 정보를 가져옴
       .then((res) => res.json())
       .then((res) => {
         setBoard(res.data); //공백에 가져온 정보로 채워줌
@@ -44,7 +45,7 @@ const Content = () => {
 
   const deleteBoard = () => {
     //해당 게시글 삭제
-    fetch("http://43.200.119.175:8080/admin/api/board/" + id + "/delete", {
+    fetch("http://" + host + ":8080/admin/api/board/" + id, {
       method: "DELETE",
       headers: {
         AccessToken: localStorage.getItem("Tnut's accessToken"),
@@ -78,7 +79,7 @@ const Content = () => {
       alert("빈 댓글을 등록할 수 없습니다.");
     } else {
       e.preventDefault();
-      fetch("http://43.200.119.175:8080/user/api/reply/save", {
+      fetch("http://" + host + ":8080/user/api/reply", {
         method: "POST",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -103,7 +104,7 @@ const Content = () => {
             }));
             setBoard((prevState) => ({
               ...prevState,
-              replies: [...prevState.replies, res.data],
+              replies: { replies: [...prevState.replies.replies, res.data] },
             }));
           }
         });
@@ -188,7 +189,7 @@ const Content = () => {
       </Form>
       <hr />
       <>
-        {board.replies.map((reply) => {
+        {board.replies.replies.map((reply) => {
           if (authority === "ROLE_TNUT") {
             return <AdminReplyItem key={reply.id} reply={reply} />;
           } else {

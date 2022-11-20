@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Badge, Button, Card, Form, InputGroup } from "react-bootstrap";
+import { host } from "../../variation.js";
 
 const AdminSubReplyItem = (props) => {
   const { content, id, nickname, createDate } = props.reReply[0];
@@ -25,7 +26,7 @@ const AdminSubReplyItem = (props) => {
   };
 
   const deleteReply = () => {
-    fetch("http://43.200.119.175:8080/admin/api/reply/" + id + "/delete", {
+    fetch("http://" + host + ":8080/admin/api/reply/" + id, {
       method: "DELETE",
       headers: {
         AccessToken: localStorage.getItem("Tnut's accessToken"),
@@ -46,7 +47,7 @@ const AdminSubReplyItem = (props) => {
     if (contentValue.content.length === 0) {
       alert("빈 댓글은 작성하실 수 없습니다.");
     } else {
-      fetch("http://43.200.119.175:8080/user/api/reply/" + id + "/update", {
+      fetch("http://" + host + ":8080/user/api/reply/" + id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json; charset=utf-8",

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../../components/admin/SideBar";
 import UserSideBar from "../../components/user/UserSideBar";
+import { host } from "../../variation.js";
 
 const Category = () => {
   const [largeCategories, setLargeCategories] = useState([]);
@@ -14,10 +15,10 @@ const Category = () => {
   }, [authority]);
 
   useEffect(() => {
-    fetch("http://43.200.119.175:8080/category")
+    fetch("http://" + host + ":8080/category")
       .then((res) => res.json())
       .then((res) => {
-        setLargeCategories(res.data); //공백에 가져온 정보로 채워줌
+        setLargeCategories(res.data.largeCategoryList); //공백에 가져온 정보로 채워줌
       });
   }, []);
 

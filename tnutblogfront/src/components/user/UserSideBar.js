@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import BoardItem from "../BoardItem";
 import styles from "../../css/UserSidebar.module.css";
+import { host } from "../../variation.js";
 
 const UserSideBar = (props) => {
   const largeCategories = props.largeCategories;
@@ -21,7 +22,7 @@ const UserSideBar = (props) => {
   });
 
   const getSubCategories = (id) => {
-    fetch("http://43.200.119.175:8080/side-bar/" + id + "/sub-categories")
+    fetch("http://" + host + ":8080/side-bar/" + id + "/sub-categories")
       .then((res) => {
         if (res.status === 200) {
           return res.json();
@@ -33,7 +34,7 @@ const UserSideBar = (props) => {
         setSubCategories((subCategories) => ({
           ...subCategories,
           largeCategory_id: id,
-          subCategories: res.data,
+          subCategories: res.data.subCategoryServiceDtoList,
         }));
       });
   };
@@ -73,7 +74,7 @@ const UserSideBar = (props) => {
                   title={subCategory.subCategoryName}
                   eventKey={subCategory.subCategoryName}
                 >
-                  {subCategory.boardServiceDtoList.map((board) => {
+                  {subCategory.boardListDto.boardServiceDtoList.map((board) => {
                     return <BoardItem key={board.id} board={board} />;
                   })}
                 </Tab>

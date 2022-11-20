@@ -34,7 +34,7 @@ const ReReplyItem = (props) => {
     if (contentValue.content.length === 0) {
       alert("빈 댓글을 작성하실 수 없습니다.");
     } else {
-      fetch("http://43.200.119.175:8080/user/api/reply/" + id + "/update", {
+      fetch("http://43.200.119.175:8080/user/api/reply/" + id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -61,7 +61,7 @@ const ReReplyItem = (props) => {
   };
 
   const deleteReReply = (id) => {
-    fetch("http://43.200.119.175:8080/user/api/reply/" + id + "/delete", {
+    fetch("http://43.200.119.175:8080/user/api/reply/" + id, {
       method: "DELETE",
       headers: {
         AccessToken: localStorage.getItem("Tnut's accessToken"),

@@ -24,4 +24,9 @@ public class BoardController {
     public ResponseDto<?> boardContent(@PathVariable Long id) {
         return new ResponseDto<>(HttpStatus.OK.value(), boardService.boardContent(id));
     }
+
+    @GetMapping({"","/"}) //indexPage에 15개의 게시물 목록을 넘겨줌
+    public ResponseDto<?> boardRecentList() {
+        return new ResponseDto<>(HttpStatus.OK.value(), boardService.boardRecentList());
+    }
 }

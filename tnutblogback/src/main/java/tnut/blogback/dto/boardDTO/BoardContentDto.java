@@ -3,6 +3,7 @@ package tnut.blogback.dto.boardDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tnut.blogback.dto.replyDTO.ReplyListDto;
 import tnut.blogback.dto.replyDTO.ReplyServiceDto;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public class BoardContentDto {
     private String title;
     private String content;
     private String subCategoryName;
-    private List<ReplyServiceDto> replies;
+    private ReplyListDto replies;
 }

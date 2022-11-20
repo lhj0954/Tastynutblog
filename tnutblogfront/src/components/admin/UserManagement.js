@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { host } from "../../variation.js";
 
 const UserManagement = () => {
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
-    fetch("http://43.200.119.175:8080/admin/api/users", {
+    fetch("http://" + host + ":8080/admin/api/users", {
       headers: {
         AccessToken: localStorage.getItem("Tnut's accessToken"),
       },
@@ -20,7 +21,7 @@ const UserManagement = () => {
       })
       .then((res) => {
         if (res !== null) {
-          setUserList(res.data);
+          setUserList(res.data.userInfoDtoList);
         }
       });
   }, []);

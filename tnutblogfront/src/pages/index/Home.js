@@ -4,16 +4,17 @@ import IndexBoardItem from "../../components/index/IndexBoardItem";
 import IndexBoardItemBlank from "../../components/index/IndexBoardItemBlank";
 import styles from "../../css/Home.module.css";
 import profile_img from "../../img/android-icon-144x144.png";
+import { host } from "../../variation.js";
 
 const Home = () => {
   const [boards, setBoards] = useState([]);
 
   useEffect(() => {
     //인덱스 화면에 불러올 게시글 정보
-    fetch("http://3.35.149.98:8080")
+    fetch("http://" + host + ":8080")
       .then((res) => res.json())
       .then((res) => {
-        setBoards(res);
+        setBoards(res.data.boardServiceDtoList);
       });
   }, []);
 
