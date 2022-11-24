@@ -7,19 +7,20 @@
 
 ## 기술 스택
 ### 백엔드 
-+ SpringBoot
-+ JPA
-+ Oauth2.0(google, kakao, naver)
-+ SpringSecurity
-+ Jwt
++ SpringBoot(2.7.1)
++ JPA(2.7.1)
++ Oauth2.0(google, kakao, naver)(2.7.1)
++ SpringSecurity(5.7.2)
++ Jwt(3.19.2)
 ### DB
 + MariaDB
 ### 프론트엔드
 + React.js
 + Bootstrap
-+ Css, HTML
++ CSS
++ HTML
 ### 배포
-+ AWS,
++ AWS(EC2)
 + Docker
 + DNS
 
