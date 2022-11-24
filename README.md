@@ -6,13 +6,22 @@
 <hr/>
 
 ## 기술 스택
-백엔드: SpringBoot, JPA, Oauth2.0(google, kakao, naver), SpringSecurity, Jwt
-
-DB: MariaDB
-
-프론트엔드: React.js
-
-배포: AWS, Docker, DNS
+### 백엔드 
++ SpringBoot
++ JPA
++ Oauth2.0(google, kakao, naver)
++ SpringSecurity
++ Jwt
+### DB
++ MariaDB
+### 프론트엔드
++ React.js
++ Bootstrap
++ Css, HTML
+### 배포
++ AWS,
++ Docker
++ DNS
 
 ## 구성도
 <img width="100%" src="https://user-images.githubusercontent.com/74577825/202366723-49e93f96-a15e-4c80-b83c-8daed4616c7c.png">
