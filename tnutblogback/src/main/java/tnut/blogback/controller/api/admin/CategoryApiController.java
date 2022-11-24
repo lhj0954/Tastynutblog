@@ -36,7 +36,7 @@ public class CategoryApiController {
         return new ResponseDto<> (HttpStatus.OK.value(), categoryService.largeCategoryUpdate(id, largeCategorySaveDto));
     }
 
-    @PostMapping("/admin/api/sub-category/{largeCategoryId}") //소분류카테고리 저장
+    @PostMapping("/admin/api/sub-category") //소분류카테고리 저장
     public ResponseDto<?> subCategorySave (@RequestBody SubCategorySaveDto subCategorySaveDto) {
         return new ResponseDto<> (HttpStatus.CREATED.value(), categoryService.subCategorySave(subCategorySaveDto));
     }

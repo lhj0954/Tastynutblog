@@ -19,17 +19,18 @@ const SaveForm = () => {
   const [subCategories, setSubCategories] = useState([]); //selection으로 부터 값을 받음
 
   const selectLC = (e) => {
-    const categoryList = categories.filter(
-      (category) => String(category.id) === e.target.value
-    );
-    setSubCategories(categoryList[0].subCategoryServiceDtoList);
+    fetch("http://" + host + ":8080/side-bar/sub-categories/" + e.target.value)
+      .then((res) => res.json())
+      .then((res) => {
+        setSubCategories(res.data.subCategoryServiceDtoList);
+      });
   };
 
   useEffect(() => {
     fetch("http://" + host + ":8080/category")
       .then((res) => res.json())
       .then((res) => {
-        setCategories(res.data); //공백에 가져온 정보로 채워줌
+        setCategories(res.data.largeCategoryList); //공백에 가져온 정보로 채워줌
       });
   }, []);
 

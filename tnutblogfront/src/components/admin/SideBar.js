@@ -39,13 +39,13 @@ const SideBar = (props) => {
   };
 
   const [subCategories, setSubCategories] = useState({
-    largeCategory_id: "",
+    largeCategoryId: "",
     subCategories: [],
   });
 
-  const getSubCategories = (id) => {
+  const getSubCategories = (largeCategoryId) => {
     //대분류 선택시 subCategory 목록 불러오기
-    fetch("http://" + host + ":8080/side-bar/" + id + "/sub-categories")
+    fetch("http://" + host + ":8080/side-bar/sub-categories/" + largeCategoryId)
       .then((res) => {
         if (res.status === 200) {
           return res.json();
@@ -56,7 +56,7 @@ const SideBar = (props) => {
       .then((res) => {
         setSubCategories((subCategories) => ({
           ...subCategories,
-          largeCategory_id: id,
+          largeCategoryId: largeCategoryId,
           subCategories: res.data.subCategoryServiceDtoList,
         }));
       });
@@ -83,7 +83,6 @@ const SideBar = (props) => {
           }
         })
         .then((res) => {
-          console.log(res);
           if (res !== null) {
             window.location.reload();
           } else {
@@ -100,9 +99,10 @@ const SideBar = (props) => {
   });
 
   const changeValue_sub = (e) => {
+    console.log(subCategory);
     setsubCategory((subCategory) => ({
       ...subCategory,
-      largeCategory_id: e.target.id,
+      largeCategory_id: subCategories.largeCategoryId,
       subCategoryName: e.target.value,
     }));
   };
@@ -112,20 +112,14 @@ const SideBar = (props) => {
     if (subCategory.subCategoryName.length === 0) {
       alert("빈칸 입력 불가");
     } else {
-      fetch(
-        "http://" +
-          host +
-          ":8080/admin/api/sub-category/" +
-          subCategory.largeCategory_id,
-        {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            AccessToken: localStorage.getItem("Tnut's accessToken"),
-          },
-          body: JSON.stringify(subCategory),
-        }
-      )
+      fetch("http://" + host + ":8080/admin/api/sub-category", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          AccessToken: localStorage.getItem("Tnut's accessToken"),
+        },
+        body: JSON.stringify(subCategory),
+      })
         .then((res) => {
           if (res.status === 200) {
             return res.json;
@@ -220,7 +214,6 @@ const SideBar = (props) => {
                     placeholder="Create subCategory"
                     aria-label="Create subCategory"
                     aria-describedby="basic-addon2"
-                    id={subCategories.largeCategory_id}
                     onChange={changeValue_sub}
                   />
                   <Button

@@ -17,12 +17,12 @@ const UserSideBar = (props) => {
   const [key, setKey] = useState();
 
   const [subCategories, setSubCategories] = useState({
-    largeCategory_id: "",
+    largeCategoryId: "",
     subCategories: [],
   });
 
-  const getSubCategories = (id) => {
-    fetch("http://" + host + ":8080/side-bar/" + id + "/sub-categories")
+  const getSubCategories = (largeCategoryId) => {
+    fetch("http://" + host + ":8080/side-bar/sub-categories/" + largeCategoryId)
       .then((res) => {
         if (res.status === 200) {
           return res.json();
@@ -33,7 +33,7 @@ const UserSideBar = (props) => {
       .then((res) => {
         setSubCategories((subCategories) => ({
           ...subCategories,
-          largeCategory_id: id,
+          largeCategoryId: largeCategoryId,
           subCategories: res.data.subCategoryServiceDtoList,
         }));
       });

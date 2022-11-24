@@ -25,7 +25,7 @@ public class CategoryController {
         return new ResponseDto<> (HttpStatus.OK.value(), categoryService.largeCategoryList());
     }
 
-    @GetMapping("/side-bar/{largeCategoryId}/sub-categories")
+    @GetMapping("/side-bar/sub-categories/{largeCategoryId}")
     public ResponseDto<?> subCategories (@PathVariable Long largeCategoryId) {
         return new ResponseDto<>(HttpStatus.OK.value(), categoryService.setSubCategories(largeCategoryId));
     }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
+import { host } from "../../variation.js";
 
 const ChangeNickname = (props) => {
   //username 바꾸는 fetch 함수 작성하고 닉네임 중복확인, spring security에 닉네임 바꾸는 요청 허용, state로 200아닐 시 아이디 중복 alert
@@ -26,9 +27,7 @@ const ChangeNickname = (props) => {
     ) {
       alert("닉네임은 1~10글자 사이로 작성해 주세요");
     } else {
-      fetch(
-        "http://43.200.119.175:8080/new-nickname" + nickname.changingNickname
-      )
+      fetch("http://" + host + ":8080/new-nickname" + nickname.changingNickname)
         .then((res) => {
           return res.json();
         })
@@ -47,7 +46,7 @@ const ChangeNickname = (props) => {
   const changeUsername = (e) => {
     e.preventDefault();
     if (isDuplicated === "n") {
-      fetch("http://43.200.119.175:8080/user/api/nickname", {
+      fetch("http://" + host + ":8080/user/api/nickname", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -65,11 +64,14 @@ const ChangeNickname = (props) => {
         .then((res) => {
           if (res !== null) {
             if (res.data.provider === "google") {
-              window.location.href = `http://ec2-43-200-119-175.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google`;
+              window.location.href =
+                `http://` + host + `:8080/oauth2/authorization/google`;
             } else if (res.data.provider === "naver") {
-              window.location.href = `http://ec2-43-200-119-175.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/naver`;
+              window.location.href =
+                `http://` + host + `:8080/oauth2/authorization/naver`;
             } else if (res.data.provider === "kakao") {
-              window.location.href = `http://ec2-43-200-119-175.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao`;
+              window.location.href =
+                `http://` + host + `:8080/oauth2/authorization/kakao`;
             }
           } else {
             alert("username 수정 실패!");
