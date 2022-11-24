@@ -3,6 +3,8 @@
 
 접속하기: [Tastynut-blog](http://www.tastynut.blog) (aws프리티어가 끝나서 종료) 
 
+<hr/>
+## 기술 스택
 백엔드: SpringBoot, JPA, Oauth2.0(google, kakao, naver), SpringSecurity, Jwt
 
 DB: MariaDB
@@ -12,7 +14,10 @@ DB: MariaDB
 배포: AWS, Docker, DNS
 
 ## 구성도
-<img width="80%" src="https://user-images.githubusercontent.com/74577825/202366723-49e93f96-a15e-4c80-b83c-8daed4616c7c.png"> 
+<img width="80%" src="https://user-images.githubusercontent.com/74577825/202366723-49e93f96-a15e-4c80-b83c-8daed4616c7c.png">
+
+## 동작 화면
+
 
 ## 개선해 나가야 할 점
  - 로그인하면 도메인 네임으로 리다이렉트 되지 않는다.
