@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class BoardSaveDto {
     private String title;
     private String content;
-    private Long subCategory_id;
+    private Long subCategoryId;
 }

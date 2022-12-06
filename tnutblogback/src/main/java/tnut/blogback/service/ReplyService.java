@@ -30,7 +30,7 @@ public class ReplyService {
     @Transactional
     public ReplyServiceDto replySave(ReplySaveDto replySaveDto, User user) { //postMapping  User는 pincipalDatails에서 가져옴
 
-        Board board = boardRepository.findById(replySaveDto.getBoard_id()) //보드 있는지 확인
+        Board board = boardRepository.findById(replySaveDto.getBoardId()) //보드 있는지 확인
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 게시글 입니다."));
 
         Reply replyEntity = Reply.builder()
@@ -58,10 +58,10 @@ public class ReplyService {
     @Transactional
     public ReReplyServiceDto reReplySave(ReReplySaveDto reReplySaveDto, User user) { //대댓글 User는 pincipalDatails에서 가져옴
 
-        Reply parentReply = replyRepository.findById(reReplySaveDto.getParentReply_id())
+        Reply parentReply = replyRepository.findById(reReplySaveDto.getParentReplyId())
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 댓글입니다."));
 
-        Board board = boardRepository.findById(reReplySaveDto.getBoard_id()) //보드 있는지 확인
+        Board board = boardRepository.findById(reReplySaveDto.getBoardId()) //보드 있는지 확인
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 게시글 입니다."));
 
         Reply reReplyEntity = Reply.builder()

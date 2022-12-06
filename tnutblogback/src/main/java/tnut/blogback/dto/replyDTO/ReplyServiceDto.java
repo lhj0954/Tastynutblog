@@ -16,6 +16,6 @@ public class ReplyServiceDto {
     private String nickname;
     private Timestamp createDate;
     private boolean deletable;
-    private Long board_id;
+    private Long boardId;
     private List<ReReplyServiceDto> reReplyServiceDtoList;
 }

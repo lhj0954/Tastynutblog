@@ -31,7 +31,7 @@ const Content = () => {
 
   const [reply, setReply] = useState({
     //댓글 작성 정보
-    board_id: id,
+    boardId: id,
     content: "",
   });
 

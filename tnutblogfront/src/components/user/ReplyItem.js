@@ -30,8 +30,8 @@ const ReplyItem = (props) => {
   const replyDate = createDate.substr(0, 10);
 
   const [reReply, setReReply] = useState({
-    parentReply_id: id,
-    board_id: board_id,
+    parentReplyId: id,
+    boardId: board_id,
     content: "",
     username: accessor,
   });

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubCategorySaveDto {
-    private Long largeCategory_id;
+    private Long largeCategoryId;
     private String subCategoryName;
 }

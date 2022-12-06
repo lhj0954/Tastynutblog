@@ -31,7 +31,7 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
 
     @Transactional //게시글 저장 PostMapping
     public BoardServiceDto boardSave(BoardSaveDto boardSaveDto) {
-        SubCategory subCategory = subCategoryRepository.findById(boardSaveDto.getSubCategory_id())
+        SubCategory subCategory = subCategoryRepository.findById(boardSaveDto.getSubCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("없는 카테고리 입니다."));
 
         boardRepository.save(new Board(subCategory, boardSaveDto.getTitle(), boardSaveDto.getContent()));
@@ -129,7 +129,7 @@ public class BoardService { //게시글 작성(save), 삭제, 수정, 내용, �
         Board boardEntity = boardRepository.findById(id) //더티 체킹(DB가 변화를 감지해서 update문 실행)
                 .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 게시글 입니다."));
 
-        SubCategory subCategory = subCategoryRepository.findById(boardSaveDto.getSubCategory_id())
+        SubCategory subCategory = subCategoryRepository.findById(boardSaveDto.getSubCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("없는 카테고리 입니다."));
 
         boardEntity.setSubCategory(subCategory);

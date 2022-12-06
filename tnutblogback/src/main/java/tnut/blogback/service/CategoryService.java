@@ -101,7 +101,7 @@ public class CategoryService {
 
     @Transactional //subCategory 저장
     public SubCategoryServiceDto subCategorySave(SubCategorySaveDto subCategorySaveDto) {
-        LargeCategory largeCategoryEntity = largeCategoryRepository.findById(subCategorySaveDto.getLargeCategory_id())
+        LargeCategory largeCategoryEntity = largeCategoryRepository.findById(subCategorySaveDto.getLargeCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("없는 대분류 카테고리 입니다."));
 
         SubCategory subCategoryEntity = SubCategory.builder()

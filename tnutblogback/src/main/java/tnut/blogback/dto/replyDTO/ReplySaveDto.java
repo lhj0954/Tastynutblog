@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReplySaveDto {
-    private Long board_id;
+    private Long boardId;
     private String content;
 }

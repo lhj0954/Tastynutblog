@@ -12,7 +12,7 @@ const SaveForm = () => {
   const [board, setBoard] = useState({
     title: "",
     content: "",
-    subCategory_id: "",
+    subCategoryId: "",
   });
 
   const [categories, setCategories] = useState([]); //카테고리 받아 올 곳
@@ -50,7 +50,7 @@ const SaveForm = () => {
 
   const submitBoard = (e) => {
     e.preventDefault();
-    if (board.subCategory_id === "") {
+    if (board.subCategoryId === "") {
       alert("카테고리를 선택하세요.");
     } else {
       fetch("http://" + host + ":8080/admin/api/board", {
@@ -149,7 +149,7 @@ const SaveForm = () => {
             <Form.Select
               size="sm"
               onChange={changeValue}
-              name="subCategory_id"
+              name="subCategoryId"
               className={styles.category}
             >
               <option value={""}>=Select SubCategory=</option>

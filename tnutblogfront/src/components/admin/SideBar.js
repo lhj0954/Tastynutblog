@@ -93,8 +93,7 @@ const SideBar = (props) => {
   };
 
   const [subCategory, setsubCategory] = useState({
-    //savesubCategory 초기화
-    largeCategory_id: "",
+    largeCategoryId: "",
     subCategoryName: "",
   });
 
@@ -102,7 +101,7 @@ const SideBar = (props) => {
     console.log(subCategory);
     setsubCategory((subCategory) => ({
       ...subCategory,
-      largeCategory_id: subCategories.largeCategoryId,
+      largeCategoryId: subCategories.largeCategoryId,
       subCategoryName: e.target.value,
     }));
   };

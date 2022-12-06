@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReReplySaveDto {
-    private Long parentReply_id;
-    private Long board_id;
+    private Long parentReplyId;
+    private Long boardId;
     private String content;
     private String username;
 }
