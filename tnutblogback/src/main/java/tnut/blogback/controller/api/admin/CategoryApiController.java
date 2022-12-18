@@ -1,20 +1,17 @@
 package tnut.blogback.controller.api.admin;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tnut.blogback.dto.ResponseDto;
 import tnut.blogback.dto.categoryDto.LargeCategorySaveDto;
 import tnut.blogback.dto.categoryDto.SubCategorySaveDto;
-import tnut.blogback.model.category.SubCategory;
 import tnut.blogback.service.CategoryService;
 
-@RequiredArgsConstructor
 @RestController
 public class CategoryApiController {
 
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @Autowired
     public CategoryApiController(CategoryService categoryService) {

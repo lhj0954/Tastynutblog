@@ -36,11 +36,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
-        //System.out.println(userRequest.getAccessToken());
-        //System.out.println(userRequest.getClientRegistration()); goolge-api-console 에 대한 내용 client id, secret등등
-        //System.out.println(super.loadUser(userRequest).getAttributes());
-        //System.out.println(super.loadUser(userRequest).getAuthorities()); 권한 정보(ROLE)
-
         //oauth2 로그인 완료 후 받은 회원 정보
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
@@ -54,15 +49,13 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             oAuth2UserInfo = new NaverUserInfo((Map) oAuth2User.getAttributes().get("response"));
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
             oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
-        } else {
-            System.out.println("구글, 네이버, 카카오만 지원합니다.");
         }
 
         //user에 넣을 정보
         String provider = Objects.requireNonNull(oAuth2UserInfo).getProvider();
         String providerId = oAuth2UserInfo.getProviderID();
-        String username = provider + "_" + providerId;
-        String nickname = provider + "_" + providerId;
+        String username = provider + "_" + providerId; //고유 유저네임 생성
+        String nickname = provider + "_" + providerId; //임시 닉네임
         String password = bCryptPasswordEncoder.encode(UUID.randomUUID().toString());
         String email = oAuth2UserInfo.getEmail();
         RoleType roleType = RoleType.ROLE_USER;
@@ -83,8 +76,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .providerId(providerId)
                     .build();
             userRepository.save(userEntity); //회원 정보로 자동 회원가입
-        } else {
-            System.out.println("이미 해당 oauth정보가 있음");
         }
 
         return new PrincipalDetails(userEntity, oAuth2User.getAttributes()); //=>authentication 객체

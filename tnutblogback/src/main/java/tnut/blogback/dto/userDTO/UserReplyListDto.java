@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserReplyListDto {
     private List<UserReplyInfoDto> userReplyInfoDtoList;
     private int total;

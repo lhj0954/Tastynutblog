@@ -1,6 +1,5 @@
 package tnut.blogback.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import tnut.blogback.dto.ResponseDto;
 import tnut.blogback.service.BoardService;
 
-@RequiredArgsConstructor
 @RestController //react와 json객체를 주고 받을 것임
 public class BoardController {
 
-    private BoardService boardService;
+    private final BoardService boardService;
 
     @Autowired
     public BoardController(BoardService boardService) {

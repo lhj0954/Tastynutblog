@@ -22,6 +22,7 @@ public class KakaoUserInfo implements OAuth2UserInfo{
 
     @Override
     public String getEmail() {
+        //카카오로 유저정보를 받아오면 이메일이 Map 형식으로 담겨져 온다.
         Map<String, Object> kakao_account = (Map<String, Object>) attributes.get("kakao_account");
 
         return (String) kakao_account.get("email");

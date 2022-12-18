@@ -1,6 +1,5 @@
 package tnut.blogback.controller.auth;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,11 +13,10 @@ import tnut.blogback.repository.UserRepository;
 import java.util.HashMap;
 import java.util.Map;
 
-@RequiredArgsConstructor
 @RestController
 public class AuthorityController {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public AuthorityController(UserRepository userRepository) {

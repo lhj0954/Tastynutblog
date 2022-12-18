@@ -27,7 +27,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        System.out.println("success Handler 작동함");
 
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 
@@ -40,7 +39,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .withSubject(TOKEN_SUBJECT)
                 .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_EXPIRATION_TIME))
                 .withClaim("username", principalDetails.getUser().getUsername())
-                .sign(Algorithm.HMAC512(ACCESS_SECRET)); //내 서버만 아는 고유한 값
+                .sign(Algorithm.HMAC512(ACCESS_SECRET));
 
         String refreshToken = JWT.create()
                 .withSubject(TOKEN_SUBJECT)
@@ -48,8 +47,10 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .withClaim("username", principalDetails.getUser().getUsername())
                 .sign(Algorithm.HMAC512(REFRESH_SECRET));
 
-        refreshTokenService.refreshTokenSave(refreshToken, principalDetails.getUser().getUsername()); //db에 refreshToken 저장
+        //db에 refreshToken 저장
+        refreshTokenService.refreshTokenSave(refreshToken, principalDetails.getUser().getUsername());
 
-        getRedirectStrategy().sendRedirect(request, response, REDIRECT_URL + "accessToken=" + accessToken + "&refreshToken=" + refreshToken); //front에 돌아갈 페이지를 말함
+        //accessToken과 refreshToken을 주소에 담아서 반환
+        getRedirectStrategy().sendRedirect(request, response, REDIRECT_URL + "accessToken=" + accessToken + "&refreshToken=" + refreshToken);
     }
 }

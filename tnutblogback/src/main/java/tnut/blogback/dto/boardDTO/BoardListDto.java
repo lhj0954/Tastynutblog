@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class BoardListDto {
     private List<BoardServiceDto> boardServiceDtoList = new ArrayList<>();
     private int total;

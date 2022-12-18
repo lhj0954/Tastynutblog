@@ -8,8 +8,8 @@ import tnut.blogback.dto.boardDTO.BoardServiceDto;
 import java.sql.Timestamp;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserReplyInfoDto {
     private BoardServiceDto boardServiceDto;
     private Timestamp createDate;

@@ -4,13 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import tnut.blogback.dto.replyDTO.ReplyListDto;
-import tnut.blogback.dto.replyDTO.ReplyServiceDto;
-
-import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class BoardContentDto {
     private Long id;
     private String title;

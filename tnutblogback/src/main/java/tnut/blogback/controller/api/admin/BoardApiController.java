@@ -1,20 +1,17 @@
 package tnut.blogback.controller.api.admin;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tnut.blogback.dto.boardDTO.BoardSaveDto;
 import tnut.blogback.dto.ResponseDto;
-import tnut.blogback.dto.boardDTO.BoardServiceDto;
-import tnut.blogback.model.Board;
 import tnut.blogback.service.BoardService;
 
-@RequiredArgsConstructor
+
 @RestController
 public class BoardApiController { //게시글 작성(save), 삭제, 수정
 
-    private BoardService boardService;
+    private final BoardService boardService;
 
     @Autowired
     public BoardApiController(BoardService boardService) {

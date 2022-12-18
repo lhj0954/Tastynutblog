@@ -1,6 +1,5 @@
 package tnut.blogback.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,10 +8,9 @@ import tnut.blogback.config.auth.PrincipalDetails;
 import tnut.blogback.dto.ResponseDto;
 import tnut.blogback.service.UserService;
 
-@RequiredArgsConstructor
 @RestController
 public class UserController {
-    UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {

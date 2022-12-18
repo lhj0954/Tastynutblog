@@ -42,7 +42,6 @@ public class RefreshController {
             return new ResponseDto<>(HttpStatus.OK.value(), accessToken); //새로운 access토큰을 반환
         } else {
             //refresh token이 만료되었다면
-
             return new ResponseDto<>(HttpStatus.UNAUTHORIZED.value(), "재 로그인이 필요합니다." );
         }
     }

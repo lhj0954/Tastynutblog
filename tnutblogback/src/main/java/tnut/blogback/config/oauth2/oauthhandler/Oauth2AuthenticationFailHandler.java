@@ -13,12 +13,9 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class Oauth2AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHandler {
-
+    //인증에 실패할 경우 해당 주소로 리다이렉트
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-
-        System.out.println("failHandler 작동함");
-
         getRedirectStrategy().sendRedirect(request, response, "http://localhost:3000");
     }
 }

@@ -19,7 +19,7 @@ import java.io.IOException;
 
 import static tnut.blogback.config.jwt.JwtProperties.*;
 
-//BasicAuthenticationFilter 무조건 권한 인증 요구하는 페이지 요청시 거쳐가게 되어 있음
+//BasicAuthenticationFilter 무조건 권한 인증 요구하는 페이지 요청시 거쳐가게 되어 있다.
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final UserRepository userRepository;
@@ -31,17 +31,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("요청이 들어옴");
-
         String accessToken = request.getHeader(HEADER_ACCESS);
 
         //header에 jwt토큰이 제대로 들어가 있는지 확인
         if (accessToken == null) {
-            System.out.println("jwt토큰이 필요없는 요청");
-
-            chain.doFilter(request, response); //jwt토큰이 없다면 그대로 filter 진행(authentication객체가 없으므로 후에 인가가 필요한 요청 x)
+            chain.doFilter(request, response); //jwt토큰이 없다면 그대로 filter 진행(후에 인가가 필요한 요청이 아닌 경우이다.)
         } else {
-            System.out.println("jwt토큰이 필요한 요청");
 
             //jwt토큰을 통해 비정상적인 사용자인지 확인 accessToken
             String username = JWT.require(Algorithm.HMAC512(ACCESS_SECRET)).build()
@@ -49,9 +44,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                     .getClaim("username")
                     .asString();
 
-            if (username != null) { //유효한 jwt토큰이 들어왔다면
-                System.out.println("jwt토큰이 유효함");
-
+            //유효한 jwt토큰이 들어왔다면
+            if (username != null) {
                 User userEntity = userRepository.findByUsername(username);
 
                 PrincipalDetails principalDetails = new PrincipalDetails(userEntity);
@@ -60,11 +54,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 Authentication authentication =
                         new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities()); //RoleType지정에 필요함
 
-                //강제로 시큐리티 세션에 접근하여 authentication객체를 저장.
+                //강제로 시큐리티 세션에 접근하여 authentication객체를 저장(JWT로 인증을 마쳤기 때문이다.)
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-
             }
 
+            //이후 필터 진행
             chain.doFilter(request, response);
         }
     }

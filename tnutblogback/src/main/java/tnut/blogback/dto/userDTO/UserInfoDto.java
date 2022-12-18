@@ -6,11 +6,10 @@ import lombok.NoArgsConstructor;
 import tnut.blogback.model.RoleType;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserInfoDto {
     private Long id;
     private RoleType roleType;

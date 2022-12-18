@@ -1,17 +1,14 @@
 package tnut.blogback.controller.api.admin;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tnut.blogback.dto.ResponseDto;
 import tnut.blogback.service.ReplyService;
 
-@RequiredArgsConstructor
 @RestController
 public class AdminReplyApiController {
-
-    private ReplyService replyService;
+    private final ReplyService replyService;
 
     @Autowired
     public AdminReplyApiController(ReplyService replyService) {
