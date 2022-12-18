@@ -12,7 +12,7 @@ import ReReplyItem from "./ReReplyItem";
 import { host } from "../../variation.js";
 
 const ReplyItem = (props) => {
-  const { board_id, createDate, deletable, id, nickname } = props.reply;
+  const { boardId, createDate, deletable, id, nickname } = props.reply;
 
   const [content, setContent] = useState(props.reply.content);
 
@@ -31,7 +31,7 @@ const ReplyItem = (props) => {
 
   const [reReply, setReReply] = useState({
     parentReplyId: id,
-    boardId: board_id,
+    boardId: boardId,
     content: "",
     username: accessor,
   });
